@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../../public/css/adminDashboard.css">
+    <link rel="stylesheet" href="../../public/css/addUser.css">
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">AdminHub</span>
+        </a>
+        <ul class="side-menu top">
+            <li class="active">
+                <a href="adminDashboard.html">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-plus-square'></i>
+                    <span class="text">Add Locations</span>
+                </a>
+            </li>
+            <li>
+                <a href="addUser.html">
+                    <i class='bx bxs-user-plus'></i>
+                    <span class="text">Add Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-current-location'></i>
+                    <span class="text">View Locations</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-group'></i>
+                    <span class="text">User</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Add User</h1>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="adminDashboard.html">Dashboard</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li>
+                            <a class="active" href="adminDashboard.html">Home</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Form -->
+            <div class="bodys">
+                <div class="container">
+                    <div class="header">
+                        <h2>Add User Form</h2>
+                    </div>
+
+                    <form action="" method="" class="form" id="userForm" onsubmit="validateForm()">
+                        <div class="form-control">
+                            <label for="firstname">First Name</label>
+                            <input type="text" id="firstname" name="Firstname" placeholder="Enter firstname" />
+                            <span id="firstnameError" class="error-message"></span>
+                        </div>
+                        <div class="form-control">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" id="lastname" name="Lastname" placeholder="Enter lastname" />
+                            <span id="lastnameError" class="error-message"></span>
+                        </div>
+                        <div class="form-control">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="Username" placeholder="Enter username" />
+                            <span id="usernameError" class="error-message"></span>
+                        </div>
+                        <div class="form-control">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Enter email" />
+                            <span id="emailError" class="error-message"></span>
+                        </div>
+                        <div class="form-control">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter password" />
+                            <span id="passwordError" class="error-message"></span>
+                        </div>
+                        <div class="form-control">
+                            <label for="confirmpassword">Confirm Password</label>
+                            <input type="password" id="confirmpassword" name="confirmpassword"
+                                placeholder="Confirm password" />
+                            <span id="confirmpasswordError" class="error-message"></span>
+                        </div>
+                        <div class="form-control">
+                            <label for="role">Role</label>
+                            <select id="role" name="type">
+                                <option value="">Select role</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
+                            <span id="roleError" class="error-message"></span>
+                        </div>
+                        <button type="submit" class="btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+    </section>
+
+    <script src="../../public/js/adminDashboard.js"></script>
+    <script src="../../public/js/addUser.js"></script>
+</body>
+
+</html>
