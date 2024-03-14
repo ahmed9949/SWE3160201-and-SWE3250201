@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <!-- <link rel="stylesheet" th:href="@{/user/assets/css/header.css}">
+    <link rel="stylesheet" th:href="@{/user/assets/css/footer.css}"> -->
+    <link rel="stylesheet" th:href="@{/public/css/user login.css}">
+    <!-- <link rel="stylesheet" th:href="@{/public/css/style.css}"> -->
+    <!-- <script th:src="@{/user/assets/js/user login.js}"></script> -->
+</head>
+
+<body>
+    <header th:replace="fragments/header :: header"></header>
+
+    <!-- Include session-helper.php -->
+    <!-- Thymeleaf does not support PHP, so any PHP code should be handled differently -->
+    <!-- Thymeleaf has its own way of handling session attributes, usually through Spring Security -->
+
+    <!-- Include flash messages -->
+    <!-- Thymeleaf can handle flash messages in a different way, usually using Thymeleaf attributes and fragments -->
+
+    <div class="container">
+        <b>
+            <h2>User Login</h2>
+        </b>
+        <form action="../controllers/Users-controller.php" method="post">
+            <input type="hidden" name="type" value="login">
+            <input type="text" id="Usersn/UsersEmail" name="Usersn/UsersEmail" placeholder="Username / Email" required>
+            <input type="password" id="UsersPwd" name="UsersPwd" placeholder="Enter your password" required>
+            <button type="submit">Login</button><br><br>
+            <div id="error" class="error"></div>
+        </form>
+    </div>
+
+    <!-- Thymeleaf does not support PHP, so any PHP code should be handled differently -->
+    <!-- Any server-side logic should be handled within your Spring Boot controller classes -->
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+
+</html>
