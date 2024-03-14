@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class adminController {
      @GetMapping("/home")
     public String home() {
-        return "adminDb"; // Return the name of your home HTML file without extension
+        return "adminDashboard"; // Return the name of your home HTML file without extension
     }
 }
