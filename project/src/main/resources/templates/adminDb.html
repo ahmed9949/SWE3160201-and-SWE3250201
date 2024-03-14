@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<div th:replace="adminHeader ::"></div>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Include the head section (CSS and other dependencies) here -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <title>EMMA</title>
+
+    <!-- External CSS files -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Internal CSS files -->
+    <link href="../public/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../public/css/nucleo-svg.css" rel="stylesheet" />
+    <link id="pagestyle" href="../public/css/soft-ui-dashboard.css" rel="stylesheet" />
+
+    <!-- Thymeleaf comment: Alertify.js is not converted, please include it separately in your project -->
+    <!-- <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+    <!-- <script>
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.success('hello world');
+    </script> -->
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+    <!-- Thymeleaf comment: Include admin-sidebar.html, admin-navbar.html files separately -->
+     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+        <!-- Thymeleaf comment: Include admin-navbar.html file separately -->
+         <div class="container-fluid py-4">
+            <!-- Your page content goes here -->
+            <div class="row">
+                <div class="col-md-2 mb-4">
+                    <div class="card card-body p-3">
+
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
+                        <h5 class="font-weight-bolder mb-0">
+                            $53,000
+                            <span class="text-success text-sm font-weight-bolder">+55%</span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <div class="card card-body p-3">
+
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
+                        <h5 class="font-weight-bolder mb-0">
+                            $53,000
+                            <span class="text-success text-sm font-weight-bolder">+55%</span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <div class="card card-body p-3">
+
+                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
+                        <h5 class="font-weight-bolder mb-0">
+                            $53,000
+                            <span class="text-success text-sm font-weight-bolder">+55%</span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Include the footer section here -->
+        <div th:replace="adminFooter ::"></div>
+    </main>
+</body>
+
+</html>
