@@ -7,7 +7,7 @@ body {
 
 /* Animated Header Styling */
 .animated-header {
-    
+    background: #333;
     color: #fff;
     padding: 20px 0;
     position: fixed;
@@ -36,7 +36,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 1;
 }
 
 .logo img {
@@ -68,6 +67,7 @@ body {
     transform: scale(1.1);
     /* Scale the button on hover */
 }
+
 /* Text Logo Animation */
 .animated-text {
     animation: fadeIn 1s ease-in;

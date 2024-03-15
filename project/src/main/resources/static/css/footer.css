@@ -4,7 +4,10 @@
     color: #fff;
     padding: 20px 0;
     text-align: center;
-    animation: slideIn 1s ease-in;
+    /* animation: slideIn 1s ease-in; */
+    margin-top: 250px;
+    display: flex;
+    flex-direction: row;
 }
 
 .footer-content {

@@ -8,11 +8,9 @@ body{
  .container{
    width: 500px;
    height: 350px;
-   margin-right:80px;
-   margin-left:450px;
-  margin-top: 70px;
-  margin-bottom: 70px;
+   align-items: center;
    background-color:  #222;
+   margin-left: 700px;
    /* border-radius: 20px; */
    opacity: 75%;
   }

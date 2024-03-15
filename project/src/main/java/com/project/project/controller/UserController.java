@@ -55,4 +55,17 @@ public class UserController {
             return "Failed to login by this username : " + username;
         }
     }
+
+    @GetMapping("index")
+    public ModelAndView index() {
+        ModelAndView model = new ModelAndView("index.html");
+        return model;
+    }
+
+    @GetMapping("products")
+    public ModelAndView products() {
+        ModelAndView model = new ModelAndView("products.html");
+        return model;
+    }
+
 }
