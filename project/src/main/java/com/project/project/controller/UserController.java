@@ -14,12 +14,19 @@ import com.project.project.Repositries.UserRepositry;
 import com.project.project.model.User;
 
 @RestController
-@RequestMapping("/User")
+
+@RequestMapping("")
 public class UserController {
     @Autowired
     private UserRepositry userRepositry;
 
-    @GetMapping("Registration")
+    @GetMapping("")
+    public ModelAndView getHomePage() {
+        ModelAndView model = new ModelAndView("index.html");
+        return model;
+    }
+
+    @GetMapping("User/Registration")
     public ModelAndView addUser() {
         ModelAndView model = new ModelAndView("register.html");
         User newUser = new User();
@@ -27,7 +34,7 @@ public class UserController {
         return model;
     }
 
-    @PostMapping("Registration")
+    @PostMapping("User/Registration")
     public String saveUser(@ModelAttribute User user) {
 
         String encoddedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
@@ -36,7 +43,7 @@ public class UserController {
         return "User has been Add successfully";
     }
 
-    @GetMapping("Login")
+    @GetMapping("User/Login")
     public ModelAndView Login() {
         ModelAndView model = new ModelAndView("login.html");
         User newUser = new User();
@@ -44,7 +51,7 @@ public class UserController {
         return model;
     }
 
-    @PostMapping("Login")
+    @PostMapping("User/Login")
     public String loginProcess(@RequestParam("username") String username, @RequestParam("password") String password) {
         User dbUser = this.userRepositry.findByUsername(username);
         Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
@@ -56,16 +63,16 @@ public class UserController {
         }
     }
 
-    @GetMapping("index")
-    public ModelAndView index() {
-        ModelAndView model = new ModelAndView("index.html");
-        return model;
-    }
-
-    @GetMapping("products")
+    @GetMapping("User/products")
     public ModelAndView products() {
         ModelAndView model = new ModelAndView("products.html");
         return model;
     }
+    @GetMapping("User/menu")
+    public ModelAndView menu() {
+        ModelAndView model = new ModelAndView("menu.html");
+        return model;
+    }
+
 
 }

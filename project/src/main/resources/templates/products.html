@@ -107,7 +107,7 @@
               <h3>products</h3>
               <i class="bx bx-search"></i>
               <i class="bx bx-filter"></i>
-              <a href="/products/addproduct">add product</a>
+              <a href="/admin/products/addproduct">add product</a>
             </div>
             <table>
               <thead>
@@ -139,16 +139,18 @@
                       width="100"
                     />
                   </td>
-         <td style="white-space: nowrap">
+                  <td style="white-space: nowrap">
                     <a
                       href=""
                       th:href="@{/admin/products/editProduct(id=${product.id})}"
                       >edit</a
                     >
-                    <a href="#" 
-   th:href="@{/admin/products/delete(id=${product.id})}" 
-   onclick="return confirm('Are you sure you want to delete?');">Delete</a>
-
+                    <a
+                      href="#"
+                      th:href="@{/admin/products/delete(id=${product.id})}"
+                      onclick="return confirm('Are you sure you want to delete?');"
+                      >Delete</a
+                    >
                   </td>
                 </tr>
               </tbody>

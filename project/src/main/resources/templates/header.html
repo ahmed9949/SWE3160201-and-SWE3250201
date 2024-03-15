@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link th:href="@{/css/header.css}" rel="stylesheet" />
     <title>YourStore - Online Shopping</title>
-    <style>
-        
-    </style>
-</head>
+    <style></style>
+  </head>
 
-<body>
+  <body>
     <header class="animated-header">
-        <div class="header-content">
-            <div class="logo">
-                <a th:href="@{/index}" class="text-logo animated-text">Eama Group</a>
-            </div>
-            <nav class="navigation">
-                <ul class="nav-links">
-                    <li><a th:href="@{/index}">Home</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a th:href="@{/views/Register}">Register</a></li>
-                    <li><a th:href="@{/views/products}">Products</a></li>
-                    <li><a th:href="@{/views/cart}">Cart</a></li>
-                </ul>
-            </nav>
+      <div class="header-content">
+        <div class="logo">
+          <a th:href="@{/index.html}" class="text-logo animated-text"
+            >Eama Group</a
+          >
         </div>
+        <nav class="navigation">
+          <ul class="nav-links">
+            <li><a th:href="@{/index}">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a th:href="@{/views/Register}">Register</a></li>
+            <li><a th:href="@{/views/products}">Products</a></li>
+            <li><a th:href="@{/views/cart}">Cart</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
-</body>
-
+  </body>
 </html>
