@@ -107,7 +107,7 @@
               <h3>products</h3>
               <i class="bx bx-search"></i>
               <i class="bx bx-filter"></i>
-              <a href="/products/addproduct">add product</a>
+              <a href="/admin/products/addproduct">add product</a>
             </div>
             <table>
               <thead>
@@ -131,6 +131,11 @@
                   <td th:text="${product.name}"></td>
                   <td th:text="${product.brand}"></td>
                   <td th:text="${product.category}"></td>
+                  <td th:text="${product.quantity}"></td>
+                  <td th:text="${product.description}"></td>
+                  <td th:text="${product.companiesDiscount}"></td>
+                  <td th:text="${product.regularDiscount}"></td>
+
                   <td th:text="${product.price + '$'}"></td>
                   <td>
                     <img
