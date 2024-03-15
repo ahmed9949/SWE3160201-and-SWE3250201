@@ -1,71 +1,61 @@
 package com.project.project.model;
-import java.util.Date; // Add this import for the Date class
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType; // Fix this import
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
-public class user {
-   @Id
-   
-    int id ;
-    private String UsersName;
-    private String UsersEmail;
-    private String Usersn;
-    private String UsersPwd;
-    private String pwdRepeat;
-    private String UsersRole;
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    private String username;
+    private String password;
+    private String email;
 
-    // Getters and setters
-    public String getUsersName() {
-        return UsersName;
+
+    public User() {
     }
 
-    public void setUsersName(String usersName) {
-        UsersName = usersName;
+
+    public User(int id, String username, String password, String email) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
     }
 
-    public String getUsersEmail() {
-        return UsersEmail;
+    public int getId() {
+        return this.id;
     }
 
-    public void setUsersEmail(String usersEmail) {
-        UsersEmail = usersEmail;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getUsersn() {
-        return Usersn;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setUsersn(String usersn) {
-        Usersn = usersn;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUsersPwd() {
-        return UsersPwd;
+    public String getPassword() {
+        return this.password;
     }
 
-    public void setUsersPwd(String usersPwd) {
-        UsersPwd = usersPwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPwdRepeat() {
-        return pwdRepeat;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setPwdRepeat(String pwdRepeat) {
-        this.pwdRepeat = pwdRepeat;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUsersRole() {
-        return UsersRole;
-    }
-
-    public void setUsersRole(String usersRole) {
-        UsersRole = usersRole;
-    }
 }

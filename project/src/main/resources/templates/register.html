@@ -1,63 +1,121 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script th:src="@{/js/search.js}"></script>
+    <link
+      id="pagestyle"
+      th:href="@{/css/soft-ui-dashboard.css}"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <!-- Nucleo Icons -->
+    <link th:href="@{/css/nucleo-icons.css}" rel="stylesheet" />
+    <link th:href="@{/css/nucleo-svg.css}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/42d5adcbca.js"
+      crossorigin="anonymous"
+    ></script>
+    <link th:href="@{/css/nucleo-svg.css}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/cart.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+    <title>YourStore - Online Shopping</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" th:href="@{/user/assets/css/header.css}">
-    <link rel="stylesheet" th:href="@{/user/assets/css/footer.css}"> -->
-    <link rel="stylesheet" th:href="@{/public/css/register.css}">
-    <script th:src="@{/public/js/register.js}"></script>
-    <title>User Sign Up</title>
-    <script src="https://kit.fontawesome.com/a98ac1f71c.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-
-    <header th:replace="fragments/header :: header"></header>
-
-    <!-- Include session-helper.php -->
-    <!-- Thymeleaf does not support PHP, so any PHP code should be handled differently -->
-    <!-- Thymeleaf has its own way of handling session attributes, usually through Spring Security -->
-
-    <!-- Include flash messages -->
-    <!-- Thymeleaf can handle flash messages in a different way, usually using Thymeleaf attributes and fragments -->
+  <body>
+    <header class="animated-header">
+      <div class="header-content">
+        <div class="logo">
+          <a href="index.php" class="text-logo animated-text">Eama Group</a>
+        </div>
+        <nav class="navigation">
+          <ul class="nav-links">
+            <li><a href="../views/index.php">Home</a></li>
+            <li><a href="../views/products.php">Products</a></li>
+            <li><a href="../views/user login.php">Login</a></li>
+            <li><a href="../views/Register.php">Register</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <input
+          type="text"
+          name="search_text"
+          id="search_text"
+          placeholder="Search..."
+        />
+      </div>
+      <div id="result"></div>
+    </header>
 
     <div class="container">
-
-        <h1>Sign Up Now</h1>
-        <form action="../controllers/Users-controller.php" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="type" value="register">
-
-            <input type="text" id="UsersName" name="UsersName" placeholder="Enter your Full Name" size="15" required>
-            <input type="email" id="UsersEmail" placeholder="Enter your email" name="UsersEmail" required>
-            <input type="text" id="Usersn" placeholder="Enter your Username" name="Usersn" required>
-            <input type="password" name="UsersPwd" id="UsersPwd" placeholder="Enter your Password" required>
-            <input type="password" name="pwdRepeat" id="pwdRepeat" placeholder="Confirm your Password" required>
-            <div class="role">
-                <label for="role">Role:</label>
-            </div>
-            <select id="role" name="UsersRole" required>
-                <option value="">Select Role</option>
-                <option value="company">Company</option>
-                <option value="pharmacy">Pharmacy</option>
-                <option value="user">User</option>
-            </select>
-
-            <button type="submit">Sign Up</button><br><br>
-            <div class="account">
-                <div class="aa">
-                    Already have an account? <a href="user login.php"><b>Login</b></a>
-                </div>
-            </div>
-
-        </form>
+      <h1>Sign Up Now</h1>
+      <form
+        action="../controllers/Users-controller.php"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" name="type" value="register" />
+        <input
+          type="text"
+          id="UsersName"
+          name="UsersName"
+          placeholder="Enter your Full Name"
+          size="15"
+          required
+        />
+        <input
+          type="email"
+          id="UsersEmail"
+          placeholder="Enter your email"
+          name="UsersEmail"
+          required
+        />
+        <input
+          type="text"
+          id="Usersn"
+          placeholder="Enter your Username"
+          name="Usersn"
+          required
+        />
+        <input
+          type="password"
+          name="UsersPwd"
+          id="UsersPwd"
+          placeholder="Enter your Password"
+          required
+        />
+        <input
+          type="password"
+          name="pwdRepeat"
+          id="pwdRepeat"
+          placeholder="Confirm your Password"
+          required
+        />
+        <div class="role">
+          <label for="role">Role:</label>
+        </div>
+        <select id="role" name="UsersRole" required>
+          <option value="">Select Role</option>
+          <option value="company">Company</option>
+          <option value="pharmacy">Pharmacy</option>
+          <option value="user">User</option>
+        </select>
+        <button type="submit">Sign Up</button><br /><br />
+        <div class="account">
+          <div class="aa">
+            Already have an account? <a href="user login.php"><b>Login</b></a>
+          </div>
+        </div>
+      </form>
     </div>
-
-    <!-- Thymeleaf does not support PHP, so any PHP code should be handled differently -->
-    <!-- Any server-side logic should be handled within your Spring Boot controller classes -->
-
-    <footer th:replace="fragments/footer :: footer"></footer>
-</body>
-
+  </body>
 </html>
