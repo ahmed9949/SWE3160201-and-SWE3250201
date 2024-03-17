@@ -40,7 +40,7 @@
             <div class="description">
                 <span class="names" th:text="${product.name}"> </span>
                 <br/>
-                <p class="ingred">Our Recommended World Wide Teeth Brushs</p>
+                <p class="ingred"  th:text="${product.description}" > </p>
                 <span class="prices" th:text="${product.price + '$'}"> </span>
             </div>
         </div>

@@ -110,7 +110,9 @@ try{
     productDto.setCategory(product.getCategory());
     productDto.setPrice(product.getPrice());
     productDto.setDescription(product.getDescription());
-
+productDto.setQuantity(product.getQuantity() );
+productDto.setCompaniesDiscount(product.getCompaniesDiscount());
+productDto.setRegularDiscount(product.getRegularDiscount());
     model.addAttribute("productDto", productDto);
     
 
@@ -138,7 +140,7 @@ return "editProduct";
 
             if(!productDto.getImageFile().isEmpty()){
                 //delete old image 
-                String uploadDir="public/images";
+                String uploadDir="public/images/";
                 Path oldImagePath=Paths.get(uploadDir+product.getImageFileName());
                 try {
                     Files.delete((oldImagePath));

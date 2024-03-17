@@ -126,8 +126,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="product :${products}">
-                  <td th:text="${product.id}"></td>
+                <tr th:each="product ,index :${products}">
+                  <td th:text="${index.index+1}"></td>
                   <td th:text="${product.name}"></td>
                   <td th:text="${product.brand}"></td>
                   <td th:text="${product.category}"></td>
