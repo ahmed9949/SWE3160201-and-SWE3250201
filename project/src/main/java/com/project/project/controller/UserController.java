@@ -19,6 +19,7 @@ import com.project.project.Repositries.UserRepositry;
 import com.project.project.model.User;
 import com.project.project.repositories.productRepo;
 import com.project.project.model.products;
+
 @RestController
 
 @RequestMapping("")
@@ -26,7 +27,7 @@ public class UserController {
     @Autowired
     private UserRepositry userRepositry;
 
-    @GetMapping({"","/"})
+    @GetMapping({ "", "/" })
     public ModelAndView getHomePage() {
         ModelAndView model = new ModelAndView("index.html");
         return model;
@@ -75,17 +76,22 @@ public class UserController {
         return model;
     }
 
-
     @Autowired
     productRepo repo;
+
     @GetMapping("/menu")
     public ModelAndView menu(Model model) {
-        ModelAndView mav= new ModelAndView("menu");
-        List<products> productList=repo.findAll();
+        ModelAndView mav = new ModelAndView("menu");
+        List<products> productList = repo.findAll();
         model.addAttribute("products", productList);
 
         return mav;
     }
 
+    @GetMapping("/cart")
+    public ModelAndView cart() {
+        ModelAndView model = new ModelAndView("cart.html");
+        return model;
+    }
 
 }

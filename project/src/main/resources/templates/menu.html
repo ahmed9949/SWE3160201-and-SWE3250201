@@ -20,7 +20,7 @@
                 height="100%"
                 th:src="@{'/images/'+${product.imageFileName}}"
                 th:alt="${product.imageFileName}"
-                width="100"
+                width="100%"
                 class="menu_img"
         />
         <div class="descr_and_add">
@@ -40,7 +40,7 @@
             <div class="description">
                 <span class="names" th:text="${product.name}"> </span>
                 <br/>
-                <p class="ingred"  th:text="${product.description}" > </p>
+                <p class="ingred" th:text="${product.description + '$'}"></p>
                 <span class="prices" th:text="${product.price + '$'}"> </span>
             </div>
         </div>
