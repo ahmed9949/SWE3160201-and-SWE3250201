@@ -40,9 +40,29 @@ public class adminController {
 
         userRepositry.findById(id).ifPresent(userRepositry::delete);
 
-       
-
         return new ModelAndView("redirect:/admin/viewUsers");
+    }
+
+    @GetMapping("/updateUser/{id}")
+    public ModelAndView showUpdateUserForm(@PathVariable("id") int id) {
+        ModelAndView model = new ModelAndView("updateUser.html");
+        userRepositry.findById(id).ifPresent(user -> model.addObject("user", user));
+        return model;
+    }
+
+    @PostMapping("/updateUser/{id}")
+    public ModelAndView updateUser(@PathVariable("id") int id, User updatedUser,
+            RedirectAttributes redirectAttributes) {
+        return userRepositry.findById(id)
+                .map(user -> {
+                    user.setUsername(updatedUser.getUsername());
+                    user.setEmail(updatedUser.getEmail());
+                    user.setPassword(updatedUser.getPassword());
+                    userRepositry.save(user);
+                    redirectAttributes.addFlashAttribute("successMessage", "User updated successfully!");
+                    return new ModelAndView("redirect:/admin/viewUsers");
+                })
+                .orElseGet(() -> new ModelAndView("redirect:/admin/viewUsers"));
     }
 
 }

@@ -94,7 +94,7 @@
                 <th>UserID</th>
                 <th>UserName</th>
                 <th>Email</th>
-                <th>Password</th>
+                <th>password</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -115,7 +115,11 @@
                       Remove
                     </button>
                   </form>
-                  <button class="btn-action update">Update</button>
+                  <a
+                    th:href="@{'/admin/updateUser/' + ${user.id}}"
+                    class="btn-action update"
+                    >Update</a
+                  >
                 </td>
               </tr>
 
