@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link th:href="@{/css/cart.css}" rel="stylesheet" />
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <title>In Cart Products</title>
+    <script src="https://kit.fontawesome.com/a98ac1f71c.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div th:replace="header :: header"></div>
+    <main>
+
+        <h1>1 Items</h1>
+        <hr>
+
+        <div class="card">
+            <div class="images">
+                <img th:src="@{/img/image.jpg}" alt="">
+            </div>
+
+            <div class="caption">
+                <p class="rate">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </p>
+
+                <p class="product_name">Signal</p>
+
+                <p class="price"><b>$3</b></p>
+
+                <p class="discount"><b><del>$4</del></b></p>
+                <button class="remove">Remove From Cart</button>
+            </div>
+        </div>
+    </main>
+    <div th:replace="footer :: footer"></div>
+</body>
+
+</html>
