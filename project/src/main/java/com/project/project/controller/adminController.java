@@ -40,9 +40,7 @@ public class adminController {
 
         userRepositry.findById(id).ifPresent(userRepositry::delete);
 
-        // // Add a flash attribute to show success message on redirect
-        // redirectAttributes.addFlashAttribute("successMessage", "User deleted
-        // successfully!");
+       
 
         return new ModelAndView("redirect:/admin/viewUsers");
     }
