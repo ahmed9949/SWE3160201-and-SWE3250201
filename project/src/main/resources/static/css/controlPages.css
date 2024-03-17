@@ -55,6 +55,16 @@
     transition: background-color 0.3s ease; /
 }
 
+.btn-action.update {
+    background-color: var(--green); /* Choose a color that represents an 'update' action */
+    color: var(--light);
+}
+
+.btn-action.update:hover {
+    background-color: darken(var(--green), 10%);
+    transition: background-color 0.3s ease;
+}
+
 /* Enhance button interactivity */
 .btn-action:focus {
     outline: none; /* Removes the default outline to maintain the design */
