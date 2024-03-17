@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
+
 
 import com.project.project.model.productDto;
 import com.project.project.model.products;
@@ -30,7 +29,7 @@ import com.project.project.repositories.productRepo;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
