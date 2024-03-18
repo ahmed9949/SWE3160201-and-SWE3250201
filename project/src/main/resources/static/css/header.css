@@ -7,16 +7,17 @@ body {
 
 /* Animated Header Styling */
 .animated-header {
-    background: #333;
+    background: #3C91E6;
     color: #fff;
-    padding: 20px 0;
+    padding: 1px 0; /* Decrease the padding to reduce the height */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    animation: slideIn 1s ease-in;
+    animation: slideIn 0.5s ease-in;
 }
+
 
 @keyframes slideIn {
     from {
