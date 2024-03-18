@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Login</title>
     <link th:href="@{/css/user login.css}" rel="stylesheet" />
     <link th:href="@{/css/header.css}" rel="stylesheet" />
     <link th:href="@{/css/footer.css}" rel="stylesheet" />
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div th:replace="header :: header"></div>
 
     <div class="container">
-        <b>
-            <h2>User Login</h2>
-        </b>
-        <form action="" method="post">
-            <input type="hidden" name="type" value="login">
+      <b><h2>User Login</h2></b>
+      <!-- Update the form action to match your @PostMapping URL and correct the input names -->
+      <form th:action="@{/User/Login}" method="post">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username / Email"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
 
-            <input type="text" id="UserUid/UsersName" name="UserUid/UsersName" placeholder="Username / Email" required>
-            <input type="password" id="UsersPwd" name="UsersPwd" placeholder="Enter your password" required>
+        <b><button type="submit">Login</button></b><br /><br />
 
-            <b><button type="submit">Login</button></b><br><br>
-
-            <div id="error" class="error" th:text="${error}"></div>
-        </form>
+        <!-- Dynamic error message display using Thymeleaf -->
+        <div id="error" class="error" th:if="${error}" th:text="${error}"></div>
+      </form>
     </div>
 
     <div th:replace="footer :: footer"></div>
-</body>
-
+  </body>
 </html>

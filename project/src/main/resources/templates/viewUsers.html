@@ -1,135 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
     <!-- My CSS -->
-    <link rel="stylesheet" th:href="@<public/css/adminDashboard.css">
+    <link rel="stylesheet" th:href="@{/css/adminDashboard.css}" />
 
     <!-- css l el control pages wa viewUser pages -->
-    <link rel="stylesheet" href="../../public/css/controlPages.css"> 
-    
+    <link rel="stylesheet" th:href="@{/css/controlPages.css}" />
 
     <title>Control Page</title>
-</head>
+  </head>
 
-<body>
-
-
+  <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
-            <i class='bx bxs-smile'></i>
-            <span class="text">AdminHub</span>
-        </a>
-        <ul class="side-menu top">
-            <li class="active">
-                <a href="#">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-plus-square'></i>
-                    <span class="text">Add Locations</span>
-                </a>
-            </li>
-            <li>
-                <a href="addUser.html">
-                    <i class='bx bxs-user-plus'></i>
-                    <span class="text">Add Users</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-current-location'></i>
-                    <span class="text">View Locations</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-group'></i>
-                    <span class="text">User</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="side-menu">
-
-            <li>
-                <a href="#" class="logout">
-                    <i class='bx bxs-log-out-circle'></i>
-                    <span class="text">Logout</span>
-                </a>
-            </li>
-        </ul>
+      <a href="/admin" class="brand">
+        <i class="bx bxs-smile"></i>
+        <span class="text">AdminHub</span>
+      </a>
+      <ul class="side-menu top">
+        <li class="active">
+          <a href="/admin/home">
+            <i class="bx bxs-dashboard"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/products">
+            <i class="bx bxs-plus-square"></i>
+            <span class="text">products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/addUser">
+            <i class="bx bxs-user-plus"></i>
+            <span class="text">Add Users</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/controlPages">
+            <i class="bx bx-current-location"></i>
+            <span class="text">Control Page</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/viewUsers">
+            <i class="bx bxs-group"></i>
+            <span class="text">View Users</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="logout">
+            <i class="bx bxs-log-out-circle"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
     </section>
     <!-- SIDEBAR -->
-
-
 
     <!-- CONTENT -->
     <section id="content">
-        <!-- NAVBAR -->
-        <nav>
-            <i class='bx bx-menu'></i>
-            <a href="#" class="nav-link">Categories</a>
-            <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
-            <input type="checkbox" id="switch-mode" hidden>
-            <label for="switch-mode" class="switch-mode"></label>
+      <!-- NAVBAR -->
+      <nav>
+        <i class="bx bx-menu"></i>
+        <a href="#" class="nav-link">Categories</a>
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button type="submit" class="search-btn">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <input type="checkbox" id="switch-mode" hidden />
+        <label for="switch-mode" class="switch-mode"></label>
+      </nav>
+      <!-- NAVBAR -->
 
-        </nav>
+      <main>
+        <div class="table-responsive">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>UserID</th>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>password</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Example Row -->
 
-        <main>
-            <div class="table-responsive">
-                <table class="custom-table">
-                    <thead>
-                        <tr>
-                            <th>UserID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Example Row -->
-                        <tr>
-                            <td>1</td>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>Admin</td>
-                            <td>
-                                <button class="btn-action remove">Remove</button>
-                            </td>
-                        </tr>
-                        <!-- Additional rows as needed -->
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <a href="#">&laquo; Prev</a>
-                    <a href="#">1</a>
-                    <a href="#" class="active">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">Next &raquo;</a>
-                </div>
-            </div>
-        </main>
-        <!-- MAIN -->
+              <tr th:each="user: ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.password}"></td>
+                <td>
+                  <form
+                    th:action="@{'/admin/deleteUser/' + ${user.id}}"
+                    method="post"
+                  >
+                    <button type="submit" class="btn-action remove">
+                      Remove
+                    </button>
+                  </form>
+                  <a
+                    th:href="@{'/admin/updateUser/' + ${user.id}}"
+                    class="btn-action update"
+                    >Update</a
+                  >
+                </td>
+              </tr>
+
+              <!-- Additional rows as needed -->
+            </tbody>
+          </table>
+          <div class="pagination">
+            <a href="#">&laquo; Prev</a>
+            <a href="#">1</a>
+            <a href="#" class="active">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">Next &raquo;</a>
+          </div>
+        </div>
+      </main>
+      <!-- MAIN -->
     </section>
 
-    <script src="../../public/js/adminDashboard.js"></script>
-</body>
-
+    <script th:src="@{/js/adminDashboard.js}"></script>
+  </body>
 </html>
