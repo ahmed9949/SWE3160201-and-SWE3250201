@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.project.project.Repositries.UserRepositry;
 import com.project.project.model.User;
+import com.project.project.repositories.UserRepositry;
 
 @RestController
 @RequestMapping("admin")
@@ -65,4 +65,12 @@ public class adminController {
                 .orElseGet(() -> new ModelAndView("redirect:/admin/viewUsers"));
     }
 
+    @GetMapping("/addUser")
+    public ModelAndView ShowAddUser() {
+        return new ModelAndView("addUser.html");
+    }
+    @GetMapping("/controlPages")
+    public ModelAndView ShowControlPage() {
+        return new ModelAndView("controlPages.html");
+    }
 }

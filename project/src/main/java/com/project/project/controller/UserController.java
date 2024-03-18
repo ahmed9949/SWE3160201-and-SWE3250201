@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.project.Repositries.UserRepositry;
 import com.project.project.model.User;
+import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
 import com.project.project.model.products;
 

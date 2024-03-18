@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +11,7 @@
     />
     <!-- My CSS -->
     <link rel="stylesheet" th:href="@{/css/adminDashboard.css}" />
+    <link rel="stylesheet" th:href="@{/css/addproduct.css}" />
 
     <title>AdminHub</title>
   </head>
@@ -18,39 +19,39 @@
   <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-      <a href="#" class="brand">
+      <a href="/admin/home" class="brand">
         <i class="bx bxs-smile"></i>
         <span class="text">AdminHub</span>
       </a>
       <ul class="side-menu top">
-        <li class=" ">
-          <a href="#">
+        <li class="active">
+          <a href="/admin/home">
             <i class="bx bxs-dashboard"></i>
             <span class="text">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="/products" class="active">
+          <a href="/admin/products">
             <i class="bx bxs-plus-square"></i>
             <span class="text">products</span>
           </a>
         </li>
         <li>
-          <a href="addUser.html">
+          <a href="/admin/addUser">
             <i class="bx bxs-user-plus"></i>
             <span class="text">Add Users</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/admin/controlPages">
             <i class="bx bx-current-location"></i>
-            <span class="text">View Locations</span>
+            <span class="text">Control Page</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/admin/viewUsers">
             <i class="bx bxs-group"></i>
-            <span class="text">User</span>
+            <span class="text">View Users</span>
           </a>
         </li>
       </ul>
@@ -104,131 +105,151 @@
         <div class="table-data">
           <div class="order">
             <div class="head">
-              <h3>add product</h3>
-              <i class="bx bx-search"></i>
-              <i class="bx bx-filter"></i>
               <a href="/admin/products">cancel</a>
             </div>
-            <form
-              method="post"
-              th:object="${productDto}"
-              enctype="multipart/form-data"
-            >
-              <div>
-                <label>name</label>
+            <div class="form-section">
+              <h3>Add Product</h3>
+              <form
+                method="post"
+                th:object="${productDto}"
+                enctype="multipart/form-data"
+              >
                 <div>
-                  <input th:field="${productDto.name}" />
+                  <label for="productName">Name</label>
+                  <input
+                    type="text"
+                    id="productName"
+                    th:field="${productDto.name}"
+                  />
                   <p
-                    th:if="${#fields.hasErrors('name')} "
-                    th:errorclass="text-danger"
+                    th:if="${#fields.hasErrors('name')}"
+                    class="text-danger"
                     th:errors="${productDto.name}"
                   ></p>
                 </div>
-              </div>
-              <div>
-                <label>brand </label>
+
                 <div>
-                  <input th:field="${productDto.brand}" />
+                  <label for="productBrand">Brand</label>
+                  <input
+                    type="text"
+                    id="productBrand"
+                    th:field="${productDto.brand}"
+                  />
                   <p
-                    th:if="${#fields.hasErrors('brand')} "
-                    th:errorclass="text-danger"
-                    th:errors="${productDto.brand	}"
+                    th:if="${#fields.hasErrors('brand')}"
+                    class="text-danger"
+                    th:errors="${productDto.brand}"
                   ></p>
                 </div>
-              </div>
-              <div class="row mb-4">
-                <label class="col-sm-4 col-form-label">category</label>
-                <div class="col-sm-8">
-                  <select class="form-select" th:field="${productDto.category}">
-                    <option value="other">other</option>
-                    <option value="phone">phone</option>
-                    <option value="c">c</option>
-                    <option value="b">b</option>
-                    <option value="f">f</option>
-                    <option value="ff">ff</option>
+
+                <div>
+                  <label for="productCategory">Category</label>
+                  <select
+                    id="productCategory"
+                    th:field="${productDto.category}"
+                  >
+                    <option value="other">Other</option>
+                    <option value="phone">Phone</option>
+                    <!-- Add more options here -->
                   </select>
                   <p
                     th:if="${#fields.hasErrors('category')}"
-                    th:errorclass="text-danger"
+                    class="text-danger"
                     th:errors="${productDto.category}"
                   ></p>
                 </div>
-              </div>
-              <div>
-                <label>quantity</label>
+
                 <div>
-                  <input th:field="${productDto.quantity}" />
+                  <label for="productQuantity">Quantity</label>
+                  <input
+                    type="number"
+                    id="productQuantity"
+                    th:field="${productDto.quantity}"
+                  />
                   <p
-                    th:if="${#fields.hasErrors('quantity')} "
-                    th:errorclass="text-danger"
+                    th:if="${#fields.hasErrors('quantity')}"
+                    class="text-danger"
                     th:errors="${productDto.quantity}"
                   ></p>
                 </div>
-              </div>
-              <div>
-                <label>description</label>
+
                 <div>
-                  <input th:field="${productDto.description}" />
+                  <label for="productDescription">Description</label>
+                  <input
+                    type="text"
+                    id="productDescription"
+                    th:field="${productDto.description}"
+                  />
                   <p
-                    th:if="${#fields.hasErrors('description')} "
-                    th:errorclass="text-danger"
+                    th:if="${#fields.hasErrors('description')}"
+                    class="text-danger"
                     th:errors="${productDto.description}"
                   ></p>
                 </div>
-              </div>
-              <div>
-                <label>price</label>
+
                 <div>
-                  <input th:field="${productDto.price}" />
+                  <label for="productPrice">Price</label>
+                  <input
+                    type="text"
+                    id="productPrice"
+                    th:field="${productDto.price}"
+                  />
                   <p
-                    th:if="${#fields.hasErrors('price')} "
-                    th:errorclass="text-danger"
+                    th:if="${#fields.hasErrors('price')}"
+                    class="text-danger"
                     th:errors="${productDto.price}"
                   ></p>
                 </div>
-              </div>
-              <div>
-                <label>companiesDiscount</label>
+
                 <div>
-                  <input th:field="${productDto.companiesDiscount}" />
+                  <label for="companiesDiscount">Companies Discount</label>
+                  <input
+                    type="text"
+                    id="companiesDiscount"
+                    th:field="${productDto.companiesDiscount}"
+                  />
                   <p
-                    th:if="${#fields.hasErrors('companiesDiscount')} "
-                    th:errorclass="text-danger"
+                    th:if="${#fields.hasErrors('companiesDiscount')}"
+                    class="text-danger"
                     th:errors="${productDto.companiesDiscount}"
                   ></p>
                 </div>
-              </div>
-              <div>
-                <label>regularDiscount</label>
+
                 <div>
-                  <input th:field="${productDto.regularDiscount}" />
+                  <label for="regularDiscount">Regular Discount</label>
+                  <input
+                    type="text"
+                    id="regularDiscount"
+                    th:field="${productDto.regularDiscount}"
+                  />
                   <p
-                    th:if="${#fields.hasErrors('regularDiscount')} "
-                    th:errorclass="text-danger"
+                    th:if="${#fields.hasErrors('regularDiscount')}"
+                    class="text-danger"
                     th:errors="${productDto.regularDiscount}"
                   ></p>
                 </div>
-              </div>
-              <div class="row mb-4">
-                <label class="col-sm-4 col-form-label">Image</label>
-                <div class="col-sm-8">
+
+                <div>
+                  <label for="productImage">Image</label>
                   <input
                     type="file"
+                    id="productImage"
                     class="form-control-file"
                     th:field="${productDto.imageFile}"
                     accept="image/*"
                   />
                   <p
                     th:if="${#fields.hasErrors('imageFile')}"
-                    th:errorclass="text-danger"
+                    class="text-danger"
                     th:errors="${productDto.imageFile}"
                   ></p>
                 </div>
-              </div>
-              <div>
-                <button type="submit">submit</button>
-              </div>
-            </form>
+
+                <div>
+                  <button type="submit">Submit</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </main>
