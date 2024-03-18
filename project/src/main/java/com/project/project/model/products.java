@@ -1,7 +1,6 @@
 package com.project.project.model;
 
-import java.util.Date; // Add this import for the Date class
-
+ 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

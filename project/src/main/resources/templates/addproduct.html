@@ -113,7 +113,7 @@
               <div>
                   <label>name</label>
                   <div><input th:field="${productDto.name}">
-                      <p th:if="${#fields.hasErrors('name')} " th:errorclass="text-danger" th:errors="${productDto.name}"></p>
+                      <p th:if="${#fields.hasErrors('name')} " th:errorclass="text-danger" th:errors="*{name}">naem err</p>
                   </div>
               </div>
               <div>
@@ -186,6 +186,5 @@
     </section>
     <!-- CONTENT -->
 
-    <script src="../../public/js/adminDashboard.js"></script>
   </body>
 </html>

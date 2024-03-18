@@ -60,8 +60,9 @@ public class productController {
             result.addError(new FieldError("productDto", "imageFile", "The image file is required."));
         }
 
+        //result.addError(new FieldError(("products"), "name", "you must enter name "));
         if(result.hasErrors()){
-            return "products";
+            return "addproduct";
         } 
             MultipartFile image = productDto.getImageFile();
             Date createdAt = new Date();
@@ -92,7 +93,7 @@ public class productController {
         product.setCompaniesDiscount(productDto.getCompaniesDiscount());
         product.setRegularDiscount(productDto.getRegularDiscount());
          product.setImageFileName(storageFileName);
-repo.save(product);
+        repo.save(product);
         return "redirect:/admin/products";
     }
 
