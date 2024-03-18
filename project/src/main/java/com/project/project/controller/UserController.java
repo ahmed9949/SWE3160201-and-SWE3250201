@@ -34,6 +34,7 @@ public class UserController {
     @GetMapping({ "", "/" })
     public ModelAndView getHomePage() {
         ModelAndView model = new ModelAndView("index.html");
+        
         return model;
     }
 

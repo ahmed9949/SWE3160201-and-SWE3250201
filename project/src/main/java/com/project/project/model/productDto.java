@@ -8,9 +8,9 @@ import jakarta.validation.constraints.*;
 
 public class productDto {
     
-   @NotEmpty(message = "this field is required")
+   @NotEmpty 
     private String name;
-   @NotEmpty(message = "this field is required")
+   @NotEmpty(message = "this name is required")
     private String brand;
    @NotEmpty(message = "this field is required")
     private String category;
@@ -27,7 +27,7 @@ public class productDto {
      private int quantity; 
 
 
-@Size(min=10,message = "thie description shoud be at least 10 chars")
+@Size(min=10,message = "the description shoud be at least 10 chars")
 @Size(max = 2000, message="the description cannot exceed 2000 chars")
 private String description;
 
