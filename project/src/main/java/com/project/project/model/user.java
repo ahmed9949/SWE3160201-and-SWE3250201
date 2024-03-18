@@ -20,7 +20,7 @@ public class User {
 
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")
-    // You can adjust the pattern to meet your password policy requirements
+
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}$", message = "Password must contain at least one letter, one number, and be 6 characters or more")
     private String password;
 
@@ -28,10 +28,6 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
 
-    // confirmPassword doesn't need to be persisted or validated here,
-    // as its validation is typically done during form submission.
-    // However, if you choose to include it, you might need a custom validator
-    // to compare it with the password field for equality.
     private transient String confirmPassword;
 
     public User() {
