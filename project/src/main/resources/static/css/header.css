@@ -63,7 +63,7 @@ body {
 
 /* Add hover animation for the navigation buttons */
 .nav-links a:hover {
-    color: #ff9900;
+    color: #2A6B9D;
     /* Change color on hover */
     transform: scale(1.1);
     /* Scale the button on hover */

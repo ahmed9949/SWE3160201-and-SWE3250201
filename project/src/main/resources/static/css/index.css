@@ -5,18 +5,27 @@
     box-sizing: border-box;
 }
 
+/* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container */
 .container {
     height: 1000px;
-    /* Adjust the height as needed */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #fff;
+    color: #fff; /* Text color for centered text */
 }
 
+/* Text styles for centered content */
 .centered-text {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
     padding: 20px;
     border-radius: 10px;
 }
@@ -29,19 +38,10 @@
 .centered-text p {
     font-size: 18px;
 }
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: gray;
-    color: #333;
-    line-height: 1.6;
-}
 
-/* Style the header */
-
-
-
+/* Hero section */
 .hero {
-    background-image: url('hero-image.jpg');
+    background-image: url('hero-image.jpg'); /* Ensure high-quality image */
     background-size: cover;
     color: #fff;
     text-align: center;
@@ -54,10 +54,11 @@ body {
     font-weight: 700;
 }
 
+/* Buttons */
 .btn {
     display: inline-block;
     padding: 15px 30px;
-    background-color: #ff3366;
+    background-color: #3C91E6; /* Updated button color */
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -67,35 +68,17 @@ body {
 }
 
 .btn:hover {
-    background-color: #e6215b;
+    background-color: #2A6B9D; /* Darker shade on hover */
 }
-/* Style the about section */
+
+/* About section */
 .about {
     text-align: center;
-    background-color: #f4f4f4;
+    background-color: #fff;
     padding: 50px 0;
 }
 
-/* Reset some default browser styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Define CSS for previous and next buttons (optional) */
-.prev,
-.next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 15px;
-    background-color: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
-}
-
+/* Product card */
 .product-container {
     display: flex;
     flex-wrap: wrap;
@@ -126,6 +109,7 @@ body {
     width: 200px;
     height: 200px;
     border-radius: 10px;
+    object-fit: cover; /* Ensure image covers the entire space */
 }
 
 .product-card h3 {
@@ -149,7 +133,7 @@ body {
 .product-card .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #ff3366;
+    background-color: #3C91E6; /* Updated button color */
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -159,18 +143,20 @@ body {
 }
 
 .product-card .btn:hover {
-    background-color: #e6215b;
+    background-color: #2A6B9D; /* Darker shade on hover */
 }
+
+/* Carousel */
 .carousel {
     display: flex;
     overflow: hidden;
     width: 100vw;
     height: 100vh;
     position: relative;
-
+    background-color: rgba(0, 0, 0, 0.1); /* Adjust the alpha value to make it less transparent */
 }
 
-.carousel>ul {
+.carousel > ul {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -189,7 +175,7 @@ body {
     flex-direction: column;
 }
 
-.slide>img {
+.slide > img {
     display: block;
     width: 100%;
     height: 100%;
@@ -208,20 +194,19 @@ body {
     z-index: 2;
     background: none;
     border: none;
-    font-size: 4rem;
+    font-size: 3rem; /* Updated font size */
     top: 50%;
     transform: translateY(-50%);
     color: rgba(255, 255, 255, .5);
     cursor: pointer;
     border-radius: .25rem;
     padding: 0 .5rem;
-    background-color: rgba(0, 0, 0, .1);
 }
 
 .carousel-button:hover,
 .carousel-button:focus {
     color: white;
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .0);
 }
 
 .carousel-button:focus {
@@ -235,7 +220,9 @@ body {
 .carousel-button.next {
     right: 1rem;
 }
-.slide-text p{
+
+/* Slideshow */
+.slide-text p {
     position: relative;
     bottom: -350px;
     color: transparent;
@@ -244,11 +231,12 @@ body {
     font-size: 50px;
 }
 
-.feauteredproducts{
+.feauteredproducts {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.slideshow{
+
+.slideshow {
     margin-top: -100px;
 }
