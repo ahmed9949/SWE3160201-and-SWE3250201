@@ -3,7 +3,7 @@ package com.project.project.controller;
 import java.util.List;
 
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 //import org.hibernate.mapping.List;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
+
+import jakarta.validation.Valid;
+
 import com.project.project.model.products;
 
 @RestController
@@ -43,8 +46,18 @@ public class UserController {
     }
 
     @PostMapping("/Register")
-    public ModelAndView saveUser(@ModelAttribute User user, @RequestParam("confirmPassword") String confirmPassword,
-            Model model) {
+    public ModelAndView saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,
+            @RequestParam("confirmPassword") String confirmPassword, Model model) {
+        
+        User existingUser = userRepositry.findByUsername(user.getUsername());
+        if (existingUser != null) {
+            model.addAttribute("usernameExists", "Username already exists");
+            return new ModelAndView("register.html");
+        }
+
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("register.html");
+        }
 
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("passwordMismatch", "Passwords do not match");
@@ -53,6 +66,8 @@ public class UserController {
 
         String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         user.setPassword(encodedPassword);
+
+        
         this.userRepositry.save(user);
         return new ModelAndView("login.html");
     }
@@ -70,22 +85,26 @@ public class UserController {
             @RequestParam("password") String password, Model model) {
         User dbUser = this.userRepositry.findByUsername(username);
 
-        // Check if the user exists
+        if (username.isEmpty() || password.isEmpty()) {
+            model.addAttribute("error", "Username and password must not be empty.");
+            return new ModelAndView("login.html");
+        }
+
         if (dbUser != null) {
-            // User exists, now check the password
+
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
 
             if (isPasswordMatch) {
-                // Password matches, redirect to index page
+
                 return new ModelAndView("index.html");
             } else {
-                // Password does not match, add error message and redirect back to login page
-                model.addAttribute("error", "Invalid username or password");
+
+                model.addAttribute("error", "Invalid password.");
                 return new ModelAndView("login.html");
             }
         } else {
-            // User does not exist, add error message and redirect back to login page
-            model.addAttribute("error", "Invalid username or password");
+
+            model.addAttribute("error", "User does not exist.");
             return new ModelAndView("login.html");
         }
     }
