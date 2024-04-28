@@ -1,4 +1,5 @@
 package com.project.project.controller;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.mindrot.jbcrypt.BCrypt;
@@ -15,19 +16,18 @@ import com.project.project.repositories.UserRepositry;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
-
-
 @RestController
-
 @RequestMapping("")
 public class UserController {
     @Autowired
     private UserRepositry userRepositry;
 
     @GetMapping({ "", "/" })
-    public ModelAndView getHomePage() {
+    public ModelAndView getHomePage(HttpSession session) {
+        if (session.getAttribute("loginUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         ModelAndView model = new ModelAndView("index.html");
-
         return model;
     }
 
@@ -42,14 +42,13 @@ public class UserController {
     @PostMapping("/Register")
     public ModelAndView saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,
             @RequestParam("confirmPassword") String confirmPassword, Model model, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("register.html");
+        }
 
         User existingUser = userRepositry.findByUsername(user.getUsername());
         if (existingUser != null) {
             model.addAttribute("usernameExists", "Username already exists");
-            return new ModelAndView("register.html");
-        }
-
-        if (bindingResult.hasErrors()) {
             return new ModelAndView("register.html");
         }
 
@@ -60,15 +59,14 @@ public class UserController {
 
         String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         user.setPassword(encodedPassword);
-
-        this.userRepositry.save(user);
+        userRepositry.save(user);
 
         session.setAttribute("loginUser", user.getUsername());
-        return new ModelAndView("login.html");
+        return new ModelAndView("redirect:/login");
     }
 
     @GetMapping("/login")
-    public ModelAndView Login() {
+    public ModelAndView login() {
         ModelAndView model = new ModelAndView("login");
         User newUser = new User();
         model.addObject("user", newUser);
@@ -78,36 +76,33 @@ public class UserController {
     @PostMapping("/User/Login")
     public ModelAndView login(@RequestParam("username") String username,
             @RequestParam("password") String password, Model model, HttpSession session) {
-        User dbUser = this.userRepositry.findByUsername(username);
-
         if (username.isEmpty() || password.isEmpty()) {
-            model.addAttribute("error", "please fill the username field and password does not leave them empty");
+            model.addAttribute("error", "Please fill the username and password fields.");
             return new ModelAndView("login.html");
         }
 
-        if (dbUser != null) {
-            Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
-            if (isPasswordMatch) {
-                session.setAttribute("loginUser", dbUser.getUsername());
-                return new ModelAndView("index.html");
-            } else {
-                model.addAttribute("error", "Incorrect password");
-                return new ModelAndView("login.html");
-            }
+        User dbUser = userRepositry.findByUsername(username);
+        if (dbUser != null && BCrypt.checkpw(password, dbUser.getPassword())) {
+            session.setAttribute("loginUser", dbUser.getUsername());
+            return new ModelAndView("redirect:/");
         } else {
-            model.addAttribute("error", "username not found");
+            model.addAttribute("error", "Incorrect username or password");
             return new ModelAndView("login.html");
         }
     }
 
     @GetMapping("User/products")
-    public ModelAndView products() {
+    public ModelAndView products(HttpSession session) {
+        if (session.getAttribute("loginUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         ModelAndView model = new ModelAndView("products.html");
         return model;
     }
 
-   
-
-   
-
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+        session.invalidate();
+        return new ModelAndView("redirect:/login");
+    }
 }
