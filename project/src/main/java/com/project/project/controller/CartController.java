@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.project.model.products;
 import com.project.project.repositories.productRepo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("user/menu")
 public class CartController {
@@ -20,7 +22,13 @@ public class CartController {
     private productRepo repo;
 
     @GetMapping("/")
-    public ModelAndView showMenu(Model model) {
+    public ModelAndView showMenu(HttpSession session, Model model) {
+
+        if (session.getAttribute("loginUser") == null) {
+
+            return new ModelAndView("redirect:/login");
+        }
+
         ModelAndView mav = new ModelAndView("menu");
         List<products> productList = repo.findAll();
         model.addAttribute("products", productList);
@@ -28,8 +36,10 @@ public class CartController {
     }
 
     @GetMapping("/cart")
-
-    public ModelAndView showCart() {
+    public ModelAndView showCart(HttpSession session) {
+        if (session.getAttribute("loginUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         ModelAndView mav = new ModelAndView("cart");
         return mav;
     }

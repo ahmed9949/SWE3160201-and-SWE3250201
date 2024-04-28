@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("admin")
 public class adminController {
@@ -21,13 +23,21 @@ public class adminController {
     private UserRepositry userRepositry;
 
     @GetMapping("")
-    public ModelAndView getAdminHome() {
+    public ModelAndView getAdminHome(HttpSession session) {
+
         ModelAndView model = new ModelAndView("adminDashboard.html");
+
+        if (session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         return model;
     }
 
     @GetMapping("/viewUsers")
-    public ModelAndView getUsers() {
+    public ModelAndView getUsers(HttpSession session) {
+        if (session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         ModelAndView model = new ModelAndView("viewUsers.html");
         List<User> users = this.userRepositry.findAll();
         model.addObject("users", users);
@@ -36,15 +46,21 @@ public class adminController {
     }
 
     @PostMapping("/deleteUser/{id}")
-    public ModelAndView deleteUser(@PathVariable("id") int id) {
-
+    public ModelAndView deleteUser(@PathVariable("id") int id, HttpSession session) {
+        if (session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         userRepositry.findById(id).ifPresent(userRepositry::delete);
 
         return new ModelAndView("redirect:/admin/viewUsers");
     }
 
     @GetMapping("/updateUser/{id}")
-    public ModelAndView showUpdateUserForm(@PathVariable("id") int id) {
+    public ModelAndView showUpdateUserForm(@PathVariable("id") int id, HttpSession session) {
+
+        if (session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         ModelAndView model = new ModelAndView("updateUser.html");
         userRepositry.findById(id).ifPresent(user -> model.addObject("user", user));
         return model;
@@ -52,7 +68,10 @@ public class adminController {
 
     @PostMapping("/updateUser/{id}")
     public ModelAndView updateUser(@PathVariable("id") int id, User updatedUser,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes, HttpSession session) {
+        if (session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         return userRepositry.findById(id)
                 .map(user -> {
                     user.setUsername(updatedUser.getUsername());
@@ -66,11 +85,27 @@ public class adminController {
     }
 
     @GetMapping("/addUser")
-    public ModelAndView ShowAddUser() {
+    public ModelAndView ShowAddUser(HttpSession session) {
+
+        if (session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
         return new ModelAndView("addUser.html");
     }
+
     @GetMapping("/controlPages")
-    public ModelAndView ShowControlPage() {
+    public ModelAndView ShowControlPage(HttpSession session) {
+
+        if (session.getAttribute("loggedInUser") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
         return new ModelAndView("controlPages.html");
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView Logout(HttpSession session) {
+        session.invalidate();
+        return new ModelAndView("redirect:/login.html");
     }
 }

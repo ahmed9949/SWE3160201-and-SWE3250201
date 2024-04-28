@@ -49,18 +49,17 @@ public class UserController {
         User existingUser = userRepositry.findByUsername(user.getUsername());
         if (existingUser != null) {
             model.addAttribute("usernameExists", "Username already exists");
-            return new ModelAndView("register.html");
+            return new ModelAndView("register.html").addObject("user", user);
         }
 
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("passwordMismatch", "Passwords do not match");
-            return new ModelAndView("register.html");
+            bindingResult.rejectValue("password", "passwordMismatch", "Passwords do not match");
+            return new ModelAndView("register.html").addObject("user", user);
         }
-
-        String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
+        String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(encodedPassword);
         userRepositry.save(user);
-
         session.setAttribute("loginUser", user.getUsername());
         return new ModelAndView("redirect:/login");
     }
