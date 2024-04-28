@@ -1,28 +1,21 @@
 package com.project.project.controller;
-
-import java.util.List;
-
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-//import org.hibernate.mapping.List;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
-import com.project.project.repositories.productRepo;
-
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
-import com.project.project.model.products;
+
 
 @RestController
 
@@ -34,7 +27,7 @@ public class UserController {
     @GetMapping({ "", "/" })
     public ModelAndView getHomePage() {
         ModelAndView model = new ModelAndView("index.html");
-        
+
         return model;
     }
 
@@ -48,8 +41,8 @@ public class UserController {
 
     @PostMapping("/Register")
     public ModelAndView saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,
-            @RequestParam("confirmPassword") String confirmPassword, Model model) {
-        
+            @RequestParam("confirmPassword") String confirmPassword, Model model, HttpSession session) {
+
         User existingUser = userRepositry.findByUsername(user.getUsername());
         if (existingUser != null) {
             model.addAttribute("usernameExists", "Username already exists");
@@ -68,8 +61,9 @@ public class UserController {
         String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         user.setPassword(encodedPassword);
 
-        
         this.userRepositry.save(user);
+
+        session.setAttribute("loginUser", user.getUsername());
         return new ModelAndView("login.html");
     }
 
@@ -82,30 +76,26 @@ public class UserController {
     }
 
     @PostMapping("/User/Login")
-    public ModelAndView loginProcess(@RequestParam("username") String username,
-            @RequestParam("password") String password, Model model) {
+    public ModelAndView login(@RequestParam("username") String username,
+            @RequestParam("password") String password, Model model, HttpSession session) {
         User dbUser = this.userRepositry.findByUsername(username);
 
         if (username.isEmpty() || password.isEmpty()) {
-            model.addAttribute("error", "Username and password must not be empty.");
+            model.addAttribute("error", "please fill the username field and password does not leave them empty");
             return new ModelAndView("login.html");
         }
 
         if (dbUser != null) {
-
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
-
             if (isPasswordMatch) {
-
+                session.setAttribute("loginUser", dbUser.getUsername());
                 return new ModelAndView("index.html");
             } else {
-
-                model.addAttribute("error", "Invalid password.");
+                model.addAttribute("error", "Incorrect password");
                 return new ModelAndView("login.html");
             }
         } else {
-
-            model.addAttribute("error", "User does not exist.");
+            model.addAttribute("error", "username not found");
             return new ModelAndView("login.html");
         }
     }
@@ -116,22 +106,8 @@ public class UserController {
         return model;
     }
 
-    @Autowired
-    productRepo repo;
+   
 
-    @GetMapping("/menu")
-    public ModelAndView menu(Model model) {
-        ModelAndView mav = new ModelAndView("menu");
-        List<products> productList = repo.findAll();
-        model.addAttribute("products", productList);
-
-        return mav;
-    }
-
-    @GetMapping("/cart")
-    public ModelAndView cart() {
-        ModelAndView model = new ModelAndView("cart.html");
-        return model;
-    }
+   
 
 }
