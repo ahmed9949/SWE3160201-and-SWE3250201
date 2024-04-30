@@ -28,8 +28,6 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
 
-    private transient String confirmPassword;
-
     public User() {
     }
 
@@ -38,15 +36,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.confirmPassword = confirmPassword;
-    }
-
-    public String getConfirmPassword() {
-        return this.confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public int getId() {
