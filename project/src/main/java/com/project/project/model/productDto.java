@@ -1,6 +1,5 @@
 package com.project.project.model;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.*;

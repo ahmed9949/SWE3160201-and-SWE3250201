@@ -139,20 +139,17 @@
                   <td th:text="${product.price + '$'}"></td>
                   <td>
                     <img
-                      th:src="@{'/images/'+${product.imageFileName}}"
+                      th:src="@{'/uploads/'+${product.id}+'/'+${product.imageFileName}}"
                       th:alt="${product.imageFileName}"
                       width="100"
                     />
                   </td>
                   <td style="white-space: nowrap">
-                    <a
-                      href=""
-                      th:href="@{/admin/products/editProduct(id=${product.id})}"
-                      >edit</a
-                    >
+                    <a th:href="@{/admin/products/editProduct/{id}(id=${product.id})}">edit</a>
+
                     <a
                       href="#"
-                      th:href="@{/admin/products/delete(id=${product.id})}"
+                      th:href="@{/admin/products/delete/{id}(id=${product.id})}"
                       onclick="return confirm('Are you sure you want to delete?');"
                       >Delete</a
                     >
