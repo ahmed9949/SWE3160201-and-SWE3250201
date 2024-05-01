@@ -1,6 +1,5 @@
 package com.project.project.model;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.*;
@@ -17,14 +16,11 @@ public class productDto {
     @Min(0)
     private double price;
     @Min(0)
-
     private double companiesDiscount;
     @Min(0)
-
     private double regularDiscount;
     @Min(0)
-
-     private int quantity; 
+    private int quantity; 
 
 
 @Size(min=10,message = "the description shoud be at least 10 chars")

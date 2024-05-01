@@ -1,7 +1,7 @@
 package com.project.project.model;
 
- 
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType; // Fix this import
@@ -14,14 +14,23 @@ public class products { // Java class names should start with an uppercase lette
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Fix the typo in GenerationType
     private int id;
+    @NotEmpty(message = "this name is required")
     private String name;
+    @NotEmpty(message = "this field is required")
     private String brand;
+    @NotEmpty(message = "this field is required")
     private String category;
+    @NotNull (message = "this field is required")
     private double price;
+    @NotNull (message = "this field is required")
     private double companiesDiscount;
+    @NotNull (message = "this field is required")
     private double regularDiscount;
-    @Column(columnDefinition = "TEXT")
+
+     
+    @NotEmpty(message = "this field is required")
     private String description;
+    @NotNull (message = "this field is required")
      private int quantity; 
     private String imageFileName;
     public int getId() {
