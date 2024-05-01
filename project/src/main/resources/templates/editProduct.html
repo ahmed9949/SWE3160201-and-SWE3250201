@@ -109,7 +109,7 @@
               <i class="bx bx-filter"></i>
               <a href="/admin/products">cancel</a>
             </div>
-            <form method="post" th:object="${product}" enctype="multipart/form-data">
+            <form method="post" th:object="${product}" th:action="@{/admin/products/editProduct/{id}(id=${product.id})}" enctype="multipart/form-data">
                 
 
                 <div class="row mb-4">
@@ -181,8 +181,8 @@
               <div class="row mb-4">
                   <label class="col-sm-4 col-form-label">Image</label>
                   <div class="col-sm-8">
-                      <input type="file" class="form-control-file" th:field="${product.imageFileName}" accept="image/*">
-                      <p th:if="${#fields.hasErrors('imageFileName')}" th:errorclass="text-danger"
+                    <input type="file" class="form-control-file" name="image" accept="image/*">
+                    <p th:if="${#fields.hasErrors('imageFileName')}" th:errorclass="text-danger"
                           th:errors="${product.imageFileName}"></p>
                   </div>
                     <img

@@ -1,8 +1,7 @@
 package com.project.project.controller;
 
 
-import org.apache.commons.io.FilenameUtils;
-
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +15,7 @@ import com.project.project.repositories.productRepo;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.util.StringUtils;
  
@@ -46,13 +46,25 @@ public class productcontrollerv1 {
     public ModelAndView saveProduct(@Valid @ModelAttribute("products") products products, BindingResult result,
                                     @RequestParam("image") MultipartFile multipartFile) {
         if (result.hasErrors()) {
-            ModelAndView mav = new ModelAndView("addproduct.html"); 
+            ModelAndView mav = new ModelAndView("addproduct.html");
             mav.addObject("bindingResult", result);
-            return mav; 
+            return mav;
         }
     
         try {
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            String originalFilename = multipartFile.getOriginalFilename();
+            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+            List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "gif");
+    
+            // Check if the file extension is in the list of allowed extensions
+            if (!allowedExtensions.contains(fileExtension.toLowerCase())) {
+                result.rejectValue("image", "file.invalid", "File must be a JPG, JPEG, PNG, or GIF");
+                ModelAndView mav = new ModelAndView("addproduct.html");
+                mav.addObject("bindingResult", result);
+                return mav;
+            }
+    
+            String fileName = StringUtils.cleanPath(originalFilename);
             products.setImageFileName(fileName);
             products savedProduct = this.productRepo.save(products);
     
@@ -81,7 +93,7 @@ public ModelAndView showEditForm(@PathVariable("id") int Id) {
 }
 @PostMapping("/editProduct/{id}")
 public ModelAndView editProduct(@PathVariable("id") int id, @Valid @ModelAttribute("products") products products, BindingResult result,
-                                @RequestParam(value = "imageFileName", required = false) MultipartFile multipartFile) throws IOException {
+                                @RequestParam(value = "image", required = false) MultipartFile multipartFile) throws IOException {
     if (result.hasErrors()) {
         System.out.println(result.getErrorCount());
         System.out.println(result.toString());
@@ -93,6 +105,12 @@ public ModelAndView editProduct(@PathVariable("id") int id, @Valid @ModelAttribu
     }
 
     products existingProduct = this.productRepo.findById(id);
+
+      // Delete the old photo if it exists
+      if (existingProduct.getImageFileName() != null) {
+        FileUploadUtil.deleteFile("project/src/main/resources/static/uploads/" + existingProduct.getId(), existingProduct.getImageFileName());
+    }
+
     existingProduct.setName(products.getName());
     existingProduct.setBrand(products.getBrand());  
     existingProduct.setCategory(products.getCategory());

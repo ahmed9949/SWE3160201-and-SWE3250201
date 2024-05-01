@@ -219,22 +219,11 @@
                     class="form-control-file"
                     required
                    />
-                  <span id="fileError" style="color: red"></span>
-                  <div class="image-preview" id="imagePreview">
-                    <img
-                      src=""
-                      alt="Image Preview"
-                      class="preview-image"
-                      style="display: none"
-                    />
-                    <span id="previewText" class="preview-text"
-                      >No image selected</span
-                    >
-                  </div>
-                  <div class="image-uploads">
-                    <img src="/img/icons/upload.svg" alt="img" />
-                    <h4>Drag and drop a file to upload</h4>
-                  </div>
+                   <p
+                   th:if="${#fields.hasErrors('imageFileName')} "
+                   th:errorclass="text-danger"
+                   th:errors="*{imageFileName}"
+                 ></p>
                 </div>
               </div>
               <div>
