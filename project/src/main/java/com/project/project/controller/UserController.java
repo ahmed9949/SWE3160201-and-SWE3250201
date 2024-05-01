@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
+import jakarta.servlet.http.HttpSession;
 
 import jakarta.validation.Valid;
 
@@ -82,8 +83,9 @@ public class UserController {
 
     @PostMapping("/User/Login")
     public ModelAndView loginProcess(@RequestParam("username") String username,
-            @RequestParam("password") String password, Model model) {
+            @RequestParam("password") String password, Model model ,HttpSession session) {
         User dbUser = this.userRepositry.findByUsername(username);
+            ModelAndView mav=new ModelAndView();
 
         if (username.isEmpty() || password.isEmpty()) {
             model.addAttribute("error", "Username and password must not be empty.");
@@ -95,8 +97,11 @@ public class UserController {
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
 
             if (isPasswordMatch) {
-
-                return new ModelAndView("index.html");
+                session.setAttribute("id", dbUser.getId());
+                session.setAttribute("username",dbUser.getUsername());
+                mav.addObject("username",dbUser.getUsername());
+                mav.setViewName("index.html");
+                return mav;
             } else {
 
                 model.addAttribute("error", "Invalid password.");
