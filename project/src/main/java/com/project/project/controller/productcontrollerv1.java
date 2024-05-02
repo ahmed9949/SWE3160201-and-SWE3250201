@@ -69,7 +69,7 @@ public class productcontrollerv1 {
             products savedProduct = this.productRepo.save(products);
     
             // Ensure the 'uploads' directory exists
-            String uploadDir = "project/src/main/resources/static/uploads/" + savedProduct.getId();
+            String uploadDir = "project/src/main/resources/static/uploads/" + savedProduct.getProduct_id();
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         } catch (IOException ex) {
             // Handle file saving exception
@@ -108,7 +108,7 @@ public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @Mode
 
       // Delete the old photo if it exists
       if (existingProduct.getImageFileName() != null) {
-        FileUploadUtil.deleteFile("project/src/main/resources/static/uploads/" + existingProduct.getId(), existingProduct.getImageFileName());
+        FileUploadUtil.deleteFile("project/src/main/resources/static/uploads/" + existingProduct.getProduct_id(), existingProduct.getImageFileName());
     }
 
     existingProduct.setName(products.getName());
@@ -124,7 +124,7 @@ public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @Mode
         System.out.println("reached the file part ");
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         existingProduct.setImageFileName(fileName);
-        String uploadDir = "project/src/main/resources/static/uploads/" + existingProduct.getId();
+        String uploadDir = "project/src/main/resources/static/uploads/" + existingProduct.getProduct_id();
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         System.out.println("saved the new photo ");
     } else {
@@ -137,7 +137,7 @@ public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @Mode
 }
 
 private void keepExistingPhoto(products product) {
-    products existingProduct = this.productRepo.findById(product.getId());
+    products existingProduct = this.productRepo.findById(product.getProduct_id());
     product.setImageFileName(existingProduct.getImageFileName());
 }
 
@@ -148,7 +148,7 @@ private void keepExistingPhoto(products product) {
 @Transactional
 public RedirectView deleteProduct(@PathVariable("product_id") int id) {
     products product = this.productRepo.findById(id);
-    String uploadDir = "project/src/main/resources/static/uploads/" + product.getId();
+    String uploadDir = "project/src/main/resources/static/uploads/" + product.getProduct_id();
     FileUploadUtil.deleteFile(uploadDir, product.getImageFileName());
     this.productRepo.deleteById(id);
     return new RedirectView("/admin/products"); // Redirect to the user list page after deleting
@@ -158,7 +158,7 @@ public RedirectView deleteProduct(@PathVariable("product_id") int id) {
 
 //product details
 @GetMapping("/product-details/{product_id}")
-public ModelAndView getproduct(@PathVariable("id")int ID) {
+public ModelAndView getproduct(@PathVariable("product_id")int ID) {
     products product = this.productRepo.findById(ID);
     ModelAndView mav =new ModelAndView("Product-details.html");
     mav.addObject("product", product);

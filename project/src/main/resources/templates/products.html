@@ -145,14 +145,14 @@
                     />
                   </td>
                   <td style="white-space: nowrap">
-                    <a th:href="@{/admin/products/editProduct/{product_id}(product_id=${product.`})}">edit</a>
+                    <a th:href="@{/admin/products/editProduct/{product_id}(product_id=${product.product_id})}">edit</a>
 
-                    <a
-                      href="#"
-                      th:href="@{/admin/products/delete/{product_id}(product_id=${product.product_id})}"
-                      onclick="return confirm('Are you sure you want to delete?');"
-                      >Delete</a
-                    >
+                    <a href="#" onclick="return confirm('Are you sure you want to delete?');"
+                    th:remove="all"
+                    th:href="@{/admin/products/delete/{product_id}(product_id=${product.product_id})}">
+                    Delete
+                </a>
+                
                   </td>
                 </tr>
               </tbody>

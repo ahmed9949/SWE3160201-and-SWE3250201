@@ -14,7 +14,9 @@ import jakarta.persistence.Table;
 public class products { // Java class names should start with an uppercase letter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Fix the typo in GenerationType
-    private int id;
+    private int product_id;
+
+
     @NotEmpty(message = "this name is required")
     private String name;
     @NotEmpty(message = "this field is required")
@@ -28,10 +30,7 @@ public class products { // Java class names should start with an uppercase lette
     @NotNull (message = "this field is required")
     private double regularDiscount;
 
-    @ManyToOne
-    private Category categorys;
-     
-
+    
 
 
     @NotEmpty(message = "this field is required")
@@ -39,12 +38,7 @@ public class products { // Java class names should start with an uppercase lette
     @NotNull (message = "this field is required")
      private int quantity; 
     private String imageFileName;
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+  
     public String getName() {
         return name;
     }
@@ -98,12 +92,12 @@ public class products { // Java class names should start with an uppercase lette
     }
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    } 
+    public int getProduct_id() {
+        return product_id;
     }
-    public Category getCategorys() {
-        return categorys;
-    }
-    public void setCategorys(Category categorys) {
-        this.categorys = categorys;
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
     
     // Getter and setter methods...
