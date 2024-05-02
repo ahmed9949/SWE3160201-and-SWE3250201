@@ -89,8 +89,23 @@ hr {
     transition: background-color 0.3s;
 }
 
+.Add {
+    background-color: #24e306;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
 .remove:hover {
     background-color: #e74c3c;
+}
+
+.Add:hover {
+    background-color: #1dcd02;
 }
 
 /* FontAwesome icons */
