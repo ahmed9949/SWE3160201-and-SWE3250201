@@ -83,16 +83,16 @@ public class productcontrollerv1 {
     
  
     
-@GetMapping("/editProduct/{id}")
-public ModelAndView showEditForm(@PathVariable("id") int Id) {
+@GetMapping("/editProduct/{product_id}")
+public ModelAndView showEditForm(@PathVariable("product_id") int Id) {
     products product = this.productRepo.findById(Id);
     
            ModelAndView mav = new ModelAndView("editProduct.html");
     mav.addObject("product", product); 
     return mav; 
 }
-@PostMapping("/editProduct/{id}")
-public ModelAndView editProduct(@PathVariable("id") int id, @Valid @ModelAttribute("products") products products, BindingResult result,
+@PostMapping("/editProduct/{product_id}")
+public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @ModelAttribute("products") products products, BindingResult result,
                                 @RequestParam(value = "image", required = false) MultipartFile multipartFile) throws IOException {
     if (result.hasErrors()) {
         System.out.println(result.getErrorCount());
@@ -144,9 +144,9 @@ private void keepExistingPhoto(products product) {
 
 
 //delete
-@GetMapping("/delete/{id}")
+@GetMapping("/delete/{product_id}")
 @Transactional
-public RedirectView deleteProduct(@PathVariable("id") int id) {
+public RedirectView deleteProduct(@PathVariable("product_id") int id) {
     products product = this.productRepo.findById(id);
     String uploadDir = "project/src/main/resources/static/uploads/" + product.getId();
     FileUploadUtil.deleteFile(uploadDir, product.getImageFileName());
@@ -157,7 +157,7 @@ public RedirectView deleteProduct(@PathVariable("id") int id) {
 
 
 //product details
-@GetMapping("/product-details/{id}")
+@GetMapping("/product-details/{product_id}")
 public ModelAndView getproduct(@PathVariable("id")int ID) {
     products product = this.productRepo.findById(ID);
     ModelAndView mav =new ModelAndView("Product-details.html");

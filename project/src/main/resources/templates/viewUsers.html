@@ -103,13 +103,13 @@
               <!-- Example Row -->
 
               <tr th:each="user: ${users}">
-                <td th:text="${user.id}"></td>
+                <td th:text="${user.User_id}"></td>
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.password}"></td>
                 <td>
                   <form
-                    th:action="@{'/admin/deleteUser/' + ${user.id}}"
+                    th:action="@{'/admin/deleteUser/' + ${user.User_id}}"
                     method="post"
                   >
                     <button type="submit" class="btn-action remove">
@@ -117,7 +117,7 @@
                     </button>
                   </form>
                   <a
-                    th:href="@{'/admin/updateUser/' + ${user.id}}"
+                    th:href="@{'/admin/updateUser/' + ${user.User_id}}"
                     class="btn-action update"
                     >Update</a
                   >

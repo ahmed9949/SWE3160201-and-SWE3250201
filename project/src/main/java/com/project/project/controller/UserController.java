@@ -97,7 +97,7 @@ public class UserController {
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
 
             if (isPasswordMatch) {
-                session.setAttribute("id", dbUser.getId());
+                session.setAttribute("User_id", dbUser.getUser_id());
                 session.setAttribute("username",dbUser.getUsername());
                 mav.addObject("username",dbUser.getUsername());
                 mav.setViewName("index.html");

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType; // Fix this import
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,7 +28,12 @@ public class products { // Java class names should start with an uppercase lette
     @NotNull (message = "this field is required")
     private double regularDiscount;
 
+    @ManyToOne
+    private Category categorys;
      
+
+
+
     @NotEmpty(message = "this field is required")
     private String description;
     @NotNull (message = "this field is required")
@@ -92,6 +98,12 @@ public class products { // Java class names should start with an uppercase lette
     }
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+    public Category getCategorys() {
+        return categorys;
+    }
+    public void setCategorys(Category categorys) {
+        this.categorys = categorys;
     }
     
     // Getter and setter methods...

@@ -45,8 +45,8 @@ public class adminController {
 
     }
 
-    @PostMapping("/deleteUser/{id}")
-    public ModelAndView deleteUser(@PathVariable("id") int id, HttpSession session) {
+    @PostMapping("/deleteUser/{User_id}")
+    public ModelAndView deleteUser(@PathVariable("User_id") int id, HttpSession session) {
         if (session.getAttribute("loggedInUser") == null) {
             return new ModelAndView("redirect:/login");
         }
@@ -55,8 +55,8 @@ public class adminController {
         return new ModelAndView("redirect:/admin/viewUsers");
     }
 
-    @GetMapping("/updateUser/{id}")
-    public ModelAndView showUpdateUserForm(@PathVariable("id") int id, HttpSession session) {
+    @GetMapping("/updateUser/{User_id}")
+    public ModelAndView showUpdateUserForm(@PathVariable("User_id") int id, HttpSession session) {
 
         if (session.getAttribute("loggedInUser") == null) {
             return new ModelAndView("redirect:/login");
@@ -66,8 +66,8 @@ public class adminController {
         return model;
     }
 
-    @PostMapping("/updateUser/{id}")
-    public ModelAndView updateUser(@PathVariable("id") int id, User updatedUser,
+    @PostMapping("/updateUser/{User_id}")
+    public ModelAndView updateUser(@PathVariable("User_id") int id, User updatedUser,
             RedirectAttributes redirectAttributes, HttpSession session) {
         if (session.getAttribute("loggedInUser") == null) {
             return new ModelAndView("redirect:/login");

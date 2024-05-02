@@ -1,5 +1,5 @@
 package com.project.project.repositories;
-import org.springframework.data.jpa.repository.JpaRepository;
+ import org.springframework.data.jpa.repository.JpaRepository;
  import org.springframework.stereotype.Repository;
  
 import com.project.project.model.products;
@@ -11,4 +11,4 @@ public interface productRepo extends JpaRepository< products, Integer> {
     products findById(int id);
     products getProductById(Long id);
 
-} 
+ } 

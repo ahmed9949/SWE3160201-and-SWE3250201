@@ -17,7 +17,7 @@
         <h2>Update User</h2>
       </div>
       <form
-        th:action="@{'/admin/updateUser/' + ${user.id}}"
+        th:action="@{'/admin/updateUser/' + ${user.User_id}}"
         th:object="${user}"
         method="post"
         class="form"

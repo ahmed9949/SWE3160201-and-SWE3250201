@@ -107,7 +107,6 @@
             <div class="head">
               <a href="/admin/products">cancel</a>
             </div>
-<<<<<<< Updated upstream
             <form
               method="post"
               th:object="${products}"
@@ -125,14 +124,6 @@
                   ></p>
                 </div>
               </div>
-=======
-            <form method="post" th:object="${productDto}" enctype="multipart/form-data">
-              <div class="form-group">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" id="name" th:field="*{name}" >
-                <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-            </div>
->>>>>>> Stashed changes
               <div>
                 <label>brand </label>
                 <div>
