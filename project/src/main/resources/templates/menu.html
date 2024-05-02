@@ -18,7 +18,7 @@
     <div class="menu_items" th:each="product : ${products}">
         <img
                 height="100%"
-                th:src="@{'/images/'+${product.imageFileName}}"
+                th:src="@{'/uploads/'+${product.product_id}+'/'+${product.imageFileName}}"
                 th:alt="${product.imageFileName}"
                 width="100%"
                 class="menu_img"
