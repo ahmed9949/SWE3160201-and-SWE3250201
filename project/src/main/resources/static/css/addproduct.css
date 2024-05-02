@@ -1,87 +1,113 @@
-/* FORM STYLING */
-.form-section {
-    padding: 24px;
-    background: var(--light);
-    border-radius: 20px;
-    margin-top: 24px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.form-section h3 {
-    margin-bottom: 24px;
-    color: var(--dark);
-    font-weight: 600;
-}
-
-.form-section form {
-    display: grid;
-    grid-gap: 20px;
-}
-
-.form-section label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--dark);
-    font-weight: 500;
-}
-
-.form-section input[type="text"],
-.form-section input[type="number"],
-.form-section input[type="file"],
-.form-section select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--grey);
-    color: var(--dark);
-    font-family: var(--poppins);
-    background-color: var(--light);
-    transition: border-color 0.3s ease-in-out;
-}
-
-.form-section input[type="text"]:focus,
-.form-section input[type="number"]:focus,
-.form-section input[type="file"]:focus,
-.form-section select:focus {
-    outline: none;
-    border-color: var(--blue);
-}
-
-.form-section .text-danger {
-    color: var(--red);
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-.form-section .form-control-file {
-    border: none;
-    padding-left: 0;
-}
-
-.form-section button[type="submit"] {
-    width: auto;
+body {
+    background-color: #f2f2f2; /* Set the background color to light grey */
+    background-image: url("p6.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Courier New', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  #content {
+    padding: 20px;
+  }
+  
+  #content nav {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
-    background-color: var(--blue);
-    color: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  #content .head-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  #content .form-data {
+    margin: 0 auto;
+    max-width: 700px; /* Increased container width */
+  }
+  
+  #content .order {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0.75;
+  }
+  
+  #content form input,
+  #content form select {
+    width: calc(100% - 10px);
+    height: 40px;
+    padding: 5px;
     border: none;
-    border-radius: 20px;
+    outline: none;
+    margin-top: 10px;
+    background-color: #f9f9f9; /* Set the background color of input fields */
+    color: #342E37; /* Adjust text color */
+    border-radius: 12px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  
+  #content form input::placeholder,
+  #content form select {
+    color: #aaaaaa; /* Adjust placeholder color */
+  }
+  
+  #content form button[type="submit"] {
     cursor: pointer;
-    font-weight: 500;
-    text-transform: uppercase;
+    font-size: 20px;
+    margin-top: 20px;
+    width: 100%;
+    height: 40px;
+    background-color: #3C91E6; /* Set button background color to white */
+    color: white; /* Adjust button text color */
+    border-radius: 12px;
     transition: background-color 0.3s ease;
-}
-
-.form-section button[type="submit"]:hover {
-    background-color: var(--dark-blue);
-}
-
-/* Adjustments for smaller screens */
-@media screen and (max-width: 768px) {
-    .form-section {
-        padding: 16px;
-    }
-
-    .form-section form {
-        grid-gap: 16px;
-    }
-}
+  }
+  
+  #content form button[type="submit"]:hover {
+    background-color: #2676C3; /* Darker background color on hover */
+    color: #f9f9f9; /* Adjust text color on hover */
+  }
+  
+  #content form label {
+    display: block;
+    margin-top: 20px;
+    color: #000000;
+    font-weight: bold;
+  }
+  
+  #content form .row {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  #content form .row .col-sm-4 {
+    flex: 0 0 40%;
+    max-width: 40%;
+    margin-right: 10px;
+  }
+  
+  #content form .row .col-sm-8 {
+    flex: 1;
+    max-width: calc(60% - 10px);
+  }
+  
+  #content form .row.mb-4 {
+    margin-bottom: 20px;
+  }
+  
+  #content form .image-upload input[type="file"] {
+    width: calc(100% - 10px);
+  }
+  
+  #content form .image-upload p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
