@@ -35,9 +35,11 @@ private productRepo productRepo;
 cartservic cartservic;
 
 @GetMapping("/cart")
-public ModelAndView cart() {
-    ModelAndView model = new ModelAndView("cart.html");
-    return model;
+public ModelAndView getAll() {
+    ModelAndView mav =new ModelAndView("cart.html");
+    List<Cart>cart=this.cartservic.getAllItems();
+    mav.addObject("Cart",cart);
+    return mav;
 }
 
 

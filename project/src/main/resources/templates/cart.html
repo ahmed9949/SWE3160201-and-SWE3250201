@@ -17,24 +17,26 @@
     <div th:replace="header :: header"></div>
     <main>
 
-        <h1>1 Items</h1>
-        <hr>
-
+         <hr>
+ 
         <div class="card">
-            <div class="images">
-             </div>
-
-            <div class="caption">
-                
-
-                <p class="product_name">product name </p>
-
-                <p class="price"><b>product price</b></p>
-                 <p class="price"><b> quantity</b></p>
-
-                 <button class="remove">Remove From Cart</button>
+            <tr th:each="item : ${Cart}">												
+                <td>
+                    <div class="card">
+                        <div class="images">
+                            <img th:src="@{'/uploads/'+${item.product.id}+'/'+${item.product.imageFileName}}"
+                            />
+                        </div>
+                        <div class="caption">
+                            <p class="product_name" th:text="${item.product.name}"> </p>
+                            <p class="price"  th:text="${item.product.price}"><b>product price</b></p>
+                        </div>
+                    </div>
+                </td>    <button class="remove">Remove From Cart</button>
 
                 <button class="Add">Add Item</button>
+            </tr>
+             
 
             </div>
         </div>

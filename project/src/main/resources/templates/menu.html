@@ -34,39 +34,7 @@
             >
               view product details
             </a>
-            <a href="#" onclick="addToCart(event, ${product.id})" style="color: red">Add to Cart</a>
-
-            <script>
-                function addToCart(event, productId) {
-                    event.preventDefault(); // Prevent the default anchor tag behavior
-            
-                    fetch('/admin/products/addtocart/' + productId, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            // Add any additional headers if needed
-                        },
-                        body: JSON.stringify({
-                            // You can include any additional data in the request body
-                            productId: productId
-                        })
-                    })
-                    .then(response => {
-                        // Handle the response as needed
-                        if (response.ok) {
-                            // Item successfully added to the cart
-                            console.log('Item added to cart successfully');
-                        } else {
-                            // Handle error response
-                            console.error('Failed to add item to cart');
-                        }
-                    })
-                    .catch(error => {
-                        // Handle network errors
-                        console.error('Network error:', error);
-                    });
-                }
-            </script>
+       
             
             <br />
             <span class="prices" th:text="${product.price + '$'}"> </span>
