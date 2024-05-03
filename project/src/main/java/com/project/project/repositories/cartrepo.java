@@ -9,6 +9,12 @@ import com.project.project.model.Cart;
 import com.project.project.model.User;
 
 @Repository
-public interface cartrepo extends JpaRepository<Cart, Integer> {
-    public List<Cart>  findByUser(User user);
+public interface cartRepo extends JpaRepository<Cart, Integer> {
+ 
+   
+    Cart findByUserIdAndProductId(int userId, int productId);
+
+    void deleteByUserIdAndProductId(int userId, int productId);
+
+    List<Cart> findByUserId(int userId);
 }

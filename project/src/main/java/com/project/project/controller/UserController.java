@@ -97,7 +97,7 @@ public class UserController {
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
 
             if (isPasswordMatch) {
-                session.setAttribute("User_id", dbUser.getUser_id());
+                session.setAttribute("User_id", dbUser.getId());
                 session.setAttribute("username",dbUser.getUsername());
                 mav.addObject("username",dbUser.getUsername());
                 mav.setViewName("index.html");
@@ -132,10 +132,6 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("/cart")
-    public ModelAndView cart() {
-        ModelAndView model = new ModelAndView("cart.html");
-        return model;
-    }
+ 
 
 }

@@ -1,52 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Products - Beauty Products</title>
-    <link th:href="@{/css/menu.css}" rel="stylesheet"/>
+    <link th:href="@{/css/menu.css}" rel="stylesheet" />
 
-    <link th:href="@{/css/header.css}" rel="stylesheet"/>
-    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
     <script th:src="@{js/products.js}"></script>
-</head>
+  </head>
 
-<body>
-<div th:replace="header :: header"></div>
+  <body>
+    <div th:replace="header :: header"></div>
 
-<div id="menubody" onclick="favorites(event.target)">
-    <div class="menu_items" th:each="product : ${products}">
+    <div id="menubody" onclick="favorites(event.target)">
+      <div class="menu_items" th:each="product : ${products}">
         <img
-                height="100%"
-                th:src="@{'/uploads/'+${product.product_id}+'/'+${product.imageFileName}}"
-                th:alt="${product.imageFileName}"
-                width="100%"
-                class="menu_img"
+          height="100%"
+          th:src="@{'/uploads/'+${product.id}+'/'+${product.imageFileName}}"
+          th:alt="${product.imageFileName}"
+          width="100%"
+          class="menu_img"
         />
-        <div class="descr_and_add">
-            <img
-                    src="user/assets/img/favourite.png"
-                    class="favrs"
-                    alt=""
-                    title="remove from favourite"
-            />
-            <img
-                    src="user/assets/img/love.png"
-                    class="favs"
-                    alt=""
-                    title="add to favourite"
-            />
-            <img src="user/assets/img/add.png" alt="" class="icons"/>
-            <div class="description">
-                <span class="names" th:text="${product.name}"> </span>
-                <br/>
-                <p class="ingred" th:text="${product.description + '$'}"></p>
-                <span class="prices" th:text="${product.price + '$'}"> </span>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div th:replace="footer :: footer"></div>
-</body>
+        <div class="descr_and_add">
+          <div class="description">
+            <span class="names" th:text="${product.name}"> </span>
+            <a
+              style="color: red"
+              href="#"
+              th:href="@{/admin/products/product-details/{id}(id=${product.id})}"
+            >
+              view product details
+            </a>
+            <a href="#" onclick="addToCart(event, ${product.id})" style="color: red">Add to Cart</a>
+
+            <script>
+                function addToCart(event, productId) {
+                    event.preventDefault(); // Prevent the default anchor tag behavior
+            
+                    fetch('/admin/products/addtocart/' + productId, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Add any additional headers if needed
+                        },
+                        body: JSON.stringify({
+                            // You can include any additional data in the request body
+                            productId: productId
+                        })
+                    })
+                    .then(response => {
+                        // Handle the response as needed
+                        if (response.ok) {
+                            // Item successfully added to the cart
+                            console.log('Item added to cart successfully');
+                        } else {
+                            // Handle error response
+                            console.error('Failed to add item to cart');
+                        }
+                    })
+                    .catch(error => {
+                        // Handle network errors
+                        console.error('Network error:', error);
+                    });
+                }
+            </script>
+            
+            <br />
+            <span class="prices" th:text="${product.price + '$'}"> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div th:replace="footer :: footer"></div>
+  </body>
 </html>

@@ -9,9 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.project.project.model.products;
+import com.project.project.model.*;
+import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
+import com.project.project.services.cartservic;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.io.IOException;
@@ -24,8 +27,16 @@ import org.springframework.util.StringUtils;
 public class productcontrollerv1 {
 
     @Autowired
-    private productRepo productRepo;
- 
+    private productRepo repo;
+@Autowired
+private UserRepositry userrepo;
+
+@Autowired 
+private productRepo productRepo;
+@Autowired
+cartservic cartservic;
+
+   
     @GetMapping({"","/"})
     public ModelAndView getAll() {
         ModelAndView mav =new ModelAndView("products.html");
@@ -69,7 +80,7 @@ public class productcontrollerv1 {
             products savedProduct = this.productRepo.save(products);
     
             // Ensure the 'uploads' directory exists
-            String uploadDir = "project/src/main/resources/static/uploads/" + savedProduct.getProduct_id();
+            String uploadDir = "project/src/main/resources/static/uploads/" + savedProduct.getId();
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         } catch (IOException ex) {
             // Handle file saving exception
@@ -83,16 +94,16 @@ public class productcontrollerv1 {
     
  
     
-@GetMapping("/editProduct/{product_id}")
-public ModelAndView showEditForm(@PathVariable("product_id") int Id) {
+@GetMapping("/editProduct/{id}")
+public ModelAndView showEditForm(@PathVariable("id") int Id) {
     products product = this.productRepo.findById(Id);
     
            ModelAndView mav = new ModelAndView("editProduct.html");
     mav.addObject("product", product); 
     return mav; 
 }
-@PostMapping("/editProduct/{product_id}")
-public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @ModelAttribute("products") products products, BindingResult result,
+@PostMapping("/editProduct/{id}")
+public ModelAndView editProduct(@PathVariable("id") int id, @Valid @ModelAttribute("products") products products, BindingResult result,
                                 @RequestParam(value = "image", required = false) MultipartFile multipartFile) throws IOException {
     if (result.hasErrors()) {
         System.out.println(result.getErrorCount());
@@ -108,7 +119,7 @@ public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @Mode
 
       // Delete the old photo if it exists
       if (existingProduct.getImageFileName() != null) {
-        FileUploadUtil.deleteFile("project/src/main/resources/static/uploads/" + existingProduct.getProduct_id(), existingProduct.getImageFileName());
+        FileUploadUtil.deleteFile("project/src/main/resources/static/uploads/" + existingProduct.getId(), existingProduct.getImageFileName());
     }
 
     existingProduct.setName(products.getName());
@@ -124,7 +135,7 @@ public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @Mode
         System.out.println("reached the file part ");
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         existingProduct.setImageFileName(fileName);
-        String uploadDir = "project/src/main/resources/static/uploads/" + existingProduct.getProduct_id();
+        String uploadDir = "project/src/main/resources/static/uploads/" + existingProduct.getId();
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         System.out.println("saved the new photo ");
     } else {
@@ -137,18 +148,18 @@ public ModelAndView editProduct(@PathVariable("product_id") int id, @Valid @Mode
 }
 
 private void keepExistingPhoto(products product) {
-    products existingProduct = this.productRepo.findById(product.getProduct_id());
+    products existingProduct = this.productRepo.findById(product.getId());
     product.setImageFileName(existingProduct.getImageFileName());
 }
 
 
 
 //delete
-@GetMapping("/delete/{product_id}")
+@GetMapping("/delete/{id}")
 @Transactional
-public RedirectView deleteProduct(@PathVariable("product_id") int id) {
+public RedirectView deleteProduct(@PathVariable("id") int id) {
     products product = this.productRepo.findById(id);
-    String uploadDir = "project/src/main/resources/static/uploads/" + product.getProduct_id();
+    String uploadDir = "project/src/main/resources/static/uploads/" + product.getId();
     FileUploadUtil.deleteFile(uploadDir, product.getImageFileName());
     this.productRepo.deleteById(id);
     return new RedirectView("/admin/products"); // Redirect to the user list page after deleting
@@ -157,13 +168,55 @@ public RedirectView deleteProduct(@PathVariable("product_id") int id) {
 
 
 //product details
-@GetMapping("/product-details/{product_id}")
-public ModelAndView getproduct(@PathVariable("product_id")int ID) {
+@GetMapping("/product-details/{id}")
+public ModelAndView getproduct(@PathVariable("id")int ID) {
     products product = this.productRepo.findById(ID);
-    ModelAndView mav =new ModelAndView("Product-details.html");
-    mav.addObject("product", product);
+    ModelAndView mav =new ModelAndView("product-details.html");
+    mav.addObject("products", product);
       return mav;
 }
 
    
+
+@PostMapping("/add-to-cart/{id}")
+public ModelAndView addItem(@Valid @ModelAttribute("Cart") Cart wishlistItem,
+                            BindingResult result,
+                            @RequestParam("id") int productId) {
+
+    if (result.hasErrors()) {
+        ModelAndView mav = new ModelAndView("cart.html");
+        // Add necessary model attributes if needed
+        mav.addObject("bindingResult", result);
+        return mav; // Return ModelAndView directly
+    }
+
+    // Retrieve User and Product objects from their respective repositories
+    // For demonstration purposes, let's assume the user is already authenticated
+    // You can retrieve the user information from the security context or any other source
+    Integer userId = 1; // Assuming user is already authenticated
+
+    // Check if the item already exists for the user
+    boolean itemExists = cartservic.doesItemExistForUser(userId, productId);
+    if (itemExists) {
+        // If the item already exists, you can handle this situation as needed
+        // For example, redirect back to the product details page with a message indicating that the item already exists
+        ModelAndView mav = new ModelAndView("redirect:/admin/products/product-details/" + productId);
+        return mav;
+    }
+
+    // Retrieve User and Product objects from their respective repositories
+    User user = userrepo.findById(userId)
+                        .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+    products product = productRepo.findById(productId);
+
+    // Set the User and Product for the Wishlist item
+    wishlistItem.setUser(user);
+    wishlistItem.setProduct(product);
+
+    // Add the item to the cart
+    Cart savedItem = cartservic.addItem(wishlistItem);
+    return new ModelAndView("redirect:/");
+}
+
+
 }
