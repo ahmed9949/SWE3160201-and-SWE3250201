@@ -1,156 +1,116 @@
-*{
+/* Resetting default margin and padding */
+body, html {
+    margin: 0;
+    padding: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body,html{
-    position: relative;
-    overflow: auto;
-   width: 100%;
-   height: 100%;
-}
-
-
-
+/* Hide scrollbar */
 #menulist::-webkit-scrollbar {
     display: none;
-  }
-#menulist li{
-    margin: 15px 5px;
- 
-}
-#menulist li a{
-    padding: 13px;
-  
-    text-decoration: none;
-    color: black;
-    text-align: center;
-    border-radius: 0px;
-
 }
 
-#menulist li a:hover{
-    cursor: pointer;
-border-bottom: 2px solid gray;
-   
-}
-img{
-    transition: 1s;
-}
-.menu_items{
-    overflow: hidden;
-    position: relative;
-    background-color:rgb(209, 209, 203);
-    width: 250px;
-    height: 250px;
-    margin: 10px 10px;
-    flex-basis: auto;
-    flex-grow: 0;
- flex-shrink: 1;
- flex: 0 1 auto;
- order: 0;
- 
-
-}
-#menubody{
-    left: 10px;
-    flex-flow:  wrap;
+/* Container for menu items */
+#menubody {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
-    align-content: normal;
-    align-items: center;
-    margin-bottom: 200px;
-    max-width: 98%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 -10px; /* Adjusting for margins */
 }
-.descr_and_add{
-  
+
+/* Menu items */
+.menu_items {
+    position: relative; /* Added position relative */
+    flex: 0 0 calc(33.33% - 20px); /* Adjust item width for three items per row */
+    margin: 10px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding subtle box shadow */
+    transition: box-shadow 0.3s ease;
+}
+
+.menu_items:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Enhancing box shadow on hover */
+}
+
+/* Image */
+.menu_img {
     width: 100%;
-    height: 100%;
-    top: 150%;
-    position: absolute;
-    background-color: rgba(253, 253, 253, 0.699);
-    transition: .8s;
+    height: 70%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
-.icons{
-    position: absolute;
-    top: 78%;
-    left: 82%;
-    border-radius: 15px;
-transition: .2s;
-width: 13%;
+
+.menu_items:hover .menu_img {
+    transform: scale(1.1); /* Scaling up image on hover */
 }
-.icons:hover{
+
+/* Description and Icons */
+.descr_and_add {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: transform 0.3s ease;
+    transform: translateY(100%); /* Initially hidden */
+}
+
+.menu_items:hover .descr_and_add {
+    transform: translateY(0); /* Show on hover */
+}
+
+/* Icons */
+.icons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
-    background-color: rgb(43, 202, 43);
+    opacity: 0.7;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
-.description{
-    left: 5%;
-    font-size: 12px;
-    width: 75%;
-    max-width: 75%;
-    color: black;
+
+.menu_items:hover .icons {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Favorite Icons */
+.favs, .favrs {
     position: absolute;
     bottom: 10px;
- 
-   height: 90%;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
-.names,.prices{
-    font-size: 15px;
-    font-family: sans-serif;
+
+.menu_items:hover .favs, .menu_items:hover .favrs {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Description Text */
+.description {
+    padding: 10px;
+}
+
+.names {
     font-weight: bold;
 }
-.names{
-    position: absolute;
-  top: 10px;
-}
-.prices{
-   position: absolute;
-bottom: 10px;
-}
-.menu_items:hover .descr_and_add{
-    top: 0px;
-    
- }
- .menu_items:hover img{ 
-    transform: scale(1.5);
- }
- .icons:hover{
-    cursor: pointer;
- }
 
- .favs{
-  
-    position: absolute;
-    width: 7%;
-    height: 7%;
-  left: 90%;
-  top: 2%;
-transition: .4s;
- }
- .favs:hover{
-    top: 3%;
-    left: 89%;
-    width: 8%;
-    height: 8%;
-    cursor: pointer;
+.prices {
+    color: #333;
+}
 
- }
- 
- .favrs{
+/* Hide favorite icon on hover */
+.menu_items:hover .favs, .menu_items:hover .favrs {
     display: none;
-    position: absolute;
-    width: 7%;
-    height: 7%;
-  left: 90%;
-  top: 2%;
-transition: .4s;
- }
- .favrs:hover{
-    top: 3%;
-    left: 89%;
-    width: 8%;
-    height: 8%;
-    cursor: pointer;
-
- }
+}

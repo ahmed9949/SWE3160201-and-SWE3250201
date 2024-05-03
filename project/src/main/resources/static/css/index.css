@@ -1,6 +1,6 @@
 /* Reset some default browser styles */
 * {
-    margin: 0;
+    margin: 2;
     padding: 0;
     box-sizing: border-box;
 }
@@ -62,20 +62,13 @@ body {
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
-    margin-top: 20px;
     font-weight: 600;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
 .btn:hover {
     background-color: #2A6B9D; /* Darker shade on hover */
-}
-
-/* About section */
-.about {
-    text-align: center;
-    background-color: #fff;
-    padding: 50px 0;
 }
 
 /* Product card */
@@ -130,22 +123,6 @@ body {
     color: #ff3366;
 }
 
-.product-card .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3C91E6; /* Updated button color */
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 600;
-    transition: background-color 0.3s;
-    margin-top: 15px;
-}
-
-.product-card .btn:hover {
-    background-color: #2A6B9D; /* Darker shade on hover */
-}
-
 /* Carousel */
 .carousel {
     display: flex;
@@ -171,7 +148,7 @@ body {
     transition: 200ms opacity ease-in-out;
     transition-delay: 200ms;
     align-items: center;
-    text-align: center;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -195,12 +172,12 @@ body {
     background: none;
     border: none;
     font-size: 3rem; /* Updated font size */
-    top: 50%;
-    transform: translateY(-50%);
     color: rgba(255, 255, 255, .5);
     cursor: pointer;
     border-radius: .25rem;
     padding: 0 .5rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .carousel-button:hover,
@@ -221,7 +198,28 @@ body {
     right: 1rem;
 }
 
+/* About section container */
+.about-container {
+    max-width: 800px;
+    margin: auto; /* Center the container horizontally */
+    padding: 50px; /* Add padding */
+}
+
+/* About section */
+.about {
+    background-color: #fff;
+    padding: 50px;
+    text-align: center;
+}
+
 /* Slideshow */
+.slideshow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -100px;
+}
+
 .slide-text p {
     position: relative;
     bottom: -350px;
@@ -229,14 +227,4 @@ body {
     font-weight: bold;
     text-align: center;
     font-size: 50px;
-}
-
-.feauteredproducts {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.slideshow {
-    margin-top: -100px;
 }
