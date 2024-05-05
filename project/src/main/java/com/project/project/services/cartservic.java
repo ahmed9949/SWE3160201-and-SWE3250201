@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.project.model.Cart;
-import com.project.project.repositories.cartRepo;
+import com.project.project.repositories.cartrepo;
 
 @Service
 public class cartservic {
     @Autowired
-    private cartRepo cartrepo; 
+    private cartrepo cartrepo; 
 
     @SuppressWarnings("null")
     public Cart addItem(Cart item){

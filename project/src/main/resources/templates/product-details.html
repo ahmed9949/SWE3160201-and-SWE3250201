@@ -45,8 +45,10 @@
             <span class="prices" th:text="${products.price + '$'}"> </span>
           </div>
           <p class="price" th:text="${products.name + ''}"><b>product price</b></p>
-          <li th:if="${session['User_id'] != null}">  <span th:text="${${session['User_id']}"></span></li>
-
+          <p th:if="${session['User_id'] != null}">
+            <span th:text="${session['User_id']}"></span>
+        </p>
+        
         
           <p class="price" th:text="${products.id + 'iddddd'}"><b>product id</b></p>
           <p class="price" th:text="${products.description + '$'}"><b>product price</b></p>

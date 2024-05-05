@@ -1,7 +1,9 @@
 package com.project.project.controller;
 
-
  
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -177,45 +179,59 @@ public ModelAndView getproduct(@PathVariable("id")int ID) {
 
    
 
+
 @PostMapping("/add-to-cart/{id}")
-public ModelAndView addItem(@Valid @ModelAttribute("Cart") Cart wishlistItem,
+public ModelAndView addItem(@Valid @ModelAttribute("Cart") Cart cartItem,
                             BindingResult result,
-                            @RequestParam("id") int productId) {
+                            @RequestParam("id") int productId,
+                            HttpSession session) {
 
     if (result.hasErrors()) {
-        ModelAndView mav = new ModelAndView("cart.html");
-        // Add necessary model attributes if needed
+        ModelAndView mav = new ModelAndView("redirect:/admin/products/product-details/" + productId);
         mav.addObject("bindingResult", result);
-        return mav; // Return ModelAndView directly
+        return mav;
     }
 
-    // Retrieve User and Product objects from their respective repositories
-    // For demonstration purposes, let's assume the user is already authenticated
-    // You can retrieve the user information from the security context or any other source
-    Integer userId = 1; // Assuming user is already authenticated
+    // Retrieve user session
+     if (session == null || session.getAttribute("User_id") == null) {
+        // User is not logged in or session expired
+        // Redirect to login page or handle accordingly
+        ModelAndView mav = new ModelAndView("redirect:/login"); // Example: redirect to login page
+        return mav;
+    }
+
+    // Get userId from session
+    int userId = (int) session.getAttribute("User_id");
+
+    // Retrieve Product object from repository
+    products product = productRepo.findById(productId);
+ 
+    // Check if product is available (quantity > 0)
+    if (product.getQuantity() <= 0) {
+        ModelAndView mav = new ModelAndView("redirect:/admin/products/product-details/" + productId);
+        mav.addObject("message", "Product is out of stock");
+        return mav;
+    }
 
     // Check if the item already exists for the user
     boolean itemExists = cartservic.doesItemExistForUser(userId, productId);
     if (itemExists) {
-        // If the item already exists, you can handle this situation as needed
-        // For example, redirect back to the product details page with a message indicating that the item already exists
         ModelAndView mav = new ModelAndView("redirect:/admin/products/product-details/" + productId);
+        mav.addObject("message", "Item already exists in the cart");
         return mav;
     }
 
-    // Retrieve User and Product objects from their respective repositories
-    User user = userrepo.findById(userId)
-                        .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-    products product = productRepo.findById(productId);
-
-    // Set the User and Product for the Wishlist item
-    wishlistItem.setUser(user);
-    wishlistItem.setProduct(product);
+    // Set the User and Product for the Cart item
+    User user = new User();
+    user.setId(userId);
+    cartItem.setUser(user);
+    cartItem.setProduct(product);
 
     // Add the item to the cart
-    Cart savedItem = cartservic.addItem(wishlistItem);
-    return new ModelAndView("redirect:/");
-}
+    Cart savedItem = cartservic.addItem(cartItem);
 
+    // Redirect to the cart page
+    return new ModelAndView("redirect:/cart");
+}
 
 }
