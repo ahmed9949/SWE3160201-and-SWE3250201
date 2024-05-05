@@ -32,9 +32,10 @@
                             <p class="price"  th:text="${item.product.price}"><b>product price</b></p>
                         </div>
                     </div>
-                </td>    <button class="remove">Remove From Cart</button>
+                </td>    
+                <a class="remove" th:href="@{'/remove/' + ${item.cart_id}}">x</a>
 
-                <button class="Add">Add Item</button>
+                <button class="Add">Add Another Item</button>
             </tr>
              
 

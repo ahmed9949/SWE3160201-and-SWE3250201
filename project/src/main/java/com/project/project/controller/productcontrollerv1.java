@@ -14,7 +14,6 @@ import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.io.IOException;
