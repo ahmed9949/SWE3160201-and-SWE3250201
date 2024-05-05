@@ -28,6 +28,13 @@ public class User {
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}$", message = "Password must contain at least one letter, one number, and be 6 characters or more")
     private String password;
 
+    private String userrole;
+
+
+
+
+
+
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;
@@ -69,7 +76,16 @@ public class User {
         return id;
     }
 
-
+    public String getUserrole() {
+        return userrole;
+    }
+    
+    
+    
+    
+    public void setUserrole(String userrole) {
+        this.userrole = userrole;
+    }
 
 
     public void setId(int id) {

@@ -33,7 +33,9 @@
               th:href="@{/admin/products/product-details/{id}(id=${product.id})}"
             >
               view product details
-            </a>
+            </a>         
+               <span th:if="${product.quantity == 0}" style="color: red">Out of Stock</span>
+
        
             
             <br />

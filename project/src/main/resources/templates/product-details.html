@@ -54,6 +54,7 @@
           <p class="price" th:text="${products.description + '$'}"><b>product price</b></p>
           <p class="price" th:text="${products.brand+ '$'}"><b>product price</b></p>
           <p class="price" th:text="${products.category + '$'}"><b>product price</b></p>
+          <span th:if="${products.quantity == 0}" style="color: red">Out of Stock</span>
 
         
 
