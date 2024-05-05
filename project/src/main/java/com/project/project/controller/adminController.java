@@ -27,7 +27,7 @@ public class adminController {
 
         ModelAndView model = new ModelAndView("adminDashboard.html");
 
-        if (session.getAttribute("loggedInUser") == null) {
+        if (session.getAttribute("userrole") == "r") {
             return new ModelAndView("redirect:/login");
         }
         return model;
@@ -35,7 +35,7 @@ public class adminController {
 
     @GetMapping("/viewUsers")
     public ModelAndView getUsers(HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null) {
+        if (session.getAttribute("userrole") == "r") {
             return new ModelAndView("redirect:/login");
         }
         ModelAndView model = new ModelAndView("viewUsers.html");
@@ -47,7 +47,7 @@ public class adminController {
 
     @PostMapping("/deleteUser/{User_id}")
     public ModelAndView deleteUser(@PathVariable("User_id") int id, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null) {
+        if (session.getAttribute("userrole") == "r") {
             return new ModelAndView("redirect:/login");
         }
         userRepositry.findById(id).ifPresent(userRepositry::delete);
@@ -58,7 +58,7 @@ public class adminController {
     @GetMapping("/updateUser/{User_id}")
     public ModelAndView showUpdateUserForm(@PathVariable("User_id") int id, HttpSession session) {
 
-        if (session.getAttribute("loggedInUser") == null) {
+        if (session.getAttribute("userrole") == "r") {
             return new ModelAndView("redirect:/login");
         }
         ModelAndView model = new ModelAndView("updateUser.html");
@@ -69,8 +69,8 @@ public class adminController {
     @PostMapping("/updateUser/{User_id}")
     public ModelAndView updateUser(@PathVariable("User_id") int id, User updatedUser,
             RedirectAttributes redirectAttributes, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null) {
-            return new ModelAndView("redirect:/login");
+                if (session.getAttribute("userrole") == "r") {
+                    return new ModelAndView("redirect:/login");
         }
         return userRepositry.findById(id)
                 .map(user -> {
@@ -87,7 +87,7 @@ public class adminController {
     @GetMapping("/addUser")
     public ModelAndView ShowAddUser(HttpSession session) {
 
-        if (session.getAttribute("loggedInUser") == null) {
+        if (session.getAttribute("userrole") == "r") {
             return new ModelAndView("redirect:/login");
         }
         return new ModelAndView("addUser.html");
@@ -96,7 +96,7 @@ public class adminController {
     @GetMapping("/controlPages")
     public ModelAndView ShowControlPage(HttpSession session) {
 
-        if (session.getAttribute("loggedInUser") == null) {
+        if (session.getAttribute("userrole") == "r") {
             return new ModelAndView("redirect:/login");
         }
 
