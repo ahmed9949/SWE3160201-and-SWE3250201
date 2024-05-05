@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import jakarta.validation.Valid;
@@ -110,10 +112,10 @@ public class UserController {
                 // Check user role
                 if ("r".equals(dbUser.getUserrole())) {
                     // If user role is "r", redirect to a certain path
-                    mav.setViewName("redirect:/index.html");
+                    mav.setViewName("index.html");
                 } else {
                     // If user role is not "r", redirect to another path
-                    mav.setViewName("redirect:/path-for-non-role-r");
+                    mav.setViewName("adminDashboard.html");
                 }
     
                 return mav;
@@ -145,7 +147,13 @@ public class UserController {
 
         return mav;
     }
-
+@GetMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+         if (session != null) {
+            session.invalidate(); // Invalidate the session
+        }
+        return new ModelAndView("redirect:/"); // Redirect to the login page
+    }
  
 
 }
