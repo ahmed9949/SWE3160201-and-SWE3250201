@@ -213,6 +213,9 @@ public ModelAndView addItem(@Valid @ModelAttribute("Cart") Cart cartItem,
         return mav;
     }
 
+    // product.setQuantity(product.getQuantity() - 1);
+    // productRepo.save(product); // Save the updated product quantity
+
     // Check if the item already exists for the user
     boolean itemExists = cartservic.doesItemExistForUser(userId, productId);
     if (itemExists) {
@@ -233,5 +236,7 @@ public ModelAndView addItem(@Valid @ModelAttribute("Cart") Cart cartItem,
     // Redirect to the cart page
     return new ModelAndView("redirect:/cart");
 }
+
+
 
 }

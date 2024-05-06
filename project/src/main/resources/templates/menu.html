@@ -34,6 +34,7 @@
             >
               view product details
             </a>         
+               <span th:text="${product.quantity}" ></span>
                <span th:if="${product.quantity == 0}" style="color: red">Out of Stock</span>
 
        
