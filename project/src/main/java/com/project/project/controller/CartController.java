@@ -1,6 +1,7 @@
 package com.project.project.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.project.model.*;
 import com.project.project.repositories.UserRepositry;
+import com.project.project.repositories.cartrepo;
 import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
 
@@ -26,8 +28,7 @@ import jakarta.validation.Valid;
 @Controller
  public class CartController {
 
-    @Autowired
-    private productRepo repo;
+    @Autowired cartrepo cartrepo;
 @Autowired
 private UserRepositry userrepo;
 
@@ -45,8 +46,14 @@ public ModelAndView getAll() {
 }
 
 @GetMapping("/remove/{cart_id}")
-public ModelAndView deleteById(@PathVariable("cart_id") int id) {
-    this.cartservic.removeItem(id);
+public ModelAndView deleteById(@PathVariable("cart_id") int cartItemId) {
+    Optional<Cart> opcartitem=cartrepo.findById(cartItemId);
+    Cart cartitem=opcartitem.get();
+    products products=cartitem.getProduct();
+    products.setQuantity(products.getQuantity()+1);
+    productRepo.save(products);
+    
+    this.cartservic.removeItem(cartItemId);
     return new ModelAndView("redirect:/cart");
 }
 

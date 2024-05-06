@@ -1,16 +1,23 @@
 package com.project.project.services;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.project.model.Cart;
-import com.project.project.repositories.cartrepo;
-
+import com.project.project.model.*;
+import com.project.project.repositories.*;
 @Service
 public class cartservic {
     @Autowired
     private cartrepo cartrepo; 
+
+
+    @Autowired
+    private productRepo productRepo; // Assuming you have a repository for the Product entity
+
+   
 
     @SuppressWarnings("null")
     public Cart addItem(Cart item){
