@@ -15,7 +15,6 @@ main {
     margin: 20px auto;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.8);
-    /* Adjust background color and opacity */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -33,16 +32,18 @@ hr {
 }
 
 .card {
-    display: flex;
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.product-details {
+    display: flex;
+}
+
 .images {
     flex: 1;
-    position: relative;
     overflow: hidden;
 }
 
@@ -63,24 +64,33 @@ hr {
     margin-bottom: 10px;
 }
 
-.rate {
-    color: #f7b731;
-}
-
 .price {
     font-size: 18px;
     color: #333;
     margin-bottom: 10px;
 }
 
-.discount {
-    color: #999;
-    font-size: 16px;
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
 }
 
 .remove {
-    background-color: #ff6348;
     color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.remove {
+    background-color: #ff6348; /* Red */
+}
+
+.Add {
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -90,25 +100,25 @@ hr {
 }
 
 .Add {
-    background-color: #24e306;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: #24e306; /* Green */
 }
 
 .remove:hover {
-    background-color: #e74c3c;
+    background-color: #c52b1e; /* Dark Red */
 }
 
 .Add:hover {
-    background-color: #1dcd02;
+    background-color: #1d8e04; /* Dark Green */
 }
 
-/* FontAwesome icons */
-.fa {
-    margin-right: 5px;
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    flex: 0 1 calc(50% - 20px); /* Two cards per row with spacing */
+    margin-bottom: 20px;
 }

@@ -16,36 +16,30 @@
 
     <div th:replace="header :: header"></div>
     <main>
-
-         <hr>
- 
-        <div class="card">
-            <tr th:each="item : ${Cart}">												
+        <hr>
+        <div class="card-container">
+            <tr th:each="item : ${Cart}">
                 <td>
                     <div class="card">
                         <div class="images">
-                            <img th:src="@{'/uploads/'+${item.product.id}+'/'+${item.product.imageFileName}}"
-                            />
+                            <img th:src="@{'/uploads/'+${item.product.id}+'/'+${item.product.imageFileName}}" />
                         </div>
                         <div class="caption">
-                            <p class="product_name" th:text="${item.product.name}"> </p>
-                            <p class="price"  th:text="${item.product.price}"><b>product price</b></p>
+                            <p class="product_name" th:text="${item.product.name}"></p>
+                            <p class="price" th:text="${item.product.price + '$'}"></p>
+                            <a class="remove" th:href="@{'/remove/' + ${item.cart_id}}">Remove</a>
                         </div>
                     </div>
-                </td>    
-                <a class="remove" th:href="@{'/remove/' + ${item.cart_id}}">x</a>
-
-                <a class="Add" href="/menu">add product</a>
-
+                </td>
             </tr>
-                     
-
-            </div>
+            <a class="Add" href="/menu">Add to Cart</a>
         </div>
+
+
     </main>
     <div th:replace="footer :: footer"></div>
-    
-    
+
 </body>
+
 
 </html>
