@@ -10,10 +10,10 @@
       rel="stylesheet"
     />
     <!-- My CSS -->
-    <link rel="stylesheet" th:href="@<public/css/adminDashboard.css" />
+    <link rel="stylesheet" th:href="@{/css/adminDashboard.css}" />
 
     <!-- css l el control pages wa viewUser pages -->
-    <link rel="stylesheet" href="../../public/css/controlPages.css" />
+    <link rel="stylesheet" th:href="@{/css/controlPages.css}" />
 
     <title>Control Page</title>
   </head>
@@ -21,39 +21,39 @@
   <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-      <a href="#" class="brand">
+      <a href="/admin" class="brand">
         <i class="bx bxs-smile"></i>
         <span class="text">AdminHub</span>
       </a>
       <ul class="side-menu top">
         <li class="active">
-          <a href="#">
+          <a href="/admin/home">
             <i class="bx bxs-dashboard"></i>
             <span class="text">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/admin/products">
             <i class="bx bxs-plus-square"></i>
-            <span class="text">Add Locations</span>
+            <span class="text">products</span>
           </a>
         </li>
         <li>
-          <a href="addUser.html">
+          <a href="/admin/addUser">
             <i class="bx bxs-user-plus"></i>
             <span class="text">Add Users</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/admin/controlPages">
             <i class="bx bx-current-location"></i>
-            <span class="text">View Locations</span>
+            <span class="text">Control Page</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/admin/viewUsers">
             <i class="bx bxs-group"></i>
-            <span class="text">User</span>
+            <span class="text">View Users</span>
           </a>
         </li>
       </ul>
@@ -85,6 +85,7 @@
         <input type="checkbox" id="switch-mode" hidden />
         <label for="switch-mode" class="switch-mode"></label>
       </nav>
+      <!-- NAVBAR -->
 
       <main>
         <div class="table-responsive">
@@ -92,23 +93,37 @@
             <thead>
               <tr>
                 <th>UserID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Role</th>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>password</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <!-- Example Row -->
-              <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>Admin</td>
+
+              <tr th:each="user: ${users}">
+                <td th:text="${user.User_id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.password}"></td>
                 <td>
-                  <button class="btn-action remove">Remove</button>
+                  <form
+                    th:action="@{'/admin/deleteUser/' + ${user.User_id}}"
+                    method="post"
+                  >
+                    <button type="submit" class="btn-action remove">
+                      Remove
+                    </button>
+                  </form>
+                  <a
+                    th:href="@{'/admin/updateUser/' + ${user.User_id}}"
+                    class="btn-action update"
+                    >Update</a
+                  >
                 </td>
               </tr>
+
               <!-- Additional rows as needed -->
             </tbody>
           </table>
@@ -126,6 +141,6 @@
       <!-- MAIN -->
     </section>
 
-    <script src="../../public/js/adminDashboard.js"></script>
+    <script th:src="@{/js/adminDashboard.js}"></script>
   </body>
 </html>

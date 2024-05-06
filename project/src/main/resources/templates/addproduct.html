@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- My CSS -->
+    <link rel="stylesheet" th:href="@{/css/adminDashboard.css}" />
+    <link rel="stylesheet" th:href="@{/css/addproduct.css}" />
+
+    <title>AdminHub</title>
+  </head>
+
+  <body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+      <a href="admin/home" class="brand">
+        <i class="bx bxs-smile"></i>
+        <span class="text">AdminHub</span>
+      </a>
+      <ul class="side-menu top">
+        <li class="active">
+          <a href="/admin/home">
+            <i class="bx bxs-dashboard"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/products">
+            <i class="bx bxs-plus-square"></i>
+            <span class="text">products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/addUser">
+            <i class="bx bxs-user-plus"></i>
+            <span class="text">Add Users</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/controlPages">
+            <i class="bx bx-current-location"></i>
+            <span class="text">Control Page</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/viewUsers">
+            <i class="bx bxs-group"></i>
+            <span class="text">View Users</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="logout">
+            <i class="bx bxs-log-out-circle"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+      <!-- NAVBAR -->
+      <nav>
+        <i class="bx bx-menu"></i>
+        <a href="#" class="nav-link">Categories</a>
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button type="submit" class="search-btn">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <input type="checkbox" id="switch-mode" hidden />
+        <label for="switch-mode" class="switch-mode"></label>
+      </nav>
+      <!-- NAVBAR -->
+
+      <!-- MAIN -->
+      <main>
+        <div class="head-title">
+          <div class="left">
+            <h1>Dashboard</h1>
+            <ul class="breadcrumb">
+              <li>
+                <a href="#">Dashboard</a>
+              </li>
+              <li><i class="bx bx-chevron-right"></i></li>
+              <li>
+                <a class="active" href="#">products</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-data">
+          <div class="order">
+            <div class="head">
+              <a href="/admin/products">cancel</a>
+            </div>
+            <form
+              method="post"
+              th:object="${products}"
+              enctype="multipart/form-data"
+             >
+              <div>
+                <label>name</label>
+                <div>
+                  <input th:field="*{name}" />
+                  <p
+                    th:if="${#fields.hasErrors('name')} "
+                    th:errorclass="text-danger"
+                    th:errors="*{name}"
+                    style="color: red"
+                  ></p>
+                </div>
+              </div>
+              <div>
+                <label>brand </label>
+                <div>
+                  <input th:field="*{brand}" />
+                  <p
+                    th:if="${#fields.hasErrors('brand')} "
+                    th:errorclass="text-danger"
+                    th:errors="*{brand}"
+                  ></p>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label">category</label>
+                <div class="col-sm-8">
+                  <select class="form-select" th:field="*{category}">
+                    <option value="other">other</option>
+                    <option value="phone">phone</option>
+                    <option value="c">c</option>
+                    <option value="b">b</option>
+                    <option value="f">f</option>
+                    <option value="ff">ff</option>
+                  </select>
+                  <p
+                    th:if="${#fields.hasErrors('category')}"
+                    th:errorclass="text-danger"
+                    th:errors="*{category}"
+                  ></p>
+                </div>
+              </div>
+              <div>
+                <label>quantity</label>
+                <div>
+                  <input th:field="*{quantity}" />
+                  <p
+                    th:if="${#fields.hasErrors('quantity')} "
+                    th:errorclass="text-danger"
+                    th:errors="*{quantity}"
+                  ></p>
+                </div>
+              </div>
+              <div>
+                <label>description</label>
+                <div>
+                  <input th:field="*{description}" />
+                  <p
+                    th:if="${#fields.hasErrors('description')} "
+                    th:errorclass="text-danger"
+                    th:errors="*{description}"
+                  ></p>
+                </div>
+              </div>
+              <div>
+                <label>price</label>
+                <div>
+                  <input th:field="*{price}" />
+                  <p
+                    th:if="${#fields.hasErrors('price')} "
+                    th:errorclass="text-danger"
+                    th:errors="*{price}"
+                  ></p>
+                </div>
+              </div>
+              <div>
+                <label>companiesDiscount</label>
+                <div>
+                  <input th:field="*{companiesDiscount}" />
+                  <p
+                    th:if="${#fields.hasErrors('companiesDiscount')} "
+                    th:errorclass="text-danger"
+                    th:errors="*{companiesDiscount}"
+                  ></p>
+                </div>
+              </div>
+              <div>
+                <label>regularDiscount</label>
+                <div>
+                  <input th:field="*{regularDiscount}" />
+                  <p
+                    th:if="${#fields.hasErrors('regularDiscount')} "
+                    th:errorclass="text-danger"
+                    th:errors="*{regularDiscount}"
+                  ></p>
+                </div>
+              </div>
+              <div class="row mb-4">
+                <label>Product Image</label>
+                <div class="image-upload">
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    class="form-control-file"
+                    required
+                   />
+                   <p
+                   th:if="${#fields.hasErrors('imageFileName')} "
+                   th:errorclass="text-danger"
+                   th:errors="*{imageFileName}"
+                 ></p>
+                </div>
+              </div>
+              <div>
+                <button type="submit">submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+      <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <script src="../../public/js/adminDashboard.js"></script>
+  </body>
+</html>
