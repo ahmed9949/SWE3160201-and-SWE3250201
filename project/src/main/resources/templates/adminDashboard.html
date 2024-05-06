@@ -93,7 +93,7 @@
               </li>
               <li><i class="bx bx-chevron-right"></i></li>
               <li>
-                <a class="active" href=""/admin/home"">Home</a>
+                <a class="active" href="/admin/home">Home</a>
               </li>
             </ul>
           </div>
@@ -104,23 +104,23 @@
             <i class="bx bx-current-location"></i>
             <span class="text">
               <h3>1020</h3>
-              <p>Number of locations</p>
+              <p>Number of Admins</p>
             </span>
           </li>
           <li>
             <i class="bx bxs-group"></i>
             <span class="text">
-              <h3>2834</h3>
-              <p>Number of Users</p>
+                <h3 th:text="${productCount}"></h3>
+                <p>Number of Products</p>
             </span>
-          </li>
+        </li>
           <li>
-            <i class="bx bxs-bar-chart-alt-2"></i>
+            <i class="bx bxs-group"></i>
             <span class="text">
-              <h3>2543</h3>
-              <p>Number of Views</p>
+                <h3 th:text="${userCount}"></h3>
+                <p>Number of Users</p>
             </span>
-          </li>
+        </li>
         </ul>
 
         <div class="table-data">
