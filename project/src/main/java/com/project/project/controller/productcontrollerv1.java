@@ -213,15 +213,17 @@ public ModelAndView addItem(@Valid @ModelAttribute("Cart") Cart cartItem,
         return mav;
     }
 
-    product.setQuantity(product.getQuantity() - 1);
-    productRepo.save(product); // Save the updated product quantity
-
     // Check if the item already exists for the user
+
     boolean itemExists = cartservic.doesItemExistForUser(userId, productId);
     if (itemExists) {
         ModelAndView mav = new ModelAndView("redirect:/admin/products/product-details/" + productId);
         mav.addObject("message", "Item already exists in the cart");
         return mav;
+    } else {
+        // Decrement the quantity of the product if it's not already in the cart
+        product.setQuantity(product.getQuantity() - 1);
+        productRepo.save(product); // Save the updated product quantity
     }
 
     // Set the User and Product for the Cart item
