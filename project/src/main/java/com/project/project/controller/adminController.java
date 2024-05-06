@@ -104,8 +104,10 @@ public class adminController {
     }
 
     @GetMapping("/logout")
-    public ModelAndView Logout(HttpSession session) {
-        session.invalidate();
-        return new ModelAndView("redirect:/login.html");
+    public ModelAndView logout(HttpSession session) {
+         if (session != null) {
+            session.invalidate(); // Invalidate the session
+        }
+        return new ModelAndView("redirect:/"); // Redirect to the login page
     }
-}
+ }
