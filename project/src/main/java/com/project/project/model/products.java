@@ -1,5 +1,5 @@
 package com.project.project.model;
-
+import java.util.List;
 import jakarta.validation.constraints.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,10 +24,14 @@ public class products { // Java class names should start with an uppercase lette
     private String brand;
     @NotEmpty(message = "this field is required")
     private String category;
+
     @NotNull (message = "this field is required")
+    @Min(value = 0, message = "Price must be non-negative")
     private double price;
     @NotNull (message = "this field is required")
-    private double companiesDiscount;
+    @Min(value = 0, message = "discount must be non-negative")
+    private double companiesDiscount;    
+    @Min(value = 0, message = "discount must be non-negative")
     @NotNull (message = "this field is required")
     private double regularDiscount;
 
@@ -36,9 +40,10 @@ public class products { // Java class names should start with an uppercase lette
 
     @NotEmpty(message = "this field is required")
     private String description;
+     @Min(value = 0, message = "Price must be non-negative")
     @NotNull (message = "this field is required")
      private int quantity; 
-    private String imageFileName;
+    private List< String> imageFileName;
   
     public String getName() {
         return name;
@@ -88,10 +93,10 @@ public class products { // Java class names should start with an uppercase lette
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public String getImageFileName() {
+    public  List<String>  getImageFileName() {
         return imageFileName;
     }
-    public void setImageFileName(String imageFileName) {
+    public void setImageFileName( List< String>  imageFileName) {
         this.imageFileName = imageFileName;
     }
     public int getId() {

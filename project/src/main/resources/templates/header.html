@@ -18,13 +18,12 @@
           <ul class="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/menu">Products</a></li>
-             <th:block th:if="${session['username'] != null}">
-               <li><a th:href="@{/logout}">Logout</a></li>
+            <th:block th:if="${session['username'] != null}">
               <li><a href="/cart">Cart</a></li>
-              <li><a href="/home">Home</a></li>
-             </th:block>
+              <li><a th:href="@{/logout}">Logout</a></li>
+            </th:block>
             <th:block th:unless="${session['username'] != null}">
-               <li><a href="/login">Login</a></li>
+              <li><a href="/login">Login</a></li>
               <li><a href="/Register">Register</a></li>
             </th:block>
           </ul>

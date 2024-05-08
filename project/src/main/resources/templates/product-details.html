@@ -28,13 +28,16 @@
   
     <div id="menubody" onclick="favorites(event.target)">
       <div class="menu_items"  >
-        <img
-          height="100%"
-          th:src="@{'/uploads/'+${products.id}+'/'+${products.imageFileName}}"
-          th:alt="${products.imageFileName}"
-          width="100%"
-          class="menu_img"
-        />
+        <div th:each="imageFileName : ${products.imageFileName}">
+          <img
+              height="100%"
+              th:src="@{'/uploads/' + ${products.id} + '/' + ${imageFileName}}"
+              th:alt="${imageFileName}"
+              width="100%"
+              class="menu_img"
+          />
+      </div>
+      
 
         <div class="descr_and_add">
           <div class="description">

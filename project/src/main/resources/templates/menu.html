@@ -17,12 +17,11 @@
     <div id="menubody" onclick="favorites(event.target)">
       <div class="menu_items" th:each="product : ${products}">
         <img
-          height="100%"
-          th:src="@{'/uploads/'+${product.id}+'/'+${product.imageFileName}}"
-          th:alt="${product.imageFileName}"
-          width="100%"
-          class="menu_img"
-        />
+        th:if="${product.imageFileName != null and product.imageFileName.size() > 0}"
+        th:src="@{'/uploads/' + ${product.id} + '/' + ${product.imageFileName[0]}}"
+        th:alt="${product.imageFileName[0]}"
+        width="100"
+    />
 
         <div class="descr_and_add">
           <div class="description">

@@ -14,7 +14,7 @@
 
 <body>
 
-    <div th:replace="header :: header"></div>
+    <div th:replace="~{header :: header}"></div>
     <main>
 
          <hr>
@@ -24,25 +24,78 @@
                 <td>
                     <div class="card">
                         <div class="images">
-                            <img th:src="@{'/uploads/'+${item.product.id}+'/'+${item.product.imageFileName}}"
-                            />
+                        
+                            <img
+                            th:if="${item.product.imageFileName != null and item.product.imageFileName.size() > 0}"
+                            th:src="@{'/uploads/' + ${item.product.id} + '/' + ${item.product.imageFileName[0]}}"
+                            th:alt="${item.product.imageFileName[0]}"
+                            width="100"
+                        />
                         </div>
                         <div class="caption">
                             <p class="product_name" th:text="${item.product.name}"> </p>
                             <p class="price"  th:text="${item.product.price}"><b>product price</b></p>
+                            <p class="price"  th:text="${item.quantity}"><b>cart quantity </b></p>
+
+                            <form method="post" th:object="${Cart}" th:action="@{/updatecart/{cart_id}(cart_id=${item.cart_id})}" enctype="multipart/form-data">
+                
+                                <input type="number" name="quantity" min="1" value="${item.quantity}">
+                          
+                              <div>
+                                 <button class="add" type="submit">update quantity </button>
+                              </div>
+                          </form>
+                          <b>final  price</b>
+                          <p class="price"  th:text="${item.quantity == 0 ? item.product.price : item.quantity *item.product.price}"><b>final  price</b></p>
+
+ 
                         </div>
                     </div>
                 </td>    
                 <a class="remove" th:href="@{'/remove/' + ${item.cart_id}}">x</a>
 
-                <a class="Add" href="/menu">add product</a>
-            </tr>
+             </tr>
              
 
             </div>
         </div>
+
+        <br>
+        <a class="Add" href="/menu">add product</a>
+
+        <a class="Add" href="/menu"> checkout</a>
+
     </main>
-    <div th:replace="footer :: footer"></div>
+    <div th:replace="~{footer :: footer}"></div>
+
+    {% comment %} <script>
+        // Function to send the updated quantity to the server
+        function updateQuantity(cartItemId, newQuantity) {
+            $.ajax({
+                url: '/cart/update-quantity/' + cartItemId,
+                type: 'PUT',
+                data: JSON.stringify({ quantity: newQuantity }),
+                contentType: 'application/json',
+                success: function(response) {
+                    // Handle success response if needed
+                    console.log('Quantity updated successfully');
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response if needed
+                    console.error('Error updating quantity:', error);
+                }
+            });
+        }
+
+        // Event listener for update quantity buttons
+        $(document).on('click', '.Add', function() {
+            var cartItemId = $(this).data('cart_id');
+            var newQuantity = prompt('Enter the new quantity:');
+            if (newQuantity !== null && newQuantity.trim() !== '') {
+                updateQuantity(cartItemId, parseInt(newQuantity));
+            }
+        });
+    </script> {% endcomment %}
 </body>
 
 </html>
