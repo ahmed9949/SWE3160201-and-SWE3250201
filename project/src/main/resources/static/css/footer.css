@@ -1,6 +1,6 @@
 /* Animated Footer Styling */
 .animated-footer {
-    background: #3C91E6;
+    background: 	#1c1c84;
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -58,11 +58,11 @@ a {
 }
 
 .footer-bottom {
-    background-color: #3C91E6; /* Darker background color for contrast */
+    background-color:	#1c1c84; /* Darker background color for contrast */
     color: #fff;
     padding: 15px; /* Increased padding for better spacing */
     font-size: 18px; /* Increased font size for better visibility */
-    border-top: 100px solid #3C91E6; /* Add a top border for separation */
+    border-top: 100px solid	#1c1c84; /* Add a top border for separation */
     font-weight: bold; /* Increase font weight for emphasis */
 }
 

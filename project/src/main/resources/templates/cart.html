@@ -16,11 +16,9 @@
 
     <div th:replace="~{header :: header}"></div>
     <main>
-
-         <hr>
- 
-        <div class="card">
-            <tr th:each="item : ${Cart}">												
+        <hr>
+        <div class="card-container">
+            <tr th:each="item : ${Cart}">
                 <td>
                     <div class="card">
                         <div class="images">
@@ -97,5 +95,6 @@
         });
     </script> {% endcomment %}
 </body>
+
 
 </html>

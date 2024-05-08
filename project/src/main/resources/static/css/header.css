@@ -7,7 +7,7 @@ body {
 
 /* Animated Header Styling */
 .animated-header {
-    background: #3C91E6;
+    background:	#1c1c84;
     color: #fff;
     padding: 1px 0; /* Decrease the padding to reduce the height */
     position: fixed;

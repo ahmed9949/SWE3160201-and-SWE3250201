@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
+import com.project.project.repositories.productRepo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,6 +23,9 @@ public class adminController {
     @Autowired
     private UserRepositry userRepositry;
 
+    @Autowired
+    private productRepo productrepo;
+
     @GetMapping("")
     public ModelAndView getAdminHome(HttpSession session) {
 
@@ -30,6 +34,17 @@ public class adminController {
         if (session.getAttribute("userrole") == "r") {
             return new ModelAndView("redirect:/login");
         }
+
+        long userCount = userRepositry.count();
+        
+        long productCount = productrepo.count();
+
+        
+        // Add the user count to the model
+        model.addObject("userCount", userCount);
+        model.addObject("productCount", productCount);
+
+
         return model;
     }
 
