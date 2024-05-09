@@ -21,16 +21,17 @@ body, html {
 
 /* Menu items */
 .menu_items {
-    position: relative; /* Added position relative */
-    flex: 0 0 calc(33.33% - 20px); /* Adjust item width for three items per row */
+    position: relative;
+    flex: 0 0 calc(25% - 20px); /* Adjust item width for four items per row */
     margin: 10px;
     background-color: #f3f3f3;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding subtle box shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+    width: calc(25% - 20px); /* Set the width of each item */
+    height: 300px; /* Set the height of each item */
 }
-
 .menu_items:hover {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Enhancing box shadow on hover */
 }

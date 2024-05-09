@@ -71,22 +71,41 @@ public ModelAndView deleteById(@PathVariable("cart_id") int cartItemId) {
  
 
 @PostMapping("/updatecart/{cart_id}")
-public ModelAndView updatecart(@Valid @ModelAttribute("Cart") Cart cart,
-@PathVariable("cart_id") int id,
-BindingResult result,
-@RequestParam("quantity") int quantity
+public ModelAndView updateCart(@Valid @ModelAttribute("Cart") Cart cart,
+                               @PathVariable("cart_id") int id,
+                               BindingResult result,
+                               @RequestParam("quantity") int quantity) {
 
-) {
+    Optional<Cart> optionalCart = cartrepo.findById(id);
+    if (optionalCart.isPresent()) {
+        Cart cartItem = optionalCart.get();
+        int oldQuantity = cartItem.getQuantity();
+        int difference = quantity - oldQuantity;
 
- Optional <Cart> optionalCart=cartrepo.findById(id);
- Cart cartitem=optionalCart.get();
- products products=cartitem.getProduct();
- products.setQuantity(products.getQuantity()-quantity);
-cartitem.setQuantity(quantity);
-cartrepo.save(cartitem);
+        products product = cartItem.getProduct();
+        int availableQuantity = product.getQuantity();
+
+        // Check if the new quantity is valid
+        if (availableQuantity >= difference) {
+            // Update the product quantity
+            product.setQuantity(availableQuantity + oldQuantity - quantity);
+            productRepo.save(product);
+
+            // Update the cart item quantity
+            cartItem.setQuantity(quantity);
+            cartrepo.save(cartItem);
+        } else {
+            // Handle the case where the requested quantity exceeds available quantity
+            // You can redirect to an error page or return an appropriate response
+        }
+    } else {
+        // Handle the case where the cart item with the given ID is not found
+        // You can redirect to an error page or return an appropriate response
+    }
+
     return new ModelAndView("redirect:/cart");
-
 }
+
   
    
 }
