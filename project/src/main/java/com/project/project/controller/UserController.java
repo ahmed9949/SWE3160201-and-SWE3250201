@@ -48,6 +48,9 @@ public class UserController {
         return model;
     }
 
+    
+
+
     @PostMapping("/Register")
     public ModelAndView saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,
             @RequestParam("confirmPassword") String confirmPassword, Model model) {

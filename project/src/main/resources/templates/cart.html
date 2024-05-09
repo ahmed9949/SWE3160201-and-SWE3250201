@@ -32,19 +32,19 @@
                         </div>
                         <div class="caption">
                             <p class="product_name" th:text="${item.product.name}"> </p>
-                            <p class="price"  th:text="${item.product.price}"><b>product price</b></p>
-                            <p class="price"  th:text="${item.quantity}"><b>cart quantity </b></p>
+                            <p class="price"  th:text="${item.product.price + ' LE'}"><b>product price</b></p>
+                            <p class="price"  th:text="${item.quantity + '  total'}"><b>cart quantity </b></p>
 
                             <form method="post" th:object="${Cart}" th:action="@{/updatecart/{cart_id}(cart_id=${item.cart_id})}" enctype="multipart/form-data">
                 
                                 <input type="number" name="quantity" min="1" value="${item.quantity}">
                           
                               <div>
-                                 <button class="add" type="submit">update quantity </button>
+                                 <button class="add" type="submit">Add Quantity </button>
                               </div>
                           </form>
                           <b>final  price</b>
-                          <p class="price"  th:text="${item.quantity == 0 ? item.product.price : item.quantity *item.product.price}"><b>final  price</b></p>
+                          <p class="price"  th:text="${item.quantity == 0 ? item.product.price : item.quantity *item.product.price +'  LE'}"><b>final  price</b></p>
 
  
                         </div>

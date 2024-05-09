@@ -122,3 +122,33 @@ hr {
     flex: 0 1 calc(50% - 20px); /* Two cards per row with spacing */
     margin-bottom: 20px;
 }
+
+.add {
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #24e306; /* Blue */
+    color: #fff; /* White text */
+}
+
+.add:hover {
+    background-color: #1d8e04; /* Darker blue on hover */
+}
+
+input[type="number"] {
+    padding: 6px 10px; /* Adjust padding as needed */
+    font-size: 16px;
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px;
+    width: 120px; /* Adjust width as needed */
+}
+
+/* Optional: Hover and focus styles */
+input[type="number"]:hover,
+input[type="number"]:focus {
+    border-color: #3498db; /* Blue border on hover/focus */
+    outline: none; /* Remove default focus outline */
+}
