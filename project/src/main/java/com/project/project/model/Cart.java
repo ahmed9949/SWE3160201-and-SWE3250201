@@ -1,12 +1,15 @@
 package com.project.project.model;
 
- import jakarta.persistence.Entity;
+ 
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
- 
+import jakarta.persistence.OneToOne;
+  
 
 
 @Entity
@@ -15,15 +18,13 @@ public class Cart {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
       private int cart_id ;
 
-    public int getCart_id() {
-        return cart_id;
-    }
-
-    public void setCart_id(int cart_id) {
-        this.cart_id = cart_id;
-    }
-
+ 
     private int quantity;
+
+@OneToOne(fetch = FetchType.LAZY )
+@JoinColumn(name = "order_id")
+    private OrderItem order;
+
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -53,9 +54,24 @@ public class Cart {
     public User getUser() {
         return user;
     }
+   public int getCart_id() {
+        return cart_id;
+    }
+
+    public void setCart_id(int cart_id) {
+        this.cart_id = cart_id;
+    }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public OrderItem getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderItem order) {
+        this.order = order;
     }
 
 

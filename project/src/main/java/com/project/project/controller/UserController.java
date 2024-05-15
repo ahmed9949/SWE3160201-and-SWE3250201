@@ -1,29 +1,22 @@
 package com.project.project.controller;
 
 import java.util.List;
-
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-//import org.hibernate.mapping.List;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
- import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
-
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
 import jakarta.validation.Valid;
-
 import com.project.project.model.products;
 
 @RestController
@@ -54,7 +47,8 @@ public class UserController {
     @PostMapping("/Register")
     public ModelAndView saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,
             @RequestParam("confirmPassword") String confirmPassword, Model model) {
-        
+        System.out.println("in login function ");
+
         User existingUser = userRepositry.findByUsername(user.getUsername());
         if (existingUser != null) {
             model.addAttribute("usernameExists", "Username already exists");
@@ -67,6 +61,7 @@ public class UserController {
     
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("passwordMismatch", "Passwords do not match");
+            System.out.println("check password");
             return new ModelAndView("register.html");
         }
     
@@ -111,7 +106,8 @@ public class UserController {
             if (isPasswordMatch) {
                 session.setAttribute("User_id", dbUser.getId());
                 session.setAttribute("username", dbUser.getUsername());
-    
+                session.setAttribute("userrole", dbUser.getUserrole());
+
                 // Check user role
                 if ("r".equals(dbUser.getUserrole())) {
                     // If user role is "r", redirect to a certain path

@@ -1,0 +1,1 @@
+from openjdk:21-jdk

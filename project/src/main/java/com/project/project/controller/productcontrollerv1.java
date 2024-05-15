@@ -12,8 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.project.project.model.*;
-import com.project.project.repositories.UserRepositry;
-import com.project.project.repositories.productRepo;
+ import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
 
 import jakarta.transaction.Transactional;
@@ -27,12 +26,7 @@ import org.springframework.util.StringUtils;
 @RestController
 @RequestMapping("admin/products")
 public class productcontrollerv1 {
-
-    @Autowired
-    private productRepo repo;
-@Autowired
-private UserRepositry userrepo;
-
+ 
 @Autowired 
 private productRepo productRepo;
 @Autowired
@@ -159,10 +153,11 @@ public ModelAndView editProduct(@PathVariable("id") int id, @Valid @ModelAttribu
 
     return new ModelAndView("redirect:/admin/products");
 }
-private void keepExistingPhoto(products product) {
-    products existingProduct = this.productRepo.findById(product.getId());
-    product.setImageFileName(existingProduct.getImageFileName());
-}
+
+// private void keepExistingPhoto(products product) {
+//     products existingProduct = this.productRepo.findById(product.getId());
+//     product.setImageFileName(existingProduct.getImageFileName());
+// }
 
 
 
@@ -252,7 +247,7 @@ public ModelAndView addItem(@Valid @ModelAttribute("Cart") Cart cartItem,
     cartItem.setProduct(product);
 
     // Add the item to the cart
-    Cart savedItem = cartservic.addItem(cartItem);
+     cartservic.addItem(cartItem);
 
     // Redirect to the cart page
     return new ModelAndView("redirect:/cart");

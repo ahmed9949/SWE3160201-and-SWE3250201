@@ -30,7 +30,8 @@ public class User {
 
     private String userrole;
 
-
+ 
+    private String address;
 
 
 
@@ -90,6 +91,20 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+
+
+    public String getAddress() {
+        return address;
+    }
+
+
+
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("admin")
 public class adminController {
+    
     @Autowired
     private UserRepositry userRepositry;
 
@@ -28,54 +29,31 @@ public class adminController {
 
     @GetMapping("")
     public ModelAndView getAdminHome(HttpSession session) {
-
         ModelAndView model = new ModelAndView("adminDashboard.html");
-
-        if (session.getAttribute("userrole") == "r") {
-            return new ModelAndView("redirect:/login");
-        }
-
         long userCount = userRepositry.count();
-        
         long productCount = productrepo.count();
-
-        
         // Add the user count to the model
         model.addObject("userCount", userCount);
         model.addObject("productCount", productCount);
-
-
         return model;
     }
 
     @GetMapping("/viewUsers")
     public ModelAndView getUsers(HttpSession session) {
-        if (session.getAttribute("userrole") == "r") {
-            return new ModelAndView("redirect:/login");
-        }
         ModelAndView model = new ModelAndView("viewUsers.html");
         List<User> users = this.userRepositry.findAll();
         model.addObject("users", users);
         return model;
-
     }
 
     @PostMapping("/deleteUser/{User_id}")
     public ModelAndView deleteUser(@PathVariable("User_id") int id, HttpSession session) {
-        if (session.getAttribute("userrole") == "r") {
-            return new ModelAndView("redirect:/login");
-        }
         userRepositry.findById(id).ifPresent(userRepositry::delete);
-
         return new ModelAndView("redirect:/admin/viewUsers");
     }
 
     @GetMapping("/updateUser/{User_id}")
     public ModelAndView showUpdateUserForm(@PathVariable("User_id") int id, HttpSession session) {
-
-        if (session.getAttribute("userrole") == "r") {
-            return new ModelAndView("redirect:/login");
-        }
         ModelAndView model = new ModelAndView("updateUser.html");
         userRepositry.findById(id).ifPresent(user -> model.addObject("user", user));
         return model;
@@ -83,10 +61,7 @@ public class adminController {
 
     @PostMapping("/updateUser/{User_id}")
     public ModelAndView updateUser(@PathVariable("User_id") int id, User updatedUser,
-            RedirectAttributes redirectAttributes, HttpSession session) {
-                if (session.getAttribute("userrole") == "r") {
-                    return new ModelAndView("redirect:/login");
-        }
+                                    RedirectAttributes redirectAttributes, HttpSession session) {
         return userRepositry.findById(id)
                 .map(user -> {
                     user.setUsername(updatedUser.getUsername());
@@ -101,28 +76,19 @@ public class adminController {
 
     @GetMapping("/addUser")
     public ModelAndView ShowAddUser(HttpSession session) {
-
-        if (session.getAttribute("userrole") == "r") {
-            return new ModelAndView("redirect:/login");
-        }
         return new ModelAndView("addUser.html");
     }
 
     @GetMapping("/controlPages")
     public ModelAndView ShowControlPage(HttpSession session) {
-
-        if (session.getAttribute("userrole") == "r") {
-            return new ModelAndView("redirect:/login");
-        }
-
         return new ModelAndView("controlPages.html");
     }
 
     @GetMapping("/logout")
     public ModelAndView logout(HttpSession session) {
-         if (session != null) {
+        if (session != null) {
             session.invalidate(); // Invalidate the session
         }
         return new ModelAndView("redirect:/"); // Redirect to the login page
     }
- }
+}

@@ -1,7 +1,6 @@
 body {
   background-color: #f2f2f2; /* Set the background color to light grey */
-  background-image: url("p6.jpg");
-  background-repeat: no-repeat;
+   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   font-family: 'Courier New', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
