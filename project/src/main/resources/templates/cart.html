@@ -17,6 +17,8 @@
     <div th:replace="~{header :: header}"></div>
     <main>
         <hr>
+        <p>Total Price: <span th:text="${#numbers.formatDecimal(totalPrice, 0)} + ' LE'"></span></p>
+s
         <div class="card-container">
             <tr th:each="item : ${Cart}">
                 <td>
@@ -61,7 +63,7 @@
         <br>
         <a class="Add" href="/menu">add product</a>
 
-        <a class="Add" th:href="@{'/checkout?userId=' + ${session.User_id}}">Checkout</a>
+        <a class="Add" th:href="@{/checkout}">Checkout</a>
 
     </main>
     <div th:replace="~{footer :: footer}"></div>

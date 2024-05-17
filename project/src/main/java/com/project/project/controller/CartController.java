@@ -38,8 +38,15 @@ cartservic cartservic;
 @GetMapping("/cart")
 public ModelAndView getAll(HttpSession  HttpSession) {
     ModelAndView mav =new ModelAndView("cart.html");
+   
     int currentUser = (Integer) HttpSession.getAttribute("User_id");
-    List<Cart>cart=this.cartrepo.findByUserId(currentUser);
+    List<Cart>cart=this.cartrepo.findByUserId(currentUser); 
+    
+    double totalPrice = cart.stream()
+                                .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
+                                .sum();
+    mav.addObject("totalPrice", totalPrice);
+
     mav.addObject("Cart",cart);
     return mav;
 }

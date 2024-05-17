@@ -1,15 +1,17 @@
 package com.project.project.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-
+import java.util.*;;
 @Entity
 public class User {
     @Id
@@ -31,7 +33,10 @@ public class User {
     private String userrole;
 
  
-    private String address;
+      
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Cart> carts;
+
 
 
 
@@ -96,15 +101,6 @@ public class User {
 
 
 
-    public String getAddress() {
-        return address;
-    }
-
-
-
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    
 
 }

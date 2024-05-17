@@ -1,11 +1,13 @@
 package com.project.project.model;
-import java.util.List;
+import java.util.*;
 import jakarta.validation.constraints.*;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType; // Fix this import
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,6 +37,9 @@ public class products { // Java class names should start with an uppercase lette
     @NotNull (message = "this field is required")
     private double regularDiscount;
 
+
+ @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Cart> carts;
     
 
 
