@@ -2,11 +2,16 @@ package com.project.project.controller;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,6 +21,7 @@ import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("admin")
@@ -91,4 +97,59 @@ public class adminController {
         }
         return new ModelAndView("redirect:/"); // Redirect to the login page
     }
+
+        @GetMapping("/admin/addUser")
+    public ModelAndView addUserByadmin() {
+        ModelAndView model = new ModelAndView("addUser.html");
+        User newUser = new User();
+        model.addObject("user", newUser);
+        return model;
+    }
+
+    
+
+
+    @PostMapping("/admin/addUser")
+    public ModelAndView saveUserByadmin(@Valid @ModelAttribute User user, BindingResult bindingResult,
+            @RequestParam("confirmPassword") String confirmPassword,
+            @RequestParam(value = "role", required = false) String role, Model model) {
+    
+        User existingUser = userRepositry.findByUsername(user.getUsername());
+        if (existingUser != null) {
+            model.addAttribute("usernameExists", "Username already exists");
+            // Add the user object to the model before returning the view
+            model.addAttribute("user", user);
+            return new ModelAndView("addUser.html");
+        }
+    
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            return new ModelAndView("addUser.html");
+        }
+    
+        if (!user.getPassword().equals(confirmPassword)) {
+            model.addAttribute("passwordMismatch", "Passwords do not match");
+            System.out.println("check password");
+            // Add the user object to the model before returning the view
+            model.addAttribute("user", user);
+            return new ModelAndView("addUser.html");
+        }
+    
+        // Assigning default role "r" to the user
+        if (role == null || role.isEmpty()) {
+            user.setUserrole("r");
+        } else {
+            user.setUserrole(role);
+        }
+    
+        // Hashing the user's password before saving
+        String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
+        user.setPassword(encodedPassword);
+    
+        // Saving the user to the database
+        userRepositry.save(user);
+    
+        return new ModelAndView("redirect:/admin/addUser");
+    }
+    
 }

@@ -67,7 +67,9 @@ public class UserController {
     
         // Assigning default role "r" to the user
         user.setUserrole("r");
-    
+
+        
+        
         // Hashing the user's password before saving
         String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         user.setPassword(encodedPassword);
