@@ -2,24 +2,18 @@ package com.project.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+ import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.PostMapping;
+ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.project.model.Cart;
-import com.project.project.model.products;
-import com.project.project.model.User;
-import com.project.project.repositories.cartrepo;
+  import com.project.project.repositories.cartrepo;
 import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
- import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
+ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller

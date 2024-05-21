@@ -5,7 +5,6 @@ import org.aspectj.lang.annotation.Aspect;
  import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
- 
 import jakarta.servlet.http.HttpSession;
 
 @Component
@@ -24,11 +23,9 @@ public class authentication {
     public Object authenticateAdmin(ProceedingJoinPoint joinPoint) throws Throwable {
         Object userRole = httpSession.getAttribute("userrole");
         if (userRole == null || !"a".equals(userRole.toString())) {
-            // If not authenticated or not an admin, redirect
-            return new ModelAndView("/index");
+             return new ModelAndView("/index");
         } else {
-            // If authenticated as admin, proceed with method execution
-            return joinPoint.proceed();
+             return joinPoint.proceed();
         }
     }
 }
