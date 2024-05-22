@@ -51,53 +51,59 @@ cartservic cartservic;
  
     
     @PostMapping("/addproduct")
-public ModelAndView saveProduct(@Valid @ModelAttribute("products") products products, BindingResult result,
-                                @RequestParam("images") MultipartFile[] multipartFiles) {
-    if (result.hasErrors()) {
-        ModelAndView mav = new ModelAndView("addproduct.html");
-        mav.addObject("bindingResult", result);
-        return mav;
-    }
-
-    try {
-        List<String> fileNames = new ArrayList<>();
-
-        for (MultipartFile multipartFile : multipartFiles) {
-            String originalFilename = multipartFile.getOriginalFilename();
-            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+    public ModelAndView saveProduct(@Valid @ModelAttribute("products") products products, BindingResult result,
+                                    @RequestParam("images") MultipartFile[] multipartFiles) {
+        if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView("addproduct.html");
+            mav.addObject("bindingResult", result);
+            return mav;
+        }
+    
+        if (multipartFiles.length > 4) {
+            result.rejectValue("images", "file.limit", "You can upload a maximum of 4 images");
+            ModelAndView mav = new ModelAndView("addproduct.html");
+            mav.addObject("bindingResult", result);
+            return mav;
+        }
+    
+        try {
+            List<String> fileNames = new ArrayList<>();
             List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "gif");
-
-            // Check if the file extension is in the list of allowed extensions
-            if (!allowedExtensions.contains(fileExtension.toLowerCase())) {
-                result.rejectValue("images", "file.invalid", "File must be a JPG, JPEG, PNG, or GIF");
-                ModelAndView mav = new ModelAndView("addproduct.html");
-                mav.addObject("bindingResult", result);
-                return mav;
+    
+            for (MultipartFile multipartFile : multipartFiles) {
+                String originalFilename = multipartFile.getOriginalFilename();
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+    
+                // Check if the file extension is in the list of allowed extensions
+                if (!allowedExtensions.contains(fileExtension.toLowerCase())) {
+                    result.rejectValue("images", "file.invalid", "File must be a JPG, JPEG, PNG, or GIF");
+                    ModelAndView mav = new ModelAndView("addproduct.html");
+                    mav.addObject("bindingResult", result);
+                    return mav;
+                }
+    
+                String fileName = StringUtils.cleanPath(originalFilename);
+                fileNames.add(fileName);
             }
-
-            String fileName = StringUtils.cleanPath(originalFilename);
-            fileNames.add(fileName);
+    
+            products.setImageFileName(fileNames);
+            products savedProduct = this.productRepo.save(products);
+    
+            // Ensure the 'uploads' directory exists
+            String uploadDir = "project/src/main/resources/static/uploads/" + savedProduct.getId();
+    
+            for (int i = 0; i < multipartFiles.length; i++) {
+                FileUploadUtil.saveFile(uploadDir, fileNames.get(i), multipartFiles[i]);
+            }
+        } catch (IOException ex) {
+            // Handle file saving exception
+            ex.printStackTrace(); // You can log the exception or show an error message to the user
         }
-
-        products.setImageFileName(fileNames);
-        products savedProduct = this.productRepo.save(products);
-
-        // Ensure the 'uploads' directory exists
-        String uploadDir = "project/src/main/resources/static/uploads/" + savedProduct.getId();
-
-        for (int i = 0; i < multipartFiles.length; i++) {
-            FileUploadUtil.saveFile(uploadDir, fileNames.get(i), multipartFiles[i]);
-        }
-    } catch (IOException ex) {
-        // Handle file saving exception
-        ex.printStackTrace(); // You can log the exception or show an error message to the user
+    
+        // Redirect to appropriate URL after saving
+        return new ModelAndView("redirect:/admin/products");
     }
-
-    // Redirect to appropriate URL after saving
-    return new ModelAndView("redirect:/admin/products");
-}
-
- 
+    
     
 @GetMapping("/editProduct/{id}")
 public ModelAndView showEditForm(@PathVariable("id") int Id) {
