@@ -95,35 +95,24 @@
                 <th>UserID</th>
                 <th>UserName</th>
                 <th>Email</th>
-                <th>password</th>
-                <th>Action</th>
+                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <!-- Example Row -->
 
               <tr th:each="user: ${users}">
-                <td th:text="${user.User_id}"></td>
+                <td th:text="${user.id}"></td>
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.password}"></td>
-                <td>
-                  <form
-                    th:action="@{'/admin/deleteUser/' + ${user.User_id}}"
-                    method="post"
-                  >
-                    <button type="submit" class="btn-action remove">
-                      Remove
-                    </button>
-                  </form>
-                  <a
-                    th:href="@{'/admin/updateUser/' + ${user.User_id}}"
-                    class="btn-action update"
-                    >Update</a
-                  >
+                 <td>
+                    <form th:action="@{'/admin/deleteUser/' + ${user.id}}" method="post">
+                        <button type="submit" class="btn-action remove">Remove</button>
+                    </form>
+                    <a th:href="@{'/admin/updateUser/' + ${user.id}}" class="btn-action update">Update</a>
                 </td>
-              </tr>
-
+            </tr>
+            
               <!-- Additional rows as needed -->
             </tbody>
           </table>
