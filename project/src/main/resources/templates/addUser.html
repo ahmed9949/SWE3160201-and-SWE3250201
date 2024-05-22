@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +29,7 @@
             <li>
                 <a href="/admin/products">
                   <i class="bx bxs-plus-square"></i>
-                  <span class="text">products</span>
+                  <span class="text">Products</span>
                 </a>
               </li>
             <li>
@@ -69,8 +69,6 @@
     </section>
     <!-- SIDEBAR -->
 
-
-
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
@@ -85,7 +83,6 @@
             </form>
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
-
         </nav>
         <!-- NAVBAR -->
 
@@ -104,7 +101,6 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
 
             <!-- Form -->
@@ -115,15 +111,12 @@
                     </div>
 
                     <form th:action="@{/admin/addUser}" th:object="${user}" method="post">
-                        <div class="form-control">   
-                                <label for="username">Username</label>
-                                <input type="text" id="username" th:field="*{username}" required />
-                                <p
-                                  th:if="${#fields.hasErrors('username')}"
-                                  th:errors="*{username}"
-                                ></p>
-                                <p th:if="${usernameExists}" th:text="${usernameExists}"></p>
-                              </div>
+                        <div class="form-control">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" th:field="*{username}" required />
+                            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                            <p th:if="${usernameExists}" th:text="${usernameExists}"></p>
+                        </div>
                         <div class="form-control">
                             <label for="email">Email</label>
                             <input type="email" id="email" th:field="*{email}" required />
@@ -131,38 +124,27 @@
                         </div>
                         <div class="form-control">
                             <label for="password">Password</label>
-                            <input
-                              type="password"
-                              id="password"
-                              th:field="*{password}"
-                              required
-                            />
-                            <p th:if="${#fields.hasErrors('password')}"
-                              th:errors="*{password}"></p>
+                            <input type="password" id="password" th:field="*{password}" required />
+                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                         </div>
                         <div class="form-control">
                             <label for="confirmPassword">Confirm Password</label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                required/>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required />
                             <p th:if="${passwordMismatch}" th:text="${passwordMismatch}"></p>
                         </div>
                         <div class="form-control">
                             <label for="role">Role</label>
-                            <select id="role" name="role" onchange="updateHiddenRole(this.value)">
+                            <select id="role" name="role">
                                 <option value="" th:if="${user.userrole == null}">Select role</option>
-                                <option value="admin" th:selected="${user.userrole == 'a'}">Admin</option>
-                                <option value="user" th:selected="${user.userrole == 'r'}">User</option>
+                                <option value="a" th:selected="${user.userrole == 'a'}">Admin</option>
+                                <option value="r" th:selected="${user.userrole == 'r'}">User</option>
                             </select>
-                            <input type="hidden" id="hiddenRole" name="hiddenRole" th:value="${user.userrole}" />
-                            
                         </div>
                         <button type="submit" class="btn">Submit</button>
                     </form>
                 </div>
             </div>
+        </main>
     </section>
 
     <script src="../../public/js/adminDashboard.js"></script>
