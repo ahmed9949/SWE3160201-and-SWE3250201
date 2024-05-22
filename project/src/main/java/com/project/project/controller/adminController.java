@@ -80,10 +80,7 @@ public class adminController {
                 .orElseGet(() -> new ModelAndView("redirect:/admin/viewUsers"));
     }
 
-    @GetMapping("/addUser")
-    public ModelAndView ShowAddUser(HttpSession session) {
-        return new ModelAndView("addUser.html");
-    }
+   
 
     @GetMapping("/controlPages")
     public ModelAndView ShowControlPage(HttpSession session) {
@@ -106,50 +103,48 @@ public class adminController {
         return model;
     }
 
-    
-
+    @GetMapping("/addUser")
+    public ModelAndView showAddUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return new ModelAndView("addUser");
+    }
 
     @PostMapping("/admin/addUser")
-    public ModelAndView saveUserByadmin(@Valid @ModelAttribute User user, BindingResult bindingResult,
+    public ModelAndView saveUserByAdmin(
+            @Valid @ModelAttribute("user") User user, 
+            BindingResult bindingResult,
             @RequestParam("confirmPassword") String confirmPassword,
-            @RequestParam(value = "role", required = false) String role, Model model) {
-    
+            @RequestParam(value = "role", required = false) String role, 
+            Model model) {
+
         User existingUser = userRepositry.findByUsername(user.getUsername());
         if (existingUser != null) {
             model.addAttribute("usernameExists", "Username already exists");
-            // Add the user object to the model before returning the view
-            model.addAttribute("user", user);
-            return new ModelAndView("addUser.html");
+            return new ModelAndView("addUser");
         }
-    
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("user", user);
-            return new ModelAndView("addUser.html");
+            return new ModelAndView("addUser");
         }
-    
+
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("passwordMismatch", "Passwords do not match");
-            System.out.println("check password");
-            // Add the user object to the model before returning the view
-            model.addAttribute("user", user);
-            return new ModelAndView("addUser.html");
+            return new ModelAndView("addUser");
         }
-    
-        // Assigning default role "r" to the user
-        if (role == null || role.isEmpty()) {
-            user.setUserrole("r");
-        } else {
-            user.setUserrole(role);
-        }
-    
-        // Hashing the user's password before saving
+
+        // Assign default role if not provided
+        user.setUserrole(role == null || role.isEmpty() ? "r" : role);
+
+        // Hash the password
         String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         user.setPassword(encodedPassword);
-    
-        // Saving the user to the database
+
+        // Save the user
         userRepositry.save(user);
-    
+
         return new ModelAndView("redirect:/admin/addUser");
     }
+
+ 
     
 }
