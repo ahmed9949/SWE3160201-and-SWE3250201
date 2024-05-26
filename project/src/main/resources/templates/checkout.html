@@ -60,8 +60,7 @@
 
     </form>
     <p>Total Price: 
-    <span th:text="${#numbers.formatDecimal(Cart.stream().mapToDouble(item -> item.product.price * item.quantity).sum(), 0, 'COMMA')} + ' LE'"></span>
-</p>
+ </p>
             <a class="Add" href="/menu">add product</a>
 
     </main>

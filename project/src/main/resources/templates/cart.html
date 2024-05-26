@@ -17,8 +17,7 @@
     <div th:replace="~{header :: header}"></div>
     <main>
         <hr>
-        <p>Total Price: <span th:text="${#numbers.formatDecimal(totalPrice, 0)} + ' LE'"></span></p>
-s
+ s
         <div class="card-container">
             <tr th:each="item : ${Cart}">
                 <td>
