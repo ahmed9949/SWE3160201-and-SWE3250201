@@ -17,50 +17,7 @@
 
   <body>
     <!-- SIDEBAR -->
-    <section id="sidebar">
-      <a href="/admin/home" class="brand">
-        <i class="bx bxs-smile"></i>
-        <span class="text">AdminHub</span>
-      </a>
-      <ul class="side-menu top">
-        <li class="active">
-          <a href="/admin/home">
-            <i class="bx bxs-dashboard"></i>
-            <span class="text">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/products">
-            <i class="bx bxs-plus-square"></i>
-            <span class="text">products</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/addUser">
-            <i class="bx bxs-user-plus"></i>
-            <span class="text">Add Users</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/controlPages">
-            <i class="bx bx-current-location"></i>
-            <span class="text">Control Page</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/viewUsers">
-            <i class="bx bxs-group"></i>
-            <span class="text">View Users</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="side-menu">
-        <li>
-          <a th:href="@{/logout}" class="logout">
-            <i class="bx bxs-log-out-circle"> logout</i>
-         </li>
-      </ul>
-    </section>
+    <div th:replace="sidebar :: sidebar"></div>
     <!-- SIDEBAR -->
 
     <!-- CONTENT -->

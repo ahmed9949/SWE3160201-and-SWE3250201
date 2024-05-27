@@ -5,17 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Category {
-    
-        @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-      private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-      @NotBlank(message = "Name cannot be null or empty")
-      @Pattern(regexp = "^(?=.*[a-zA-Z])[a-zA-Z\\s]+$", message = "Name cannot contain special characters and should have at least one alphabet")
+    @NotBlank(message = "category should have name ")
+    @Size(min=3,max = 15, message = "category should have name between 3 and 15  letter ")
     private String name;
 
     public int getId() {
@@ -35,5 +34,4 @@ public class Category {
     }
 
     
-
 }

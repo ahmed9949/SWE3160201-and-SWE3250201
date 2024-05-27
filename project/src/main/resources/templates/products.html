@@ -17,52 +17,8 @@
 
   <body>
     <!-- SIDEBAR -->
-    <section id="sidebar">
-      <a href="#" class="brand">
-        <i class="bx bxs-smile"></i>
-        <span class="text">AdminHub</span>
-      </a>
-      <ul class="side-menu top">
-        <li class=" ">
-          <a href="#">
-            <i class="bx bxs-dashboard"></i>
-            <span class="text">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="/products" class="active">
-            <i class="bx bxs-plus-square"></i>
-            <span class="text">products</span>
-          </a>
-        </li>
-        <li>
-          <a href="addUser.html">
-            <i class="bx bxs-user-plus"></i>
-            <span class="text">Add Users</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-current-location"></i>
-            <span class="text">View Locations</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bxs-group"></i>
-            <span class="text">User</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="side-menu">
-        <li>
-          <a href="#" class="logout">
-            <i class="bx bxs-log-out-circle"></i>
-            <span class="text">Logout</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+    <div th:replace="sidebar :: sidebar"></div>
+
     <!-- SIDEBAR -->
 
     <!-- CONTENT -->
@@ -119,8 +75,7 @@
                   <th>quantity</th>
                   <th>description</th>
                   <th>price</th>
-                  <th>companies discount</th>
-                  <th>regular disount</th>
+                   <th>regular disount</th>
                   <th>image</th>
                   <th>action</th>
                 </tr>
@@ -133,8 +88,7 @@
                   <td th:text="${product.category}"></td>
                   <td th:text="${product.quantity}"></td>
                   <td th:text="${product.description}"></td>
-                  <td th:text="${product.companiesDiscount}"></td>
-                  <td th:text="${product.regularDiscount}"></td>
+                   <td th:text="${product.regularDiscount}"></td>
 
                   <td th:text="${product.price + '$'}"></td>
                   <td>

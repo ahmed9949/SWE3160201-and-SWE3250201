@@ -18,52 +18,8 @@
 
   <body>
     <!-- SIDEBAR -->
-    <section id="sidebar">
-      <a href="admin/home" class="brand">
-        <i class="bx bxs-smile"></i>
-        <span class="text">AdminHub</span>
-      </a>
-      <ul class="side-menu top">
-        <li class="active">
-          <a href="/admin/home">
-            <i class="bx bxs-dashboard"></i>
-            <span class="text">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/products">
-            <i class="bx bxs-plus-square"></i>
-            <span class="text">products</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/addUser">
-            <i class="bx bxs-user-plus"></i>
-            <span class="text">Add Users</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/controlPages">
-            <i class="bx bx-current-location"></i>
-            <span class="text">Control Page</span>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/viewUsers">
-            <i class="bx bxs-group"></i>
-            <span class="text">View Users</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="side-menu">
-        <li>
-          <a href="#" class="logout">
-            <i class="bx bxs-log-out-circle"></i>
-            <span class="text">Logout</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+    <div th:replace="sidebar :: sidebar"></div>
+
     <!-- SIDEBAR -->
 
     <!-- CONTENT -->
@@ -139,12 +95,8 @@
                 <label class="col-sm-4 col-form-label">category</label>
                 <div class="col-sm-8">
                   <select class="form-select" th:field="*{category}">
-                    <option value="other">other</option>
-                    <option value="phone">phone</option>
-                    <option value="c">c</option>
-                    <option value="b">b</option>
-                    <option value="f">f</option>
-                    <option value="ff">ff</option>
+                    <option th:each="category : ${category}" th:value="${category.id}" th:text="${category.name}">p</option>
+
                   </select>
                   <p
                     th:if="${#fields.hasErrors('category')}"
@@ -186,17 +138,7 @@
                   ></p>
                 </div>
               </div>
-              <div>
-                <label>companiesDiscount</label>
-                <div>
-                  <input th:field="*{companiesDiscount}" />
-                  <p
-                    th:if="${#fields.hasErrors('companiesDiscount')} "
-                    th:errorclass="text-danger"
-                    th:errors="*{companiesDiscount}"
-                  ></p>
-                </div>
-              </div>
+            
               <div>
                 <label>regularDiscount</label>
                 <div>

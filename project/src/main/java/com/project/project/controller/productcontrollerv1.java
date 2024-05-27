@@ -12,7 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.project.project.model.*;
- import com.project.project.repositories.productRepo;
+import com.project.project.repositories.categoryrepo;
+import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
 
 import jakarta.transaction.Transactional;
@@ -26,7 +27,8 @@ import org.springframework.util.StringUtils;
 @RestController
 @RequestMapping("admin/products")
 public class productcontrollerv1 {
- 
+    @Autowired
+ categoryrepo categoryrepo;
 @Autowired 
 private productRepo productRepo;
 @Autowired
@@ -43,9 +45,12 @@ cartservic cartservic;
 
     @GetMapping("/addproduct")
     public ModelAndView addProduct() {
+
         ModelAndView mav = new ModelAndView("addproduct.html");
         mav.addObject("products", new products());
- 
+        List  <Category> category=categoryrepo.findAll();
+ mav.addObject("category",category );
+
         return mav;
     }
  
@@ -56,6 +61,7 @@ cartservic cartservic;
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("addproduct.html");
             mav.addObject("bindingResult", result);
+            mav.addObject("category",categoryrepo.findAll());
             return mav;
         }
     
@@ -110,6 +116,8 @@ public ModelAndView showEditForm(@PathVariable("id") int Id) {
     products product = this.productRepo.findById(Id);
     
            ModelAndView mav = new ModelAndView("editProduct.html");
+           mav.addObject("category",categoryrepo.findAll() );
+
     mav.addObject("product", product); 
     return mav; 
 }
@@ -139,8 +147,7 @@ public ModelAndView editProduct(@PathVariable("id") int id, @Valid @ModelAttribu
     existingProduct.setQuantity(products.getQuantity());
     existingProduct.setDescription(products.getDescription());
     existingProduct.setPrice(products.getPrice());
-    existingProduct.setCompaniesDiscount(products.getCompaniesDiscount());
-    existingProduct.setRegularDiscount(products.getRegularDiscount());
+     existingProduct.setRegularDiscount(products.getRegularDiscount());
 
     if (multipartFiles != null && multipartFiles.length > 0) {
         List<String> fileNames = new ArrayList<>();

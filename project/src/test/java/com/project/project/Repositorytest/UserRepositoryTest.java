@@ -23,7 +23,7 @@ public class UserRepositoryTest {
     //
     @Test
     public void findByUsernameNotFoundTest() {
-        String username = "ahmed";
+        String username = "aa";
         User dbUser = userRepository.findByUsername(username);
         assertNull(dbUser);
     }

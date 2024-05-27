@@ -1,5 +1,7 @@
 package com.project.project.model;
 import java.util.*;
+
+ 
 import jakarta.validation.constraints.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -7,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType; // Fix this import
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -31,8 +35,7 @@ public class products { // Java class names should start with an uppercase lette
     @Min(value = 0, message = "Price must be non-negative")
     private double price;
     @NotNull (message = "this field is required")
-    @Min(value = 0, message = "discount must be non-negative")
-    private double companiesDiscount;    
+    
     @Min(value = 0, message = "discount must be non-negative")
     @NotNull (message = "this field is required")
     private double regularDiscount;
@@ -50,6 +53,13 @@ public class products { // Java class names should start with an uppercase lette
      private int quantity; 
     private List< String> imageFileName;
   
+
+@ManyToOne
+@JoinColumn(name = "category_id")
+private Category catergory;
+
+private boolean available=true;
+
     public String getName() {
         return name;
     }
@@ -74,12 +84,7 @@ public class products { // Java class names should start with an uppercase lette
     public void setPrice(double price) {
         this.price = price;
     }
-    public double getCompaniesDiscount() {
-        return companiesDiscount;
-    }
-    public void setCompaniesDiscount(double companiesDiscount) {
-        this.companiesDiscount = companiesDiscount;
-    }
+ 
     public double getRegularDiscount() {
         return regularDiscount;
     }
@@ -109,6 +114,24 @@ public class products { // Java class names should start with an uppercase lette
     }
     public void setId(int id) {
         this.id = id;
+    }
+    public Set<Cart> getCarts() {
+        return carts;
+    }
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
+    }
+    public Category getCatergory() {
+        return catergory;
+    }
+    public void setCatergory(Category catergory) {
+        this.catergory = catergory;
+    }
+    public boolean isAvailable() {
+        return available;
+    }
+    public void setAvailable(boolean available) {
+        this.available = available;
     } 
     
     
