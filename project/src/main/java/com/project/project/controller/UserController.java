@@ -26,10 +26,15 @@ public class UserController {
     @Autowired
     private UserRepositry userRepositry;
 
+    @Autowired
+    public UserController(UserRepositry userRepositry) {
+        this.userRepositry = userRepositry;
+    }
+
     @GetMapping({ "", "/" })
     public ModelAndView getHomePage() {
         ModelAndView model = new ModelAndView("index.html");
-        
+
         return model;
     }
 
@@ -41,9 +46,6 @@ public class UserController {
         return model;
     }
 
-    
-
-
     @PostMapping("/Register")
     public ModelAndView saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,
             @RequestParam("confirmPassword") String confirmPassword, Model model) {
@@ -51,36 +53,34 @@ public class UserController {
 
         User existingUser = userRepositry.findByUsername(user.getUsername());
         if (existingUser != null) {
-            model.addAttribute("usernameExists", "Username already exists");
-            return new ModelAndView("register.html");
+            ModelAndView modelAndView = new ModelAndView("register.html");
+            modelAndView.addObject("usernameExists", "usernameExists");
+            return modelAndView;
         }
-    
+
         if (bindingResult.hasErrors()) {
             return new ModelAndView("register.html");
         }
-    
+
         if (!user.getPassword().equals(confirmPassword)) {
             model.addAttribute("passwordMismatch", "Passwords do not match");
             System.out.println("check password");
             return new ModelAndView("register.html");
         }
-    
+
         // Assigning default role "r" to the user
         user.setUserrole("r");
 
-        
-        
         // Hashing the user's password before saving
         String encodedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         user.setPassword(encodedPassword);
-    
+
         // Saving the user to the database
         userRepositry.save(user);
-        
+
         // Redirecting to the login page after successful registration
         return new ModelAndView("login.html");
     }
-    
 
     @GetMapping("/login")
     public ModelAndView Login() {
@@ -89,6 +89,7 @@ public class UserController {
         model.addObject("user", newUser);
         return model;
     }
+
     @PostMapping("/User/Login")
     public ModelAndView loginProcess(@RequestParam("username") String username,
                                      @RequestParam("password") String password,
@@ -101,7 +102,7 @@ public class UserController {
             model.addAttribute("error", "Username and password must not be empty.");
             return new ModelAndView("login.html");
         }
-    
+
         if (dbUser != null) {
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
 
@@ -120,7 +121,7 @@ public class UserController {
                     // If user role is not "r", redirect to another path
                     mav.setViewName("adminDashboard.html");
                 }
-    
+
                 return mav;
             } else {
                 model.addAttribute("error", "Invalid password.");
@@ -131,7 +132,6 @@ public class UserController {
             return new ModelAndView("login.html");
         }
     }
-    
 
     @GetMapping("User/products")
     public ModelAndView products() {
@@ -150,9 +150,10 @@ public class UserController {
 
         return mav;
     }
-@GetMapping("/logout")
+
+    @GetMapping("/logout")
     public ModelAndView logout(HttpSession session) {
-         if (session != null) {
+        if (session != null) {
             session.invalidate(); // Invalidate the session
         }
         return new ModelAndView("redirect:/"); // Redirect to the login page

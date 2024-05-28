@@ -39,18 +39,17 @@ cartservic cartservic;
     public ModelAndView getAll() {
         ModelAndView mav =new ModelAndView("products.html");
         List<products>productList=this.productRepo.findAll();
+        
         mav.addObject("products", productList);
         return mav;
     }
 
     @GetMapping("/addproduct")
     public ModelAndView addProduct() {
-
+        List  <Category> category=categoryrepo.findAll();
         ModelAndView mav = new ModelAndView("addproduct.html");
         mav.addObject("products", new products());
-        List  <Category> category=categoryrepo.findAll();
- mav.addObject("category",category );
-
+        mav.addObject("category",category );
         return mav;
     }
  
