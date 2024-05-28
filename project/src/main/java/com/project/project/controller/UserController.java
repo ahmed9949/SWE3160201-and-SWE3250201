@@ -33,6 +33,7 @@ public class UserController {
     public UserController(UserRepositry userRepositry) {
         this.userRepositry = userRepositry;
     }
+    
 
     @GetMapping({ "", "/" })
     public ModelAndView getHomePage() {
@@ -173,25 +174,19 @@ public class UserController {
     // }
     @GetMapping("/Profile")
     public ModelAndView getUserProfile(HttpSession session, Model model) {
-        // User user = (User) session.getAttribute("User_id");
-        Integer userId = (Integer) session.getAttribute("User_id");
+    // User user = (User) session.getAttribute("User_id");
+    Integer userId = (Integer) session.getAttribute("User_id");
 
-        if (userId != null) {
-            User user = userRepositry.findById(userId).orElse(null);
+    if (userId != null) {
+    User user = userRepositry.findById(userId).orElse(null);
 
-            model.addAttribute("user", user);
-            return new ModelAndView("Profile");
+    model.addAttribute("user", user);
+    return new ModelAndView("Profile");
         } else {
             return new ModelAndView("redirect:/");
         }
     }
 
-        // @GetMapping("/UpdateProfile/{User_id}")
-    // public ModelAndView showUpdateUserProfile(@PathVariable("User_id") int id, HttpSession session) {
-    //     ModelAndView model = new ModelAndView("UpdateProfile.html");
-    //     userRepositry.findById(id).ifPresent(user -> model.addObject("user", user));
-    //     return model;
-    // }
 
     @GetMapping("/UpdateProfile")
 public ModelAndView updateUserProfile(HttpSession session) {
@@ -200,33 +195,49 @@ public ModelAndView updateUserProfile(HttpSession session) {
     if (userId != null) {
         // If logged in, fetch the user object from the database
         User user = userRepositry.findById(userId).orElse(null);
-        // Pass the user object to the template
+
+        // Create a new User object without the hashed password
+        User userWithoutPassword = new User();
+        userWithoutPassword.setId(user.getId());
+        userWithoutPassword.setUsername(user.getUsername());
+        userWithoutPassword.setEmail(user.getEmail());
+
+        // Pass the user object without the hashed password to the template
         ModelAndView modelAndView = new ModelAndView("UpdateProfile");
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", userWithoutPassword);
         return modelAndView;
     } else {
         // If not logged in, redirect to the login page
         return new ModelAndView("redirect:/login");
-    }
+    }   
 }
+
     
 
 
-    @PostMapping("/UpdateProfile")
-    public ModelAndView updateProfile(User updateprofile,
-            RedirectAttributes redirectAttributes, HttpSession session) {
+@PostMapping("/UpdateProfile")
+public ModelAndView updateProfile(User updateprofile,
+                                  RedirectAttributes redirectAttributes, HttpSession session) {
 
-                Integer userId = (Integer) session.getAttribute("User_id");                
-            return userRepositry.findById(userId)
-                .map(user -> {
-                    user.setUsername(updateprofile.getUsername());
-                    user.setEmail(updateprofile.getEmail());
-                    user.setPassword(updateprofile.getPassword());
-                    userRepositry.save(user);
-                    redirectAttributes.addFlashAttribute("successMessage", "User updated successfully!");
-                    return new ModelAndView("redirect:/Profile");
-                })
-                .orElseGet(() -> new ModelAndView("redirect:/Profile"));
-    }
+    Integer userId = (Integer) session.getAttribute("User_id");
+
+    return userRepositry.findById(userId)
+        .map(user -> {
+            user.setUsername(updateprofile.getUsername());
+            user.setEmail(updateprofile.getEmail());
+
+            // Check if the password has been updated
+            if (updateprofile.getPassword() != null && !updateprofile.getPassword().isEmpty()) {
+                // Hash the new password before saving
+                String encodedPassword = BCrypt.hashpw(updateprofile.getPassword(), BCrypt.gensalt(12));
+                user.setPassword(encodedPassword);
+            }
+
+            userRepositry.save(user);
+            redirectAttributes.addFlashAttribute("successMessage", "User updated successfully!");
+            return new ModelAndView("redirect:/Profile");
+        })
+        .orElseGet(() -> new ModelAndView("redirect:/Profile"));
+}
 
 }
