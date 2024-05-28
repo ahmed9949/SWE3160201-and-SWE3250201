@@ -1,70 +1,33 @@
 package com.project.project.Repositorytest;
 
-import static org.junit.Assert.assertFalse;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.project.project.controller.UserController;
 import com.project.project.controller.productcontrollerv1;
-import com.project.project.model.User;
 import com.project.project.model.products;
-import com.project.project.repositories.UserRepositories;
-import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.categoryrepo;
 import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
-
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
 import com.project.project.model.Cart;
-import com.project.project.model.Category;
-import com.project.project.model.User;
-import com.project.project.model.products;
-import com.project.project.repositories.categoryrepo;
-import com.project.project.repositories.productRepo;
-import com.project.project.services.cartservic;
-
 import jakarta.servlet.http.HttpSession;
-import org.springframework.ui.Model;
 
 @SpringBootTest
 @AutoConfigureMockMvc

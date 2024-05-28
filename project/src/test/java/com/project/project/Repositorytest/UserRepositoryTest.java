@@ -79,7 +79,7 @@ public class UserRepositoryTest {
 
         // Check if the username exists in the database
         User userFromDatabase = uRepositories.findByUsername("Fady");
-        assertNull(userFromDatabase, "The username 'Fady' should exist in the database");
+        assertNotNull(userFromDatabase, "The username 'Fady' should exist in the database");
     }
 
     @Test
@@ -114,16 +114,16 @@ public class UserRepositoryTest {
     public void testLogout() {
         // Mock HttpSession
         HttpSession session = mock(HttpSession.class);
-        
+
         // Create an instance of UserController
         UserController userController = new UserController(userRepository);
-        
+
         // Call the logout method
         ModelAndView modelAndView = userController.logout(session);
-        
+
         // Verify that session.invalidate() is called
         verify(session).invalidate();
-        
+
         // Verify that ModelAndView redirects to the login page ("/")
         assert modelAndView.getViewName().equals("redirect:/");
     }

@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("admin")
 public class adminController {
-    
+
     @Autowired
     private UserRepositry userRepositry;
 
@@ -45,7 +45,7 @@ public class adminController {
         long userCount = userRepositry.count();
         long productCount = productrepo.count();
         // long orderCount = OrderItemrepo.count();
-        
+
         // Add the user count to the model
         // model.addObject("orderCount", OrderItem);
         model.addObject("userCount", userCount);
@@ -54,8 +54,7 @@ public class adminController {
     }
 
     @GetMapping("/viewUsers")
-    public ModelAndView getUsers(HttpSession session) 
-    {
+    public ModelAndView getUsers(HttpSession session) {
         ModelAndView model = new ModelAndView("viewUsers.html");
         List<User> users = this.userRepositry.findAll();
         model.addObject("users", users);
@@ -77,7 +76,7 @@ public class adminController {
 
     @PostMapping("/updateUser/{User_id}")
     public ModelAndView updateUser(@PathVariable("User_id") int id, User updatedUser,
-                                    RedirectAttributes redirectAttributes, HttpSession session) {
+            RedirectAttributes redirectAttributes, HttpSession session) {
         return userRepositry.findById(id)
                 .map(user -> {
                     user.setUsername(updatedUser.getUsername());
@@ -90,8 +89,6 @@ public class adminController {
                 .orElseGet(() -> new ModelAndView("redirect:/admin/viewUsers"));
     }
 
-   
-
     @GetMapping("/controlPages")
     public ModelAndView ShowControlPage(HttpSession session) {
         return new ModelAndView("controlPages.html");
@@ -100,12 +97,11 @@ public class adminController {
     @GetMapping("/logout")
     public ModelAndView logout(HttpSession session) {
         if (session != null) {
-            session.invalidate(); // 
+            session.invalidate(); //
         }
         return new ModelAndView("redirect:/"); // Redirect to the login page
     }
 
- 
     @GetMapping("/addUser")
     public ModelAndView showAddUserForm(Model model) {
         model.addAttribute("user", new User());
@@ -114,10 +110,10 @@ public class adminController {
 
     @PostMapping("/addUser")
     public ModelAndView saveUserByAdmin(
-            @Valid @ModelAttribute("user") User user, 
+            @Valid @ModelAttribute("user") User user,
             BindingResult bindingResult,
             @RequestParam("confirmPassword") String confirmPassword,
-            @RequestParam(value = "role", required = false) String role, 
+            @RequestParam(value = "role", required = false) String role,
             Model model) {
 
         User existingUser = userRepositry.findByUsername(user.getUsername());
@@ -148,6 +144,4 @@ public class adminController {
         return new ModelAndView("redirect:/admin/addUser");
     }
 
- 
-    
 }

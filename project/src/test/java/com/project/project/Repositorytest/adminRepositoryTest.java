@@ -1,8 +1,11 @@
 package com.project.project.Repositorytest;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.project.controller.UserController;
@@ -37,58 +42,84 @@ public class adminRepositoryTest {
     @InjectMocks
     private UserController userController;
 
-
     @Autowired
     private UserRepositories uRepositories;
 
-     @Test
+    @Test
+    public void testUsernameExistsInDatabase() {
+        // Create a new user with an existing username
+        User existingUser = new User();
+        existingUser.setUsername("Fady");
+        when(userRepository.findByUsername("Fady")).thenReturn(existingUser);
+        existingUser.setPassword("password"); // Set a non-null password
+
+        // Mock BindingResult and Model
+        BindingResult bindingResult = mock(BindingResult.class);
+        Model model = mock(Model.class);
+        adminController adminController = new adminController(userRepository);
+        // Call the saveUserByAdmin method of adminController
+        ModelAndView modelAndView = adminController.saveUserByAdmin(existingUser, bindingResult, "password", "role",
+                model);
+
+        // Verify that the view name is "addUser"
+        assertEquals("addUser", modelAndView.getViewName());
+
+        // Verify that the userRepository.findByUsername method is called with the
+        // correct username
+        verify(userRepository, times(1)).findByUsername("Fady");
+
+        // Check if the username exists in the database
+        User userFromDatabase = userRepository.findByUsername("Fady");
+        assertNotNull(userFromDatabase, "The username 'Fady' should exist in the database");
+    }
+
+    @Test
     public void testLogout() {
         // Mock HttpSession
         HttpSession session = mock(HttpSession.class);
-        
+
         // Create an instance of UserController
-        UserController userController = new UserController(userRepository);
-        
+        adminController aController = new adminController(userRepository);
+
         // Call the logout method
-        ModelAndView modelAndView = userController.logout(session);
-        
+        ModelAndView modelAndView = aController.logout(session);
+
         // Verify that session.invalidate() is called
         verify(session).invalidate();
-        
+
         // Verify that ModelAndView redirects to the login page ("/")
         assert modelAndView.getViewName().equals("redirect:/");
-    } 
+    }
 
     @Test
     public void testDeleteUser() {
-    // Mock HttpSession
-    HttpSession session = mock(HttpSession.class);
+        // Mock HttpSession
+        HttpSession session = mock(HttpSession.class);
 
-    // Create a sample user ID
-    int userId = 1;
+        // Create a sample user ID
+        int userId = 1;
 
-    // Mock UserRepository
-    UserRepositry userRepository = mock(UserRepositry.class);
-    
-    // Mock behavior for findById method to return a non-null user when called with userId
-    when(userRepository.findById(userId)).thenReturn(Optional.of(new User()));
+        // Mock UserRepository
+        UserRepositry userRepository = mock(UserRepositry.class);
 
-    // Create an instance of adminController with userRepository
-    adminController aController = new adminController(userRepository);
+        // Mock behavior for findById method to return a non-null user when called with
+        // userId
+        when(userRepository.findById(userId)).thenReturn(Optional.of(new User()));
 
-    // Call the deleteUser method
-    ModelAndView modelAndView = aController.deleteUser(userId, session);
+        // Create an instance of adminController with userRepository
+        adminController aController = new adminController(userRepository);
 
-    // Verify that userRepository.findById(id) is called with the correct user ID
-    verify(userRepository).findById(userId);
+        // Call the deleteUser method
+        ModelAndView modelAndView = aController.deleteUser(userId, session);
 
-    // Verify that userRepository.delete(user) is called if the user is present
-    verify(userRepository).delete(any());
+        // Verify that userRepository.findById(id) is called with the correct user ID
+        verify(userRepository).findById(userId);
 
-    // Verify that ModelAndView redirects to the viewUsers page ("/admin/viewUsers")
-    assertEquals("redirect:/admin/viewUsers", modelAndView.getViewName());
-}
+        // Verify that userRepository.delete(user) is called if the user is present
+        verify(userRepository).delete(any());
 
-
+        // Verify that ModelAndView redirects to the viewUsers page ("/admin/viewUsers")
+        assertEquals("redirect:/admin/viewUsers", modelAndView.getViewName());
+    }
 
 }
