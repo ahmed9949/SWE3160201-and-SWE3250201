@@ -110,4 +110,22 @@ public class UserRepositoryTest {
         verify(session).setAttribute("userrole", user.getUserrole());
     }
 
+    @Test
+    public void testLogout() {
+        // Mock HttpSession
+        HttpSession session = mock(HttpSession.class);
+        
+        // Create an instance of UserController
+        UserController userController = new UserController(userRepository);
+        
+        // Call the logout method
+        ModelAndView modelAndView = userController.logout(session);
+        
+        // Verify that session.invalidate() is called
+        verify(session).invalidate();
+        
+        // Verify that ModelAndView redirects to the login page ("/")
+        assert modelAndView.getViewName().equals("redirect:/");
+    }
+
 }
