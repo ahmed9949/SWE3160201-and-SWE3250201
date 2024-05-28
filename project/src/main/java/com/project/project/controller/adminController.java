@@ -95,21 +95,14 @@ public class adminController {
         return new ModelAndView("redirect:/"); // Redirect to the login page
     }
 
-        @GetMapping("/admin/addUser")
-    public ModelAndView addUserByadmin() {
-        ModelAndView model = new ModelAndView("addUser.html");
-        User newUser = new User();
-        model.addObject("user", newUser);
-        return model;
-    }
-
+ 
     @GetMapping("/addUser")
     public ModelAndView showAddUserForm(Model model) {
         model.addAttribute("user", new User());
         return new ModelAndView("addUser");
     }
 
-    @PostMapping("/admin/addUser")
+    @PostMapping("/addUser")
     public ModelAndView saveUserByAdmin(
             @Valid @ModelAttribute("user") User user, 
             BindingResult bindingResult,
