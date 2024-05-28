@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project.project.model.OrderItem;
 import com.project.project.model.User;
+import com.project.project.repositories.OrderItemrepo;
 import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
 
@@ -33,19 +35,27 @@ public class adminController {
     @Autowired
     private productRepo productrepo;
 
+    public adminController(UserRepositry userRepository) {
+        this.userRepositry = userRepository;
+    }
+
     @GetMapping("")
     public ModelAndView getAdminHome(HttpSession session) {
         ModelAndView model = new ModelAndView("adminDashboard.html");
         long userCount = userRepositry.count();
         long productCount = productrepo.count();
+        // long orderCount = OrderItemrepo.count();
+        
         // Add the user count to the model
+        // model.addObject("orderCount", OrderItem);
         model.addObject("userCount", userCount);
         model.addObject("productCount", productCount);
         return model;
     }
 
     @GetMapping("/viewUsers")
-    public ModelAndView getUsers(HttpSession session) {
+    public ModelAndView getUsers(HttpSession session) 
+    {
         ModelAndView model = new ModelAndView("viewUsers.html");
         List<User> users = this.userRepositry.findAll();
         model.addObject("users", users);
@@ -90,7 +100,7 @@ public class adminController {
     @GetMapping("/logout")
     public ModelAndView logout(HttpSession session) {
         if (session != null) {
-            session.invalidate(); // Invalidate the session
+            session.invalidate(); // 
         }
         return new ModelAndView("redirect:/"); // Redirect to the login page
     }
