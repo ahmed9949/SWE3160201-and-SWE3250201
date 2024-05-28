@@ -94,9 +94,9 @@ public class UserController {
                                      @RequestParam("password") String password,
                                      Model model,
                                      HttpSession session) {
+                                        
         User dbUser = this.userRepositry.findByUsername(username);
-        ModelAndView mav = new ModelAndView();
-    
+        ModelAndView mav = new ModelAndView();    
         if (username.isEmpty() || password.isEmpty()) {
             model.addAttribute("error", "Username and password must not be empty.");
             return new ModelAndView("login.html");
@@ -104,11 +104,13 @@ public class UserController {
     
         if (dbUser != null) {
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
+
     
             if (isPasswordMatch) {
+                // session.setAttribute("loggedInUser",dbUser);
                 session.setAttribute("User_id", dbUser.getId());
                 session.setAttribute("username", dbUser.getUsername());
-                session.setAttribute("userrole", dbUser.getUserrole());
+                session.setAttribute("userrole", dbUser.getUserrole()); 
 
                 // Check user role
                 if ("r".equals(dbUser.getUserrole())) {
@@ -154,6 +156,30 @@ public class UserController {
             session.invalidate(); // Invalidate the session
         }
         return new ModelAndView("redirect:/"); // Redirect to the login page
+    }
+    // @GetMapping("/UserProfile")
+    // public String getUserProfile(HttpSession session, Model model) {
+    //     User user = (User) session.getAttribute("username");
+    //     if (user != null) {
+    //         model.addAttribute("user", user);
+    //         return "UserProfile";
+    //     } else {
+    //         return "redirect:/login"; // Redirect to login if the user is not found in the session
+    //     }
+    // }
+    @GetMapping("/Profile")
+    public ModelAndView getUserProfile(HttpSession session, Model model) {
+        // User user = (User) session.getAttribute("User_id");
+        Integer userId = (Integer) session.getAttribute("User_id");
+
+        if (userId != null) {
+            User user = userRepositry.findById(userId).orElse(null);
+
+            model.addAttribute("user", user);
+            return new ModelAndView("Profile");
+        } else {
+            return new ModelAndView("redirect:/");
+        }
     }
  
 
