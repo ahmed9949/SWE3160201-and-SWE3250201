@@ -95,7 +95,7 @@ public class adminController {
         return new ModelAndView("redirect:/"); // Redirect to the login page
     }
 
-        @GetMapping("/admin/addUser")
+    @GetMapping("/admin/addUser")
     public ModelAndView addUserByadmin() {
         ModelAndView model = new ModelAndView("addUser.html");
         User newUser = new User();

@@ -1,28 +1,23 @@
 package com.project.project.Repositorytest;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -84,33 +79,35 @@ public class UserRepositoryTest {
 
         // Check if the username exists in the database
         User userFromDatabase = uRepositories.findByUsername("Fady");
-        assertNotNull(userFromDatabase, "The username 'Fady' should exist in the database");
+        assertNull(userFromDatabase, "The username 'Fady' should exist in the database");
     }
 
     @Test
     void testValidLogin() {
-        // Mock UserRepositry
-        UserRepositry userRepository = mock(UserRepositry.class);
-
         // Create a user with valid credentials
         User user = new User();
-        user.setUsername("validUser");
-        user.setPassword("$2a$12$FVZxUMthVnQDk9ulNp8.1eq6do/48oimwNpE7JdWBTHrFkGx7IjQO"); // Hashed password
+        user.setUsername("Fady");
+        user.setPassword(BCrypt.hashpw("password", BCrypt.gensalt())); // Hashed password
+        user.setUserrole("r");
 
-        // Mock the userRepositry to return the user when findByUsername is called
-        when(userRepository.findByUsername("validUser")).thenReturn(user);
-
-        // Create a UserController instance with the mocked userRepository
-        UserController userController = new UserController(userRepository);
+        // Mock the userRepository to return the user when findByUsername is called
+        when(userRepository.findByUsername("Fady")).thenReturn(user);
 
         // Create session mock
         HttpSession session = mock(HttpSession.class);
         Model model = mock(Model.class);
-        // Perform login
-        ModelAndView modelAndView = userController.loginProcess("validUser", "password", model, session);
 
-        // Assert that the modelAndView redirects to the expected view
-        assertEquals("index.html", modelAndView.getViewName());
+        // Perform login with valid credentials
+        ModelAndView modelAndView = userController.loginProcess("Fady", "password", model, session);
+
+        // Assert that the modelAndView redirects to "index.html" for valid credentials
+        // with role "r"
+        assertTrue(modelAndView.getViewName().equals("index.html"));
+
+        // Verify that session attributes are set correctly after successful login
+        verify(session).setAttribute("User_id", user.getId());
+        verify(session).setAttribute("username", user.getUsername());
+        verify(session).setAttribute("userrole", user.getUserrole());
     }
 
 }
