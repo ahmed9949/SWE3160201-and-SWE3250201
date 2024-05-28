@@ -18,7 +18,7 @@ import com.project.project.repositories.categoryrepo;
 import jakarta.validation.Valid;
 
 @Controller
-public class CategoryController {
+public class categoryController {
 
     @Autowired
     private categoryrepo categoryRepository;
