@@ -18,7 +18,7 @@ import com.project.project.services.categoryservice;
 import jakarta.validation.Valid;
 
 @Controller
-public class CategoryController {
+public class categoryController {
 
     @Autowired
     private categoryservice categoryservice;

@@ -7,11 +7,14 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.project.project.model.User;
 import com.project.project.repositories.UserRepositry;
 import com.project.project.repositories.productRepo;
@@ -92,12 +95,12 @@ public class UserController {
 
     @PostMapping("/User/Login")
     public ModelAndView loginProcess(@RequestParam("username") String username,
-            @RequestParam("password") String password,
-            Model model,
-            HttpSession session) {
+                                     @RequestParam("password") String password,
+                                     Model model,
+                                     HttpSession session) {
+                                        
         User dbUser = this.userRepositry.findByUsername(username);
-        ModelAndView mav = new ModelAndView();
-
+        ModelAndView mav = new ModelAndView();    
         if (username.isEmpty() || password.isEmpty()) {
             model.addAttribute("error", "Username and password must not be empty.");
             return new ModelAndView("login.html");
@@ -106,10 +109,12 @@ public class UserController {
         if (dbUser != null) {
             Boolean isPasswordMatch = BCrypt.checkpw(password, dbUser.getPassword());
 
+    
             if (isPasswordMatch) {
+                // session.setAttribute("loggedInUser",dbUser);
                 session.setAttribute("User_id", dbUser.getId());
                 session.setAttribute("username", dbUser.getUsername());
-                session.setAttribute("userrole", dbUser.getUserrole());
+                session.setAttribute("userrole", dbUser.getUserrole()); 
 
                 // Check user role
                 if ("r".equals(dbUser.getUserrole())) {
@@ -155,6 +160,73 @@ public class UserController {
             session.invalidate(); // Invalidate the session
         }
         return new ModelAndView("redirect:/"); // Redirect to the login page
+    }
+    // @GetMapping("/UserProfile")
+    // public String getUserProfile(HttpSession session, Model model) {
+    //     User user = (User) session.getAttribute("username");
+    //     if (user != null) {
+    //         model.addAttribute("user", user);
+    //         return "UserProfile";
+    //     } else {
+    //         return "redirect:/login"; // Redirect to login if the user is not found in the session
+    //     }
+    // }
+    @GetMapping("/Profile")
+    public ModelAndView getUserProfile(HttpSession session, Model model) {
+        // User user = (User) session.getAttribute("User_id");
+        Integer userId = (Integer) session.getAttribute("User_id");
+
+        if (userId != null) {
+            User user = userRepositry.findById(userId).orElse(null);
+
+            model.addAttribute("user", user);
+            return new ModelAndView("Profile");
+        } else {
+            return new ModelAndView("redirect:/");
+        }
+    }
+
+        // @GetMapping("/UpdateProfile/{User_id}")
+    // public ModelAndView showUpdateUserProfile(@PathVariable("User_id") int id, HttpSession session) {
+    //     ModelAndView model = new ModelAndView("UpdateProfile.html");
+    //     userRepositry.findById(id).ifPresent(user -> model.addObject("user", user));
+    //     return model;
+    // }
+
+    @GetMapping("/UpdateProfile")
+public ModelAndView updateUserProfile(HttpSession session) {
+    // Check if the user is logged in
+    Integer userId = (Integer) session.getAttribute("User_id");
+    if (userId != null) {
+        // If logged in, fetch the user object from the database
+        User user = userRepositry.findById(userId).orElse(null);
+        // Pass the user object to the template
+        ModelAndView modelAndView = new ModelAndView("UpdateProfile");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    } else {
+        // If not logged in, redirect to the login page
+        return new ModelAndView("redirect:/login");
+    }
+}
+    
+
+
+    @PostMapping("/UpdateProfile")
+    public ModelAndView updateProfile(User updateprofile,
+            RedirectAttributes redirectAttributes, HttpSession session) {
+
+                Integer userId = (Integer) session.getAttribute("User_id");                
+            return userRepositry.findById(userId)
+                .map(user -> {
+                    user.setUsername(updateprofile.getUsername());
+                    user.setEmail(updateprofile.getEmail());
+                    user.setPassword(updateprofile.getPassword());
+                    userRepositry.save(user);
+                    redirectAttributes.addFlashAttribute("successMessage", "User updated successfully!");
+                    return new ModelAndView("redirect:/Profile");
+                })
+                .orElseGet(() -> new ModelAndView("redirect:/Profile"));
     }
 
 }
