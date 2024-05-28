@@ -1,25 +1,10 @@
 package com.project.project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import java.util.Set;
-import jakarta.persistence.CascadeType;
-
-@Entity
+ 
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @NotBlank(message = "category should have name ")
-    @Size(min=3,max = 15, message = "category should have name between 3 and 15  letter ")
     private String name;
-
+  
 
    
     public int getId() {

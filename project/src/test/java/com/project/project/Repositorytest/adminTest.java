@@ -33,8 +33,7 @@ import com.project.project.model.User;
 import com.project.project.model.products;
 import com.project.project.repositories.UserRepositories;
 import com.project.project.repositories.UserRepositry;
-import com.project.project.repositories.categoryrepo;
-import com.project.project.repositories.productRepo;
+ import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -59,8 +58,7 @@ import com.project.project.model.Cart;
 import com.project.project.model.Category;
 import com.project.project.model.User;
 import com.project.project.model.products;
-import com.project.project.repositories.categoryrepo;
-import com.project.project.repositories.productRepo;
+ import com.project.project.repositories.productRepo;
 import com.project.project.services.cartservic;
 
 import jakarta.servlet.http.HttpSession;
@@ -71,9 +69,7 @@ import org.springframework.ui.Model;
 public class adminTest {
     @Mock
     private productRepo productRepo;
-    @Mock
-    private categoryrepo categoryrepo;
-
+ 
     @Mock
     private cartservic cartservic;
 

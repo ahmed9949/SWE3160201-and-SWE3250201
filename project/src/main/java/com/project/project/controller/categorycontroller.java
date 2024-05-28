@@ -1,7 +1,6 @@
 package com.project.project.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.project.model.Category;
-import com.project.project.repositories.categoryrepo;
+import com.project.project.services.categoryservice;
 
 import jakarta.validation.Valid;
 
@@ -21,11 +21,11 @@ import jakarta.validation.Valid;
 public class CategoryController {
 
     @Autowired
-    private categoryrepo categoryRepository;
+    private categoryservice categoryservice;
 
     @GetMapping("/categories")
     public ModelAndView getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryservice.findAll();
         ModelAndView mav = new ModelAndView("AdminCategory.html");
         mav.addObject("categories", categories);
         return mav;
@@ -43,16 +43,13 @@ public class CategoryController {
         if (result.hasErrors()) {
             return new ModelAndView("addcategory.html", "formErrors", result.getAllErrors());
         }
-        categoryRepository.save(category);
+        categoryservice.save(category);
         return new ModelAndView("redirect:/categories");
     }
 
-    @GetMapping("/categories/delete/{id}")
+    @DeleteMapping("/categories/delete/{id}")
     public ModelAndView deleteCategory(@PathVariable("id") int id) {
-        Optional<Category> categoryOptional = categoryRepository.findById(id);
-        if (categoryOptional.isPresent()) {
-            categoryRepository.delete(categoryOptional.get());
-        }
+        categoryservice.delete(id);
         return new ModelAndView("redirect:/categories");
     }
 }
